@@ -689,7 +689,10 @@
       background: #333; color: white;
       padding: 12px 24px; border-radius: 24px;
       font-size: 0.88rem; z-index: 999;
-    }
+    }      </div>
+    </div>
+  </div>
+
 
     .hidden { display: none !important; }
 
@@ -807,6 +810,72 @@ body {
                 <p class="location-region">📌 <span id="locationRegionText"></span></p>
               </div>
             </div>
+                      </div>
+          </div>
+
+          <!-- 결과 모달 -->
+          <div id="resultOverlay" class="hidden" style="display:none; width:100%; margin-top:16px;">
+            <div class="result-modal">
+              <button class="close-btn" id="closeResult">✕</button>
+              <div class="status-badge-wrap">
+                <span class="status-badge" id="statusBadge">확인 중</span>
+              </div>
+              <div class="fish-header">
+                <div class="fish-names">
+                  <h2 id="resultFishName">—</h2>
+                  <p id="resultScientificName" class="scientific-name">—</p>
+                  <span id="resultWaterType" class="water-badge">—</span>
+                </div>
+                <div class="confidence-wrap">
+                  <span id="resultConfidence" class="confidence">—</span>
+                  <small>신뢰도</small>
+                </div>
+              </div>
+              <div class="regulation-cards">
+                <div class="reg-card">
+                  <div class="reg-icon">🚫</div>
+                  <div class="reg-label">금어기</div>
+                  <div class="reg-value" id="closedSeasonValue">—</div>
+                </div>
+                <div class="reg-card">
+                  <div class="reg-icon">📏</div>
+                  <div class="reg-label">금지체장</div>
+                  <div class="reg-value" id="minSizeValue">—</div>
+                </div>
+              </div>
+              <div class="region-note hidden" id="regionNote">
+                <span>⚠️</span>
+                <span id="regionNoteText"></span>
+              </div>
+              <div class="fish-info">
+                <div class="info-row">
+                  <span class="info-label">서식지</span>
+                  <span id="resultHabitat">—</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">제철</span>
+                  <span id="resultSeason">—</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">특징</span>
+                  <span id="resultDescription">—</span>
+                </div>
+              </div>
+              <div class="similar-section hidden" id="similarSection">
+                <h3>⚠️ 혼동하기 쉬운 유사어종</h3>
+                <div id="similarList"></div>
+              </div>
+              <div class="warning-box hidden" id="warningBox">
+                <span id="warningText"></span>
+              </div>
+              <div class="disclaimer">
+                ℹ️ AI 분석 결과는 참고용입니다. 정확한 규정은
+                <a href="https://www.mof.go.kr" target="_blank">해양수산부</a> 및
+                <a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a>에서 확인하세요.
+              </div>
+            </div>
+          </div>
+
           </div>
 
             <div id="photoPreviewWrap" style="display:none; margin-top:12px; text-align:center;">
@@ -892,68 +961,7 @@ body {
     </div>
   </div>
 
-  <!-- 결과 모달 -->
-  <div id="resultOverlay" class="hidden">
-    <div class="result-modal">
-      <button class="close-btn" id="closeResult">✕</button>
-      <div class="status-badge-wrap">
-        <span class="status-badge" id="statusBadge">확인 중</span>
-      </div>
-      <div class="fish-header">
-        <div class="fish-names">
-          <h2 id="resultFishName">—</h2>
-          <p id="resultScientificName" class="scientific-name">—</p>
-          <span id="resultWaterType" class="water-badge">—</span>
-        </div>
-        <div class="confidence-wrap">
-          <span id="resultConfidence" class="confidence">—</span>
-          <small>신뢰도</small>
-        </div>
-      </div>
-      <div class="regulation-cards">
-        <div class="reg-card">
-          <div class="reg-icon">🚫</div>
-          <div class="reg-label">금어기</div>
-          <div class="reg-value" id="closedSeasonValue">—</div>
-        </div>
-        <div class="reg-card">
-          <div class="reg-icon">📏</div>
-          <div class="reg-label">금지체장</div>
-          <div class="reg-value" id="minSizeValue">—</div>
-        </div>
-      </div>
-      <div class="region-note hidden" id="regionNote">
-        <span>⚠️</span>
-        <span id="regionNoteText"></span>
-      </div>
-      <div class="fish-info">
-        <div class="info-row">
-          <span class="info-label">서식지</span>
-          <span id="resultHabitat">—</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">제철</span>
-          <span id="resultSeason">—</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">특징</span>
-          <span id="resultDescription">—</span>
-        </div>
-      </div>
-      <div class="similar-section hidden" id="similarSection">
-        <h3>⚠️ 혼동하기 쉬운 유사어종</h3>
-        <div id="similarList"></div>
-      </div>
-      <div class="warning-box hidden" id="warningBox">
-        <span id="warningText"></span>
-      </div>
-      <div class="disclaimer">
-        ℹ️ AI 분석 결과는 참고용입니다. 정확한 규정은
-        <a href="https://www.mof.go.kr" target="_blank">해양수산부</a> 및
-        <a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a>에서 확인하세요.
-      </div>
-    </div>
-  </div>
+ 
 
   <!-- 토스트 -->
   <div id="errorToast" class="hidden"></div>
