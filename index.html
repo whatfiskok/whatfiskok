@@ -953,27 +953,7 @@ body {
   ════════════════════════════════════════ -->
   <script>
     /* ── 인트로 제어 ─────────────────────── */
-    const introTimer = setTimeout(closeIntro, 7500);
 
-    function closeIntro() {
-      clearTimeout(introTimer);
-      const intro = document.getElementById('introScreen');
-      const main  = document.getElementById('mainScreen');
-      intro.style.display  = 'none';
-      main.style.display   = 'block';
-      main.style.position  = 'fixed';
-      main.style.inset     = '0';
-      main.style.width     = '100%';
-      main.style.height    = '100%';
-    }
-
-    // 이미지 로드 실패 시 즉시 메인화면으로
-    document.getElementById('introImg').onerror = closeIntro;
-
-    // 이미지 로드 성공 시 7.5초 후 메인화면으로
-    document.getElementById('introImg').onload = () => {
-      if (navigator.vibrate) navigator.vibrate([30, 50, 80]);
-    };
 
 
     /* ── GPS (검색 시점에만 호출) ────────── */
