@@ -278,14 +278,12 @@
   }
 
   // ── 모달 닫기 ────────────────────────────────────────────────────────────
-  document.getElementById('closeResult').addEventListener('click', () => {
-    document.getElementById('resultOverlay').classList.add('hidden');
-  });
-  document.getElementById('resultOverlay').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('resultOverlay')) {
-      document.getElementById('resultOverlay').classList.add('hidden');
-    }
-  });
+    document.getElementById('closeResult').addEventListener('click', () => {
+      const ro = document.getElementById('resultOverlay');
+      ro.classList.add('hidden');
+      ro.style.display = 'none';
+    });
+
 
   // ── 로딩 ─────────────────────────────────────────────────────────────────
   function showLoading(show, msg = '', sub = '') {
