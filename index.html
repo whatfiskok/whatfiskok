@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <title>이게 잡아도 돼?</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, 'Noto Sans KR', sans-serif;
+      background: #000;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+
+    html {
+      height: 100%;
+      width: 100%;
+    }
+
+
+    /* ════════════════════════════════
+       인트로 화면
+    ════════════════════════════════ */
+    #introScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* 배경 사진 */
+    #introImg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transform-origin: center 40%;
+      animation: imgZoomIn 2.0s ease-out forwards;
+    }
+
+    /* 사진이 살짝 커지며 등장 */
+    @keyframes imgZoomIn {
+      0%   { transform: scale(1.15); opacity: 0; }
+      100% { transform: scale(1.0);  opacity: 1; }
+    }
+
+    /* 갑오징어가 앞으로 내밀어지는 효과 (중앙 하단 오징어 강조) */
+    #squidFocus {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(
+        ellipse 55% 45% at 48% 52%,
+        transparent 0%,
+        transparent 35%,
+        rgba(0,0,0,0.25) 60%,
+        rgba(0,0,0,0.65) 100%
+      );
+      opacity: 0;
+      animation: focusIn 0.8s ease 1.2s forwards;
+    }
+    @keyframes focusIn {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* 먹물 SVG 캔버스 */
+    #inkCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* 먹물 번짐 원형들 */
+    .ink-blob {
+      animation: inkSpread var(--dur) cubic-bezier(0.2, 0.8, 0.4, 1.0) var(--delay) forwards;
+      transform-origin: var(--ox) var(--oy);
+      opacity: 0;
+    }
+    @keyframes inkSpread {
+      0%   { transform: scale(0);   opacity: 0.95; }
+      60%  { transform: scale(1.0); opacity: 1;    }
+      100% { transform: scale(1.0); opacity: 1;    }
+    }
+
+    /* 전체 검은 화면 페이드인 */
+    #inkOverlay {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      animation: inkOverlayIn 0.9s ease 4.2s forwards;
+    }
+    @keyframes inkOverlayIn {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* 텍스트 레이어 */
+    #introText {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      pointer-events: none;
+    }
+
+    #introEmoji {
+      font-size: 3rem;
+      opacity: 0;
+      transform: scale(0.3);
+      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 5.0s forwards;
+    }
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(0.3); }
+      100% { opacity: 1; transform: scale(1);   }
+    }
+
+    #introTitle {
+      font-size: 2.0rem;
+      font-weight: 900;
+      color: #fff;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.1);
+      animation: titleGrow 1.2s cubic-bezier(0.16,1,0.3,1) 5.2s forwards;
+      text-shadow: 0 0 40px rgba(100,200,255,0.8),
+                   0 0 80px rgba(100,200,255,0.4);
+    }
+    @keyframes titleGrow {
+      0%   { opacity: 0; transform: scale(0.1);  }
+      50%  { opacity: 1; transform: scale(1.08); }
+      70%  { transform: scale(0.97); }
+      85%  { transform: scale(1.02); }
+      100% { opacity: 1; transform: scale(1);    }
+    }
+
+    #introDivider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(100,200,255,0.7), transparent);
+      opacity: 0;
+      animation: slideUp 0.8s ease 6.2s forwards;
+    }
+
+    #introSub {
+      font-size: 1.0rem;
+      color: rgba(150,220,255,0.9);
+      letter-spacing: 2px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: slideUp 0.8s ease 6.0s forwards;
+    }
+
+    #introDesc {
+      font-size: 0.82rem;
+      color: rgba(200,230,255,0.65);
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: slideUp 0.8s ease 6.4s forwards;
+    }
+
+    @keyframes slideUp {
+      0%   { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* 인트로 종료 페이드아웃 */
+    #introOutro {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.7s ease;
+    }
+
+    /* 스킵 버튼 */
+    #skipBtn {
+      position: absolute;
+      bottom: 36px;
+      right: 20px;
+      z-index: 20;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+
+    /* 진행 바 */
+    #introProgress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #1a1a2e, #48cae4, #90e0ef);
+      z-index: 20;
+      width: 0%;
+      animation: progressAnim 7.5s linear forwards;
+      border-radius: 0 2px 2px 0;
+    }
+    @keyframes progressAnim {
+      0%   { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* ════════════════════════════════
+       메인 화면
+    ════════════════════════════════ */
+    #mainScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-image: url('shark2.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    #mainOverlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    #mainContent {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+    }
+
+    .main-title {
+      text-align: center;
+      margin-bottom: 52px;
+      margin-top: -500px;
+    }
+
+
+
+    .main-title h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.8),
+                   0 0 40px rgba(100,200,255,0.5);
+      letter-spacing: -0.5px;
+    }
+    .main-title p {
+      font-size: 0.85rem;
+      color: rgba(200,230,255,0.8);
+      margin-top: 8px;
+      letter-spacing: 1.5px;
+    }
+
+    .gps-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .menu-wrap {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .main-tabs {
+      display: flex;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .main-tab {
+      flex: 1;
+      padding: 12px 0;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tab.active {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .keyword-input-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .keyword-input-wrap input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .keyword-input-wrap input::placeholder { color: rgba(255,255,255,0.5); }
+    .keyword-input-wrap button {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .photo-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .photo-btn {
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .location-wrap {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .location-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .location-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 10px;
+    }
+    .location-region {
+      font-size: 0.95rem;
+      color: #fff;
+      margin-top: 14px;
+      font-weight: 600;
+    }
+
+    .menu-btn {
+      flex: 1;
+      padding: 28px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      backdrop-filter: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      text-align: center;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .menu-icon {
+      font-size: 2.4rem;
+    }
+
+
+
+    .menu-text h2 { font-size: 1rem; font-weight: 800; color: #fff; }
+    .menu-text p  { font-size: 0.72rem; color: rgba(255,255,255,0.72); margin-top: 3px; }
+    .menu-arrow  { display: none; }
+
+
+    /* 탭 CSS 삭제 */
+
+
+    /* ════════════════════════════════
+       검색 화면
+    ════════════════════════════════ */
+    #searchScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: #f0f4f8;
+      overflow-y: auto;
+      animation: slideUpAnim 0.3s ease;
+    }
+    @keyframes slideUpAnim {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+
+    .search-header {
+      background: linear-gradient(135deg, #0077b6, #2d6a4f);
+      color: white;
+      padding: 20px 16px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .search-header h2 { font-size: 1.1rem; font-weight: 700; }
+    .search-header p  { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
+
+    .search-body {
+      padding: 20px 16px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .photo-area {
+      background: #fff;
+      border: 2px dashed #c8d6e0;
+      border-radius: 16px;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 14px;
+      cursor: pointer;
+    }
+    .photo-placeholder { text-align: center; padding: 24px; }
+    .photo-placeholder .ph-icon { font-size: 3rem; }
+    .photo-placeholder p {
+      font-size: 0.85rem; color: #888;
+      margin-top: 8px; line-height: 1.5;
+    }
+    #previewImg { width: 100%; max-height: 260px; object-fit: cover; }
+
+    .btn-row { display: flex; gap: 8px; }
+    .btn {
+      flex: 1;
+      padding: 13px 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-outline {
+      background: #f0f4f8;
+      border: 2px solid #dde;
+      color: #444;
+    }
+    .btn-primary { background: #0077b6; color: white; flex: 1.3; }
+    .btn-primary:disabled { background: #b0c4d8; cursor: not-allowed; }
+    .btn-primary:hover:not(:disabled) { background: #005f92; }
+
+    .keyword-wrap { display: flex; gap: 8px; margin-bottom: 16px; }
+    .keyword-wrap input {
+      flex: 1; padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 0.95rem; outline: none;
+    }
+    .keyword-wrap input:focus { border-color: #0077b6; }
+
+    .quick-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag-label { font-size: 0.78rem; color: #888; width: 100%; }
+    .quick-tag {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid #dde;
+      background: white;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-tag[data-type="sea"]:hover {
+      border-color: #0077b6; color: #0077b6; background: #e0f4ff;
+    }
+    .quick-tag[data-type="fresh"]:hover {
+      border-color: #2d6a4f; color: #2d6a4f; background: #d8f3dc;
+    }
+
+    /* ════════════════════════════════
+       로딩
+    ════════════════════════════════ */
+    #loadingOverlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 500;
+    }
+    .loading-box {
+      background: white; border-radius: 20px;
+      padding: 32px 28px; text-align: center; width: 280px;
+    }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #0077b6;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-box p { font-size: 0.95rem; font-weight: 600; }
+    .loading-sub   { font-size: 0.78rem; color: #888; margin-top: 6px; }
+
+    /* ════════════════════════════════
+       결과 모달
+    ════════════════════════════════ */
+    #resultOverlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: flex-end; justify-content: center;
+      z-index: 600;
+    }
+    .result-modal {
+      background: white;
+      border-radius: 24px 24px 0 0;
+      padding: 24px 20px 40px;
+      width: 100%; max-width: 480px;
+      max-height: 90vh; overflow-y: auto;
+      position: relative;
+      animation: slideUpAnim 0.3s ease;
+    }
+    .close-btn {
+      position: absolute; top: 16px; right: 16px;
+      background: #f0f4f8; border: none;
+      border-radius: 50%; width: 34px; height: 34px;
+      font-size: 1rem; cursor: pointer;
+    }
+    .status-badge-wrap { text-align: center; margin-bottom: 16px; }
+    .status-badge {
+      display: inline-block;
+      padding: 8px 24px; border-radius: 20px;
+      font-size: 1rem; font-weight: 700;
+    }
+    .status-badge.danger  { background: #ffe5e7; color: #e63946; }
+    .status-badge.safe    { background: #e6faea; color: #1a7a32; }
+    .status-badge.caution { background: #fff3e0; color: #b05e00; }
+
+    .fish-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 16px;
+    }
+    .fish-header h2  { font-size: 1.4rem; font-weight: 800; }
+    .scientific-name { font-size: 0.8rem; color: #888; font-style: italic; margin-top: 2px; }
+    .water-badge {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 12px; font-size: 0.75rem;
+      font-weight: 600; margin-top: 6px;
+    }
+    .water-badge.sea   { background: #e0f4ff; color: #0077b6; }
+    .water-badge.fresh { background: #d8f3dc; color: #2d6a4f; }
+    .confidence-wrap { text-align: center; }
+    .confidence { font-size: 1.6rem; font-weight: 800; color: #0077b6; }
+    .confidence-wrap small { display: block; font-size: 0.72rem; color: #888; }
+
+    .regulation-cards {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 14px;
+    }
+    .reg-card {
+      background: #f0f4f8; border-radius: 12px;
+      padding: 14px; text-align: center;
+    }
+    .reg-icon  { font-size: 1.5rem; margin-bottom: 4px; }
+    .reg-label { font-size: 0.75rem; color: #888; font-weight: 600; margin-bottom: 4px; }
+    .reg-value { font-size: 0.88rem; font-weight: 700; }
+    .reg-value.none   { color: #2dc653; }
+    .reg-value.active { color: #e63946; }
+
+    .region-note {
+      background: #fff3e0; border-radius: 10px;
+      padding: 10px 14px; font-size: 0.82rem;
+      margin-bottom: 14px; display: flex; gap: 8px;
+    }
+    .fish-info { margin-bottom: 16px; }
+    .info-row {
+      display: flex; gap: 12px;
+      padding: 8px 0; border-bottom: 1px solid #f0f0f0;
+      font-size: 0.88rem;
+    }
+    .info-label { min-width: 52px; color: #888; font-weight: 600; }
+
+    .similar-section { margin-bottom: 16px; }
+    .similar-section h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; }
+    .similar-item {
+      background: #fff3e0; border-radius: 10px;
+      padding: 10px 14px; margin-bottom: 7px; font-size: 0.85rem;
+    }
+    .similar-name { font-weight: 700; margin-bottom: 3px; }
+    .similar-diff { color: #555; }
+
+    .warning-box {
+      background: #ffe5e7; border-radius: 10px;
+      padding: 12px 14px; font-size: 0.85rem;
+      color: #e63946; font-weight: 600; margin-bottom: 14px;
+    }
+    .disclaimer {
+      font-size: 0.76rem; color: #888; line-height: 1.6;
+      padding: 12px; background: #f0f4f8;
+      border-radius: 10px; text-align: center;
+    }
+    .disclaimer a { color: #0077b6; }
+
+    #errorToast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%);
+      background: #333; color: white;
+      padding: 12px 24px; border-radius: 24px;
+      font-size: 0.88rem; z-index: 999;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (min-width: 480px) {
+      .result-modal { border-radius: 24px; margin: auto; }
+      #resultOverlay { align-items: center; }
+    }
+/* ── 모바일/PC 공통 배경 수정 ── */
+#mainBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* 이미지 상단 기준으로 맞춤 */
+}
+
+/* ── 모바일 주소창 vh 문제 해결 ── */
+#mainScreen {
+  height: 100dvh; /* dvh = 실제 보이는 영역만 계산 */
+  min-height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* ── PC 화면 (768px 이상) ── */
+@media (min-width: 768px) {
+  .main-title h1 { font-size: 2.8rem; }
+  .menu-wrap { max-width: 400px; }
+  .menu-btn { padding: 26px 28px; }
+  .menu-icon { font-size: 2.6rem; }
+  .menu-text h2 { font-size: 1.3rem; }
+  #mainScreen { background-position: center center; }
+}
+
+
+/* ── 모바일 화면 (767px 이하) ── */
+@media (max-width: 767px) {
+  .main-title h1 { font-size: 1.8rem; }
+  .main-title { margin-bottom: 36px; }
+  .menu-wrap { max-width: 100%; padding: 0 8px; }
+  .menu-btn { padding: 18px 18px; }
+  .menu-icon { font-size: 2rem; }
+  .menu-text h2 { font-size: 1rem; }
+  .menu-text p { font-size: .72rem; }
+  #mainScreen { background-position: center 30%; }
+}
+
+
+/* ── 아주 작은 화면 (375px 이하, 구형 아이폰 등) ── */
+@media (max-width: 375px) {
+  .main-title h1 { font-size: 1.5rem; }
+  .menu-btn { padding: 15px 14px; gap: 12px; }
+  .menu-icon { font-size: 1.7rem; }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       1. 인트로 화면 (갑오징어 먹물 효과)
+  ════════════════════════════════════════ -->
+  <div id="introScreen">
+
+    <!-- 낚시 사진 -->
+    <img id="introImg"
+      src="squid_lady.png"
+      alt="갑오징어 낚시"
+    />
+
+    <!-- 갑오징어 강조 비네팅 -->
+    <div id="squidFocus"></div>
+
+    <!-- 먹물 SVG 레이어 -->
+    <svg id="inkCanvas" viewBox="0 0 100 100" preserveAspectRatio="none"
+         xmlns="http://www.w3.org/2000/svg">
+
+      <!-- 먹물 번짐: 갑오징어 위치(중앙 40%) 기준으로 퍼짐 -->
+      <!-- 메인 먹물 덩어리 -->
+      <ellipse class="ink-blob" cx="48" cy="42" rx="22" ry="18"
+        fill="#0a0a0a"
+        style="--dur:1.1s; --delay:2.0s; --ox:48%; --oy:42%;" />
+
+      <ellipse class="ink-blob" cx="52" cy="38" rx="18" ry="14"
+        fill="#050505"
+        style="--dur:0.9s; --delay:2.2s; --ox:52%; --oy:38%;" />
+
+      <!-- 먹물이 흘러내리는 방울들 -->
+      <ellipse class="ink-blob" cx="44" cy="55" rx="12" ry="16"
+        fill="#080808"
+        style="--dur:1.0s; --delay:2.4s; --ox:44%; --oy:55%;" />
+
+      <ellipse class="ink-blob" cx="56" cy="58" rx="10" ry="13"
+        fill="#060606"
+        style="--dur:0.9s; --delay:2.5s; --ox:56%; --oy:58%;" />
+
+      <!-- 먹물 확장 -->
+      <ellipse class="ink-blob" cx="35" cy="45" rx="20" ry="15"
+        fill="#0c0c0c"
+        style="--dur:1.2s; --delay:2.6s; --ox:35%; --oy:45%;" />
+
+      <ellipse class="ink-blob" cx="62" cy="44" rx="19" ry="14"
+        fill="#0a0a0a"
+        style="--dur:1.1s; --delay:2.7s; --ox:62%; --oy:44%;" />
+
+      <ellipse class="ink-blob" cx="48" cy="65" rx="22" ry="18"
+        fill="#080808"
+        style="--dur:1.2s; --delay:2.8s; --ox:48%; --oy:65%;" />
+
+      <!-- 상단으로 번짐 -->
+      <ellipse class="ink-blob" cx="45" cy="28" rx="18" ry="14"
+        fill="#0a0a0a"
+        style="--dur:1.0s; --delay:2.9s; --ox:45%; --oy:28%;" />
+
+      <ellipse class="ink-blob" cx="58" cy="25" rx="16" ry="12"
+        fill="#080808"
+        style="--dur:1.0s; --delay:3.0s; --ox:58%; --oy:25%;" />
+
+      <!-- 화면 전체 덮기 -->
+      <ellipse class="ink-blob" cx="20" cy="30" rx="30" ry="25"
+        fill="#111"
+        style="--dur:1.3s; --delay:3.1s; --ox:20%; --oy:30%;" />
+
+      <ellipse class="ink-blob" cx="75" cy="35" rx="30" ry="25"
+        fill="#111"
+        style="--dur:1.3s; --delay:3.2s; --ox:75%; --oy:35%;" />
+
+      <ellipse class="ink-blob" cx="48" cy="80" rx="35" ry="25"
+        fill="#0d0d0d"
+        style="--dur:1.4s; --delay:3.3s; --ox:48%; --oy:80%;" />
+
+      <ellipse class="ink-blob" cx="48" cy="10" rx="35" ry="20"
+        fill="#0d0d0d"
+        style="--dur:1.3s; --delay:3.4s; --ox:48%; --oy:10%;" />
+
+      <!-- 최종 전체 덮개 -->
+      <rect class="ink-blob" x="-5" y="-5" width="110" height="110"
+        fill="#000"
+        style="--dur:1.0s; --delay:3.8s; --ox:50%; --oy:50%;" />
+    </svg>
+
+    <!-- 검은화면 페이드인 -->
+    <div id="inkOverlay"></div>
+
+    <!-- 텍스트 -->
+    <div id="introText">
+      <div id="introEmoji">🦑</div>
+      <h1 id="introTitle">이게 잡아도 돼?</h1>
+      <div id="introDivider"></div>
+      <p id="introSub">바다 · 민물 통합</p>
+      <p id="introDesc">AI 실시간 어종 식별 및 규정 조회</p>
+    </div>
+
+    <div id="introOutro"></div>
+    <button id="skipBtn" onclick="closeIntro()">건너뛰기 ›</button>
+    <div id="introProgress"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       2. 메인 화면
+  ════════════════════════════════════════ -->
+  <div id="mainScreen">
+
+
+    <div id="mainOverlay"></div>
+
+    <div id="mainContent">
+           <div class="main-title">
+        <h1>이게 잡아도 돼?</h1>
+      </div>
+
+
+      <div class="menu-wrap">
+          <div class="main-tabs">
+            <button class="main-tab active" id="tabKeyword" onclick="switchMainTab('keyword')">키워드로 찾기</button>
+            <button class="main-tab" id="tabPhoto" onclick="switchMainTab('photo')">사진으로 찾기</button>
+            <button class="main-tab" id="tabLocation" onclick="switchMainTab('location')">현재 위치로 찾기</button>
+          </div>
+
+
+                   <!-- 키워드 입력 영역 (기본으로 보임) -->
+          <div class="main-tab-content" id="mainKeywordArea">
+            <div class="keyword-input-wrap">
+              <input type="text" id="keywordInput" placeholder="어종 이름 입력 (예: 광어, 붕어)" />
+              <button id="keywordBtn">검색</button>
+            </div>
+          </div>
+
+
+          <!-- 사진 업로드 영역 (처음엔 숨김) -->
+          <div class="main-tab-content" id="mainPhotoArea" style="display:none;">
+            <div class="photo-btns">
+              <label class="photo-btn" for="cameraInput">📷 카메라</label>
+              <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none"/>
+              <label class="photo-btn" for="galleryInput">🖼️ 갤러리</label>
+              <input type="file" id="galleryInput" accept="image/*" style="display:none"/>
+            </div>
+          <!-- 위치로 찾기 영역 (처음엔 숨김) -->
+          <div class="main-tab-content" id="mainLocationArea" style="display:none;">
+            <div class="location-wrap">
+              <button class="location-btn" id="locationSearchBtn" onclick="searchByLocation()">
+                📍 현재 위치로 검색
+              </button>
+              <p class="location-desc">내 주변 금어기 및 규정을 확인합니다</p>
+              <div id="locationResult" style="display:none;">
+                <p class="location-region">📌 <span id="locationRegionText"></span></p>
+              </div>
+            </div>
+          </div>
+
+            <div id="photoPreviewWrap" style="display:none; margin-top:12px; text-align:center;">
+              <img id="previewImg" style="max-width:100%; max-height:200px; border-radius:12px;"/>
+              <br/>
+              <button id="analyzeBtn" style="margin-top:12px;" disabled>AI 분석하기</button>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- ════════════════════════════════════════
+       검색 화면
+  ════════════════════════════════════════ -->
+  <div id="searchScreen">
+    <div class="search-header">
+      <button class="back-btn" onclick="closeSearch()">‹</button>
+      <div>
+        <h2 id="searchTitle">검색</h2>
+        <p id="searchSubtitle">어종을 검색하세요</p>
+      </div>
+    </div>
+    <div class="search-body">
+      <div id="photoArea_wrap">
+        <div class="photo-area" id="photoArea"
+             onclick="document.getElementById('galleryInput').click()">
+          <div class="photo-placeholder" id="photoPlaceholder">
+            <div class="ph-icon">🐟</div>
+            <p>사진을 선택하거나<br/>카메라로 촬영하세요</p>
+          </div>
+          <img id="previewImg" class="hidden" alt="미리보기" />
+        </div>
+        <div class="btn-row">
+          <label class="btn btn-outline" for="cameraInput">
+            📸 카메라
+            <input type="file" id="cameraInput" accept="image/*"
+                   capture="environment" class="hidden" />
+          </label>
+          <label class="btn btn-outline" for="galleryInput">
+            🖼️ 갤러리
+            <input type="file" id="galleryInput" accept="image/*" class="hidden" />
+          </label>
+          <button class="btn btn-primary" id="analyzeBtn" disabled>🔍 분석</button>
+        </div>
+      </div>
+
+      <div id="keywordArea_wrap" class="hidden">
+        <div class="keyword-wrap">
+          <input type="text" id="keywordInput"
+                 placeholder="예: 감성돔, 쏘가리, 은어..."
+                 autocomplete="off" />
+          <button class="btn btn-primary" id="keywordBtn"
+                  style="flex:0.6">검색</button>
+        </div>
+        <div class="quick-tags">
+          <span class="tag-label">자주 찾는 어종</span>
+          <button class="quick-tag" data-fish="감성돔"   data-type="sea">감성돔</button>
+          <button class="quick-tag" data-fish="넙치"     data-type="sea">넙치(광어)</button>
+          <button class="quick-tag" data-fish="조피볼락" data-type="sea">우럭</button>
+          <button class="quick-tag" data-fish="갈치"     data-type="sea">갈치</button>
+          <button class="quick-tag" data-fish="꽃게"     data-type="sea">꽃게</button>
+          <button class="quick-tag" data-fish="삼치"     data-type="sea">삼치</button>
+          <button class="quick-tag" data-fish="쏘가리"   data-type="fresh">쏘가리</button>
+          <button class="quick-tag" data-fish="은어"     data-type="fresh">은어</button>
+          <button class="quick-tag" data-fish="뱀장어"   data-type="fresh">뱀장어</button>
+          <button class="quick-tag" data-fish="연어"     data-type="fresh">연어</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 로딩 -->
+  <div id="loadingOverlay" class="hidden">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p id="loadingMsg">AI가 분석 중입니다...</p>
+      <p class="loading-sub" id="loadingSource"></p>
+    </div>
+  </div>
+
+  <!-- 결과 모달 -->
+  <div id="resultOverlay" class="hidden">
+    <div class="result-modal">
+      <button class="close-btn" id="closeResult">✕</button>
+      <div class="status-badge-wrap">
+        <span class="status-badge" id="statusBadge">확인 중</span>
+      </div>
+      <div class="fish-header">
+        <div class="fish-names">
+          <h2 id="resultFishName">—</h2>
+          <p id="resultScientificName" class="scientific-name">—</p>
+          <span id="resultWaterType" class="water-badge">—</span>
+        </div>
+        <div class="confidence-wrap">
+          <span id="resultConfidence" class="confidence">—</span>
+          <small>신뢰도</small>
+        </div>
+      </div>
+      <div class="regulation-cards">
+        <div class="reg-card">
+          <div class="reg-icon">🚫</div>
+          <div class="reg-label">금어기</div>
+          <div class="reg-value" id="closedSeasonValue">—</div>
+        </div>
+        <div class="reg-card">
+          <div class="reg-icon">📏</div>
+          <div class="reg-label">금지체장</div>
+          <div class="reg-value" id="minSizeValue">—</div>
+        </div>
+      </div>
+      <div class="region-note hidden" id="regionNote">
+        <span>⚠️</span>
+        <span id="regionNoteText"></span>
+      </div>
+      <div class="fish-info">
+        <div class="info-row">
+          <span class="info-label">서식지</span>
+          <span id="resultHabitat">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">제철</span>
+          <span id="resultSeason">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">특징</span>
+          <span id="resultDescription">—</span>
+        </div>
+      </div>
+      <div class="similar-section hidden" id="similarSection">
+        <h3>⚠️ 혼동하기 쉬운 유사어종</h3>
+        <div id="similarList"></div>
+      </div>
+      <div class="warning-box hidden" id="warningBox">
+        <span id="warningText"></span>
+      </div>
+      <div class="disclaimer">
+        ℹ️ AI 분석 결과는 참고용입니다. 정확한 규정은
+        <a href="https://www.mof.go.kr" target="_blank">해양수산부</a> 및
+        <a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a>에서 확인하세요.
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 -->
+  <div id="errorToast" class="hidden"></div>
+
+  <!-- ════════════════════════════════════════
+       스크립트
+  ════════════════════════════════════════ -->
+  <script>
+    /* ── 인트로 제어 ─────────────────────── */
+    const introTimer = setTimeout(closeIntro, 7500);
+
+    function closeIntro() {
+      clearTimeout(introTimer);
+      const intro = document.getElementById('introScreen');
+      const main  = document.getElementById('mainScreen');
+      intro.style.display  = 'none';
+      main.style.display   = 'block';
+      main.style.position  = 'fixed';
+      main.style.inset     = '0';
+      main.style.width     = '100%';
+      main.style.height    = '100%';
+    }
+
+    // 이미지 로드 실패 시 즉시 메인화면으로
+    document.getElementById('introImg').onerror = closeIntro;
+
+    // 이미지 로드 성공 시 7.5초 후 메인화면으로
+    document.getElementById('introImg').onload = () => {
+      if (navigator.vibrate) navigator.vibrate([30, 50, 80]);
+    };
+
+
+    /* ── GPS (검색 시점에만 호출) ────────── */
+    window.userRegion = null;
+
+    function requestGPSOnce() {
+      return new Promise((resolve) => {
+        if (window.userRegion) { resolve(); return; }
+        if (!navigator.geolocation) { resolve(); return; }
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            window.userRegion = getRegion(pos.coords.latitude, pos.coords.longitude);
+            resolve();
+          },
+          () => { resolve(); },
+          { timeout: 8000 }
+        );
+      });
+    }
+
+
+    function getRegion(lat, lon) {
+      if (lat >= 33.0 && lat <= 34.0 && lon >= 126.0 && lon <= 127.0) return '제주특별자치도';
+      if (lat >= 37.8 && lon >= 127.0 && lon < 129.5) return '강원도';
+      if (lat >= 37.0 && lon >= 129.0) return '경상북도';
+      if (lat >= 35.5 && lat < 37.0 && lon >= 129.0) return '경상남도';
+      if (lat >= 35.0 && lat < 37.0 && lon >= 126.5 && lon < 129.0) return '전라남도';
+      if (lat >= 35.7 && lat < 37.0 && lon >= 126.0 && lon < 127.5) return '전라북도';
+      if (lat >= 36.5 && lat < 37.8 && lon >= 126.0 && lon < 127.5) return '충청남도';
+      if (lat >= 36.5 && lat < 37.8 && lon >= 127.5 && lon < 129.0) return '충청북도';
+      if (lat >= 37.5 && lon >= 126.7 && lon < 127.2) return '서울·인천';
+      if (lat >= 37.0 && lat < 38.3 && lon >= 126.0 && lon < 127.5) return '경기도';
+      return '전국';
+    }
+
+    /* ── 탭 ──────────────────────────────── */
+    /* ── 탭 삭제, 기본값 전체로 고정 ── */
+    let currentWaterType = 'all';
+
+
+    /* ── 검색 화면 ───────────────────────── */
+    function openSearch(mode) {
+      const photoWrap   = document.getElementById('photoArea_wrap');
+      const keywordWrap = document.getElementById('keywordArea_wrap');
+      const title       = document.getElementById('searchTitle');
+      const subtitle    = document.getElementById('searchSubtitle');
+
+      if (mode === 'photo') {
+        photoWrap.classList.remove('hidden');
+        keywordWrap.classList.add('hidden');
+        title.textContent    = '📷 사진으로 찾기';
+        subtitle.textContent = '물고기 사진을 찍거나 선택하세요';
+      } else {
+        photoWrap.classList.add('hidden');
+        keywordWrap.classList.remove('hidden');
+        title.textContent    = '🔤 키워드로 찾기';
+        subtitle.textContent = '어종 이름을 입력하세요';
+        setTimeout(() => document.getElementById('keywordInput').focus(), 300);
+      }
+      document.getElementById('searchScreen').style.display = 'block';
+    }
+
+    function closeSearch() {
+      document.getElementById('searchScreen').style.display = 'none';
+    }
+
+    /* ── 사진 선택 ───────────────────────── */
+    let currentImageBase64 = null;
+
+    function handleImage(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        currentImageBase64 = e.target.result.split(',')[1];
+        const preview     = document.getElementById('previewImg');
+        const placeholder = document.getElementById('photoPlaceholder');
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        document.getElementById('analyzeBtn').disabled = false;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById('cameraInput').addEventListener('change',
+      (e) => handleImage(e.target.files[0]));
+    document.getElementById('galleryInput').addEventListener('change',
+      (e) => handleImage(e.target.files[0]));
+    document.getElementById('analyzeBtn').addEventListener('click', () => {
+      if (currentImageBase64)
+        callAPI({ imageBase64: currentImageBase64, waterType: currentWaterType });
+    });
+
+    /* ── 키워드 검색 ─────────────────────── */
+    function doSearch() {
+      const kw = document.getElementById('keywordInput').value.trim();
+      if (!kw) { showToast('어종 이름을 입력해주세요.'); return; }
+      callAPI({ fishName: kw, waterType: currentWaterType });
+    }
+
+    document.getElementById('keywordBtn').addEventListener('click', doSearch);
+    document.getElementById('keywordInput').addEventListener('keypress',
+      (e) => { if (e.key === 'Enter') doSearch(); });
+
+    document.querySelectorAll('.quick-tag').forEach((tag) => {
+      tag.addEventListener('click', () => {
+        document.getElementById('keywordInput').value = tag.dataset.fish;
+        callAPI({ fishName: tag.dataset.fish, waterType: tag.dataset.type });
+      });
+    });
+
+    /* ── 세션 캐시 ───────────────────────── */
+    const CACHE_KEY = 'fishCache_' + new Date().toDateString();
+    function getCache(k) {
+      try { return JSON.parse(sessionStorage.getItem(CACHE_KEY) || '{}')[k] || null; }
+      catch { return null; }
+    }
+    function setCache(k, v) {
+      try {
+        const s = JSON.parse(sessionStorage.getItem(CACHE_KEY) || '{}');
+        s[k] = v;
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify(s));
+      } catch {}
+    }
+
+    /* ── API 호출 ────────────────────────── */
+    const TODAY = new Date().toLocaleDateString('ko-KR', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+    function switchMainTab(mode) {
+      document.getElementById('mainKeywordArea').style.display  = mode === 'keyword'  ? 'block' : 'none';
+      document.getElementById('mainPhotoArea').style.display    = mode === 'photo'    ? 'block' : 'none';
+      document.getElementById('mainLocationArea').style.display = mode === 'location' ? 'block' : 'none';
+      document.getElementById('tabKeyword').classList.toggle('active',  mode === 'keyword');
+      document.getElementById('tabPhoto').classList.toggle('active',    mode === 'photo');
+      document.getElementById('tabLocation').classList.toggle('active', mode === 'location');
+
+      // 위치 탭 선택 시에만 위치 권한 요청
+      if (mode === 'location') requestGPSOnce();
+    }
+
+    function searchByLocation() {
+      if (!window.userRegion) {
+        showToast('위치를 확인 중입니다. 잠시 후 다시 눌러주세요.');
+        return;
+      }
+      document.getElementById('locationRegionText').textContent = window.userRegion;
+      document.getElementById('locationResult').style.display = 'block';
+      callAPI({ fishName: '전체', waterType: 'all', region: window.userRegion });
+    }
+
+    async function callAPI(payload) {
+
+      if (payload.fishName && !payload.imageBase64) {
+
+        const ck = `${payload.fishName}_${payload.waterType}_${window.userRegion || 'all'}`;
+        const cached = getCache(ck);
+        if (cached) { showResult(cached); return; }
+      }
+
+      showLoading(true,
+        payload.imageBase64 ? 'AI가 어종을 분석 중...' : 'AI가 규정을 조회 중...',
+        payload.imageBase64
+          ? '📷 Fishial → iNaturalist → Gemini 순서로 시도'
+          : '🔤 Gemini AI 조회 중'
+      );
+
+      try {
+        const res = await fetch('/api/identify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...payload,
+            region: window.userRegion,
+            today: TODAY,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || '서버 오류');
+
+        if (payload.fishName && !payload.imageBase64) {
+          const ck = `${payload.fishName}_${payload.waterType}_${window.userRegion || 'all'}`;
+          setCache(ck, data);
+        }
+        showResult(data);
+      } catch (err) {
+        showLoading(false);
+        showToast('❌ ' + (err.message || '네트워크 오류'));
+      }
+    }
+
+    /* ── 결과 표시 ───────────────────────── */
+    function showResult(data) {
+      showLoading(false);
+
+      const badge = document.getElementById('statusBadge');
+      if (data.closedSeasonActive) {
+        badge.textContent = '🚫 지금은 금어기입니다';
+        badge.className   = 'status-badge danger';
+      } else if (data.todayStatus === '체장확인필요') {
+        badge.textContent = '📏 체장을 확인하세요';
+        badge.className   = 'status-badge caution';
+      } else {
+        badge.textContent = '✅ 포획 가능합니다';
+        badge.className   = 'status-badge safe';
+      }
+
+      document.getElementById('resultFishName').textContent       = data.fishName || '—';
+      document.getElementById('resultScientificName').textContent  = data.scientificName || '';
+
+      const wb = document.getElementById('resultWaterType');
+      wb.textContent = data.waterType === 'fresh' ? '🏞️ 민물' : '🌊 바다';
+      wb.className   = 'water-badge ' + (data.waterType === 'fresh' ? 'fresh' : 'sea');
+
+      document.getElementById('resultConfidence').textContent =
+        data.confidence ? data.confidence + '%' : '—';
+
+      const csv = document.getElementById('closedSeasonValue');
+      csv.textContent = data.closedSeason || '금어기 없음';
+      csv.className   = 'reg-value' +
+        (data.closedSeason ? (data.closedSeasonActive ? ' active' : '') : ' none');
+
+      const msv = document.getElementById('minSizeValue');
+      msv.textContent = data.minSize
+        ? data.minSize + (data.minSizeUnit ? ' (' + data.minSizeUnit + ')' : '')
+        : '제한 없음';
+      msv.className = 'reg-value' + (data.minSize ? '' : ' none');
+
+      const rn = document.getElementById('regionNote');
+      if (data.regionNote) {
+        document.getElementById('regionNoteText').textContent = data.regionNote;
+        rn.classList.remove('hidden');
+      } else {
+        rn.classList.add('hidden');
+      }
+
+      document.getElementById('resultHabitat').textContent     = data.habitat || '—';
+      document.getElementById('resultSeason').textContent      = data.season || '—';
+      document.getElementById('resultDescription').textContent = data.description || '—';
+
+      const ss = document.getElementById('similarSection');
+      const sl = document.getElementById('similarList');
+      sl.innerHTML = '';
+      if (data.similarFish && data.similarFish.length > 0) {
+        ss.classList.remove('hidden');
+        data.similarFish.forEach((sf) => {
+          const d = document.createElement('div');
+          d.className = 'similar-item';
+          d.innerHTML = `<div class="similar-name">🐟 ${sf.name}</div>
+                         <div class="similar-diff">${sf.difference}</div>`;
+          sl.appendChild(d);
+        });
+      } else {
+        ss.classList.add('hidden');
+      }
+
+      const wb2 = document.getElementById('warningBox');
+      if (data.warning) {
+        document.getElementById('warningText').textContent = '⚠️ ' + data.warning;
+        wb2.classList.remove('hidden');
+      } else {
+        wb2.classList.add('hidden');
+      }
+
+      document.getElementById('resultOverlay').classList.remove('hidden');
+    }
+
+    document.getElementById('closeResult').addEventListener('click', () => {
+      document.getElementById('resultOverlay').classList.add('hidden');
+    });
+    document.getElementById('resultOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'resultOverlay')
+        document.getElementById('resultOverlay').classList.add('hidden');
+    });
+
+    /* ── 로딩 ────────────────────────────── */
+    function showLoading(show, msg = '', sub = '') {
+      const el = document.getElementById('loadingOverlay');
+      if (show) {
+        document.getElementById('loadingMsg').textContent    = msg;
+        document.getElementById('loadingSource').textContent = sub;
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
+    }
+
+    /* ── 토스트 ──────────────────────────── */
+    function showToast(msg) {
+      const t = document.getElementById('errorToast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 3500);
+    }
+  </script>
+
+</body>
+</html>
