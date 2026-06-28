@@ -120,10 +120,11 @@ async function identifyWithINaturalist(imageBase64) {
 // ── 3·4순위: Gemini (식별 + 금어기/금지체장 통합 조회) ─────────────────────
 // 모델 우선순위: gemini-2.5-flash-lite → gemini-2.5-flash → gemini-2.0-flash
 const GEMINI_MODELS = [
-  'gemini-2.5-flash-lite-preview-06-17',
   'gemini-2.5-flash',
   'gemini-2.0-flash',
+  'gemini-1.5-flash',
 ];
+
 
 async function callGemini(apiKey, model, prompt, imageBase64 = null) {
   const parts = [];
