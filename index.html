@@ -584,21 +584,21 @@
        결과 모달
     ════════════════════════════════ */
     #resultOverlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: flex;
-      align-items: flex-end; justify-content: center;
-      z-index: 600;
+      position: relative;
+      width: 100%;
+      z-index: 3;
+      display: none;
     }
+
     .result-modal {
-      background: white;
-      border-radius: 24px 24px 0 0;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
       padding: 24px 20px 40px;
       width: 100%; max-width: 480px;
-      max-height: 90vh; overflow-y: auto;
       position: relative;
-      animation: slideUpAnim 0.3s ease;
+      margin-top: 16px;
     }
+
     .close-btn {
       position: absolute; top: 16px; right: 16px;
       background: #f0f4f8; border: none;
@@ -791,7 +791,9 @@ body {
               <label class="photo-btn" for="galleryInput">🖼️ 갤러리</label>
               <input type="file" id="galleryInput" accept="image/*" style="display:none"/>
             </div>
+          </div>
           <!-- 위치로 찾기 영역 (처음엔 숨김) -->
+
           <div class="main-tab-content" id="mainLocationArea" style="display:none;">
             <div class="location-wrap">
               <button class="location-btn" id="locationSearchBtn" onclick="searchByLocation()">
@@ -1224,16 +1226,19 @@ body {
         wb2.classList.add('hidden');
       }
 
-      document.getElementById('resultOverlay').classList.remove('hidden');
+            const ro = document.getElementById('resultOverlay');
+      ro.classList.remove('hidden');
+      ro.style.display = 'block';
+      ro.scrollIntoView({ behavior: 'smooth' });
+
     }
 
     document.getElementById('closeResult').addEventListener('click', () => {
-      document.getElementById('resultOverlay').classList.add('hidden');
+      const ro = document.getElementById('resultOverlay');
+      ro.classList.add('hidden');
+      ro.style.display = 'none';
     });
-    document.getElementById('resultOverlay').addEventListener('click', (e) => {
-      if (e.target.id === 'resultOverlay')
-        document.getElementById('resultOverlay').classList.add('hidden');
-    });
+
 
     /* ── 로딩 ────────────────────────────── */
     function showLoading(show, msg = '', sub = '') {
