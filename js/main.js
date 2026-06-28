@@ -270,7 +270,11 @@
     }
 
     // 모달 열기
-    document.getElementById('resultOverlay').classList.remove('hidden');
+       const ro = document.getElementById('resultOverlay');
+      ro.classList.remove('hidden');
+      ro.style.display = 'block';
+      ro.scrollIntoView({ behavior: 'smooth' });
+
   }
 
   // ── 모달 닫기 ────────────────────────────────────────────────────────────
