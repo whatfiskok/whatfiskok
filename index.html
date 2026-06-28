@@ -1120,11 +1120,12 @@ body {
       }
 
       showLoading(true,
-        payload.imageBase64 ? 'AI가 어종을 분석 중...' : 'AI가 규정을 조회 중...',
+        payload.imageBase64 ? 'AI가 어종을 분석 중...' : '오늘도 열심히 조회 중....',
         payload.imageBase64
           ? '📷 Fishial → iNaturalist → Gemini 순서로 시도'
-          : '🔤 Gemini AI 조회 중'
+          : '잠시만요....'
       );
+
 
       try {
         const res = await fetch('/api/identify', {
