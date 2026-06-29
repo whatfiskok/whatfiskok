@@ -178,11 +178,32 @@
   }
 
   // ── 결과 표시 ────────────────────────────────────────────────────────────
-  function showResult(data) {
+function showResult(data) {
     showLoading(false);
+
+    // 어종 사진 (Wikipedia API)
+    const fishPhoto = document.getElementById('fishPhoto');
+    const fishPhotoImg = document.getElementById('fishPhotoImg');
+    fishPhoto.classList.add('hidden');
+    fishPhotoImg.src = '';
+
+    if (data.fishName) {
+      fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
+        .then(r => r.json())
+        .then(json => {
+          const pages = json.query.pages;
+          const page = Object.values(pages)[0];
+          if (page.thumbnail && page.thumbnail.source) {
+            fishPhotoImg.src = page.thumbnail.source;
+            fishPhoto.classList.remove('hidden');
+          }
+        })
+        .catch(() => {});
+    }
 
     // 상태 배지
     const badge = document.getElementById('statusBadge');
+
     if (data.closedSeasonActive) {
       badge.textContent = '🚫 지금은 금어기입니다';
       badge.className = 'status-badge danger';
