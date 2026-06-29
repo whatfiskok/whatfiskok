@@ -34,16 +34,39 @@ function isClosedSeason(mm, dd, closedSeasonStr) {
 function lookupFishDB(name) {
   if (!name) return null;
   const normalized = name.trim();
-  // 직접 매칭
-  if (FISH_DB[normalized]) return { ...FISH_DB[normalized], fishName: normalized, source: 'db' };
-  // 별칭 매칭
-  for (const [key, val] of Object.entries(FISH_DB)) {
-    if (val.aliases && val.aliases.includes(normalized)) {
-      return { ...val, fishName: key, source: 'db' };
+
+  let entry = null;
+  let fishName = null;
+
+  if (FISH_DB[normalized]) {
+    entry = FISH_DB[normalized];
+    fishName = normalized;
+  } else {
+    for (const [key, val] of Object.entries(FISH_DB)) {
+      if (val.aliases && val.aliases.includes(normalized)) {
+        entry = val;
+        fishName = key;
+        break;
+      }
     }
   }
-  return null;
+
+  if (!entry) return null;
+
+  // 오늘 날짜 기준 금어기 여부 동적 계산
+  const now = new Date();
+  const mm = now.getMonth() + 1;
+  const dd = now.getDate();
+  const active = entry.closedSeason ? isClosedSeason(mm, dd, entry.closedSeason) : false;
+
+  return {
+    ...entry,
+    fishName,
+    closedSeasonActive: active,
+    source: 'db'
+  };
 }
+
 
 
 
