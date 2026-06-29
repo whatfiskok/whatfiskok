@@ -198,10 +198,11 @@ function showResult(data) {
         .then(json => {
           const pages = json.query.pages;
           const page = Object.values(pages)[0];
-          if (page.thumbnail && page.thumbnail.source) {
-            fishPhotoImg.src = page.thumbnail.source;
-            fishPhoto.classList.remove('hidden');
-          }
+if (page.thumbnail && page.thumbnail.source) {
+  fishPhotoImg.src = page.thumbnail.source;
+  fishPhoto.style.display = 'block';
+}
+
         })
         .catch(() => {});
     }
