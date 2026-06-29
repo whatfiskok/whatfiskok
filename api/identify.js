@@ -12,10 +12,13 @@ const fs   = require('fs');
 let FISH_DB = {};
 try {
   const dbPath = path.join(process.cwd(), 'data', 'fishDB.json');
+  console.log('[FISH_DB] 경로:', dbPath);
   FISH_DB = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+  console.log('[FISH_DB] 로드 성공, 어종 수:', Object.keys(FISH_DB).length);
 } catch (e) {
   console.error('[FISH_DB] fishDB.json 로드 실패:', e.message);
 }
+
 
 function isClosedSeason(mm, dd, closedSeasonStr) {
   if (!closedSeasonStr) return false;
