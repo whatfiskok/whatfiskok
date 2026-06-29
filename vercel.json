@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "api/identify.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["data/fishDB.json"]
+      }
     },
     {
       "src": "*.html",
