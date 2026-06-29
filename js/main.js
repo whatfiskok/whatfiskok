@@ -181,6 +181,11 @@
 function showResult(data) {
     showLoading(false);
 
+    // 모달 먼저 열기
+    const ro = document.getElementById('resultOverlay');
+    ro.classList.remove('hidden');
+    ro.style.display = 'flex';
+
     // 어종 사진 (Wikipedia API)
     const fishPhoto = document.getElementById('fishPhoto');
     const fishPhotoImg = document.getElementById('fishPhotoImg');
@@ -200,6 +205,7 @@ function showResult(data) {
         })
         .catch(() => {});
     }
+
 
     // 상태 배지
     const badge = document.getElementById('statusBadge');
@@ -289,12 +295,6 @@ function showResult(data) {
     } else {
       warningBox.classList.add('hidden');
     }
-
-    // 모달 열기
-       const ro = document.getElementById('resultOverlay');
-      ro.classList.remove('hidden');
-      ro.style.display = 'block';
-      ro.scrollIntoView({ behavior: 'smooth' });
 
   }
 
