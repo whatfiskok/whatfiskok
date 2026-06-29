@@ -375,9 +375,16 @@
         <div id="resultOverlay">
           <div class="result-modal">
             <button class="close-btn" id="closeResult">✕</button>
-            <div class="status-badge-wrap">
-              <span class="status-badge" id="statusBadge">확인 중</span>
-            </div>
+<!-- 어종 실사 사진 -->
+<div id="fishPhoto" class="hidden" style="margin-bottom:14px;">
+  <img id="fishPhotoImg" src="" alt="어종 사진"
+    style="width:100%; max-height:200px; object-fit:cover; border-radius:12px;">
+</div>
+
+<div class="status-badge-wrap">
+  <span class="status-badge" id="statusBadge">확인 중</span>
+</div>
+
             <div class="fish-header">
               <div class="fish-names">
                 <h2 id="resultFishName">—</h2>
