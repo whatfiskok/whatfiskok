@@ -5,15 +5,15 @@
   'use strict';
 
   // ── 상태 ────────────────────────────────────────────────────────────────
-  let currentWaterType = 'all';   // 'all' | 'sea' | 'fresh'
+  let currentWaterType = 'all';
   let currentImageBase64 = null;
-  let userRegion = null;          // GPS 기반 지역명
-  let userGPS = null;             // { lat, lon }
+  let userRegion = null;
+  let userGPS = null;
   const TODAY = new Date().toLocaleDateString('ko-KR', {
     year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  // ── 브라우저 세션 캐시 (같은 날 같은 어종 재검색 시 API 절약) ────────────
+  // ── 브라우저 세션 캐시 ────────────────────────────────────────────────
   const SESSION_KEY = 'fishCache_' + new Date().toDateString();
   function getSessionCache(key) {
     try {
@@ -47,7 +47,6 @@
     );
   }
 
-  // GPS → 지역명 (도 단위)
   function getRegionFromGPS(lat, lon) {
     if (lat >= 33.0 && lat <= 34.0 && lon >= 126.0 && lon <= 127.0) return '제주특별자치도';
     if (lat >= 37.4 && lon >= 130.8) return '울릉도·독도';
@@ -77,8 +76,8 @@
     if (!file || !file.type.startsWith('image/')) return;
     const reader = new FileReader();
     reader.onload = (e) => {
-      const base64Full = e.target.result; // data:image/jpeg;base64,....
-      currentImageBase64 = base64Full.split(',')[1]; // base64만 추출
+      const base64Full = e.target.result;
+      currentImageBase64 = base64Full.split(',')[1];
 
       const preview = document.getElementById('previewImg');
       const placeholder = document.getElementById('photoPlaceholder');
@@ -93,7 +92,6 @@
   document.getElementById('cameraInput').addEventListener('change', (e) => handleImageFile(e.target.files[0]));
   document.getElementById('galleryInput').addEventListener('change', (e) => handleImageFile(e.target.files[0]));
 
-  // 사진 영역 클릭 → 갤러리 오픈
   document.getElementById('photoArea').addEventListener('click', () => {
     document.getElementById('galleryInput').click();
   });
@@ -122,7 +120,6 @@
       const fish = tag.dataset.fish;
       const type = tag.dataset.type;
       document.getElementById('keywordInput').value = fish;
-      // 탭도 맞춰서 전환
       document.querySelectorAll('.tab-btn').forEach((b) => {
         b.classList.toggle('active', b.dataset.type === type);
       });
@@ -133,7 +130,6 @@
 
   // ── API 호출 ─────────────────────────────────────────────────────────────
   async function sendToAPI(payload) {
-    // 세션 캐시 확인 (이미지 검색은 캐시 제외)
     if (payload.fishName && !payload.imageBase64) {
       const cacheKey = `${payload.fishName}_${payload.waterType}_${userRegion || 'all'}`;
       const cached = getSessionCache(cacheKey);
@@ -143,7 +139,7 @@
       }
     }
 
-    showLoading(true, '어종을 분석하는 중...', payload.imageBase64 ? '📷 Fishial.AI → iNaturalist → Gemini 순서로 시도합니다' : '🔤 Gemini AI 조회 중...');
+    showLoading(true, '어종을 분석하는 중...', payload.imageBase64 ? '📷 Fishial.AI → iNaturalist 순서로 시도합니다' : '🔤 DB 조회 중...');
 
     try {
       const body = {
@@ -164,7 +160,6 @@
         throw new Error(data.error || '서버 오류가 발생했습니다.');
       }
 
-      // 세션 캐시 저장 (키워드 검색만)
       if (payload.fishName && !payload.imageBase64) {
         const cacheKey = `${payload.fishName}_${payload.waterType}_${userRegion || 'all'}`;
         setSessionCache(cacheKey, data);
@@ -178,7 +173,7 @@
   }
 
   // ── 결과 표시 ────────────────────────────────────────────────────────────
-function showResult(data) {
+  function showResult(data) {
     showLoading(false);
 
     // 모달 먼저 열기
@@ -186,32 +181,29 @@ function showResult(data) {
     ro.classList.remove('hidden');
     ro.style.display = 'flex';
 
-    // 어종 사진 (Wikipedia API)
+    // 어종 사진 초기화
     const fishPhoto = document.getElementById('fishPhoto');
     const fishPhotoImg = document.getElementById('fishPhotoImg');
-    fishPhoto.classList.add('hidden');
+    fishPhoto.style.display = 'none';
     fishPhotoImg.src = '';
 
+    // Wikipedia 사진 조회
     if (data.fishName) {
       fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
         .then(r => r.json())
         .then(json => {
           const pages = json.query.pages;
           const page = Object.values(pages)[0];
-if (page.thumbnail && page.thumbnail.source) {
-  fishPhotoImg.src = page.thumbnail.source;
-  fishPhoto.style.setProperty('display', 'block', 'important');
-}
-
-
+          if (page.thumbnail && page.thumbnail.source) {
+            fishPhotoImg.src = page.thumbnail.source;
+            fishPhoto.style.setProperty('display', 'block', 'important');
+          }
         })
         .catch(() => {});
     }
 
-
     // 상태 배지
     const badge = document.getElementById('statusBadge');
-
     if (data.closedSeasonActive) {
       badge.textContent = '🚫 지금은 금어기입니다';
       badge.className = 'status-badge danger';
@@ -235,9 +227,6 @@ if (page.thumbnail && page.thumbnail.source) {
       waterBadge.textContent = '🌊 바다';
       waterBadge.className = 'water-badge sea';
     }
-
-    document.getElementById('resultConfidence').textContent =
-      data.confidence ? data.confidence + '%' : '—';
 
     // 금어기
     const csVal = document.getElementById('closedSeasonValue');
@@ -276,37 +265,40 @@ if (page.thumbnail && page.thumbnail.source) {
     // 유사어종
     const similarSection = document.getElementById('similarSection');
     const similarList = document.getElementById('similarList');
-    similarList.innerHTML = '';
-    if (data.similarFish && data.similarFish.length > 0) {
-      similarSection.classList.remove('hidden');
-      data.similarFish.forEach((sf) => {
-        const div = document.createElement('div');
-        div.className = 'similar-item';
-        div.innerHTML = `<div class="similar-name">🐟 ${sf.name}</div><div class="similar-diff">${sf.difference}</div>`;
-        similarList.appendChild(div);
-      });
-    } else {
-      similarSection.classList.add('hidden');
+    if (similarSection && similarList) {
+      similarList.innerHTML = '';
+      if (data.similarFish && data.similarFish.length > 0) {
+        similarSection.classList.remove('hidden');
+        data.similarFish.forEach((sf) => {
+          const div = document.createElement('div');
+          div.className = 'similar-item';
+          div.innerHTML = `<div class="similar-name">🐟 ${sf.name}</div><div class="similar-diff">${sf.difference}</div>`;
+          similarList.appendChild(div);
+        });
+      } else {
+        similarSection.classList.add('hidden');
+      }
     }
 
     // 경고
     const warningBox = document.getElementById('warningBox');
-    if (data.warning) {
-      document.getElementById('warningText').textContent = '⚠️ ' + data.warning;
-      warningBox.classList.remove('hidden');
-    } else {
-      warningBox.classList.add('hidden');
+    if (warningBox) {
+      if (data.warning) {
+        const warningText = document.getElementById('warningText');
+        if (warningText) warningText.textContent = '⚠️ ' + data.warning;
+        warningBox.classList.remove('hidden');
+      } else {
+        warningBox.classList.add('hidden');
+      }
     }
-
   }
 
   // ── 모달 닫기 ────────────────────────────────────────────────────────────
-    document.getElementById('closeResult').addEventListener('click', () => {
-      const ro = document.getElementById('resultOverlay');
-      ro.classList.add('hidden');
-      ro.style.display = 'none';
-    });
-
+  document.getElementById('closeResult').addEventListener('click', () => {
+    const ro = document.getElementById('resultOverlay');
+    ro.classList.add('hidden');
+    ro.style.display = 'none';
+  });
 
   // ── 로딩 ─────────────────────────────────────────────────────────────────
   function showLoading(show, msg = '', sub = '') {
