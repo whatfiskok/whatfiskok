@@ -578,52 +578,78 @@
       }
     }
 
-    function showResult(data) {
-      showLoading(false);
-      const badge = document.getElementById('statusBadge');
-      if (data.closedSeasonActive) {
-        badge.textContent = '🚫 지금은 금어기입니다';
-        badge.className = 'status-badge danger';
-      } else if (data.todayStatus === '체장확인필요') {
-        badge.textContent = '📏 체장을 확인하세요';
-        badge.className = 'status-badge caution';
-      } else {
-        badge.textContent = '✅ 포획 가능합니다';
-        badge.className = 'status-badge safe';
-      }
-      document.getElementById('resultFishName').textContent = data.fishName || '—';
-      document.getElementById('resultScientificName').textContent = data.scientificName || '';
-      const wb = document.getElementById('resultWaterType');
-      wb.textContent = data.waterType === 'fresh' ? '🏞️ 민물' : '🌊 바다';
-      wb.className = 'water-badge ' + (data.waterType === 'fresh' ? 'fresh' : 'sea');
-      const csv = document.getElementById('closedSeasonValue');
-      csv.textContent = data.closedSeason || '금어기 없음';
-      csv.className = 'reg-value' + (data.closedSeason ? (data.closedSeasonActive ? ' active' : '') : ' none');
-      const msv = document.getElementById('minSizeValue');
-      msv.textContent = data.minSize ? data.minSize + (data.minSizeUnit ? ' (' + data.minSizeUnit + ')' : '') : '제한 없음';
-      msv.className = 'reg-value' + (data.minSize ? '' : ' none');
-      const rn = document.getElementById('regionNote');
-      if (data.regionNote) {
-        document.getElementById('regionNoteText').textContent = data.regionNote;
-        rn.classList.remove('hidden');
-      } else {
-        rn.classList.add('hidden');
-      }
-      document.getElementById('resultHabitat').textContent = data.habitat || '—';
-      document.getElementById('resultSeason').textContent = data.season || '—';
-      document.getElementById('resultDescription').textContent = data.description || '—';
+function showResult(data) {
+  showLoading(false);
 
-      const wb2 = document.getElementById('warningBox');
-      if (data.warning) {
-        document.getElementById('warningText').textContent = '⚠️ ' + data.warning;
-        wb2.classList.remove('hidden');
-      } else {
-        wb2.classList.add('hidden');
-      }
-      const ro = document.getElementById('resultOverlay');
-      ro.style.display = 'block';
-      ro.scrollIntoView({ behavior: 'smooth' });
-    }
+  // 모달 열기
+  const ro = document.getElementById('resultOverlay');
+  ro.style.display = 'block';
+
+  // 어종 사진 초기화
+  const fishPhoto = document.getElementById('fishPhoto');
+  const fishPhotoImg = document.getElementById('fishPhotoImg');
+  fishPhoto.style.display = 'none';
+  fishPhotoImg.src = '';
+
+  // Wikipedia 사진 조회
+  if (data.fishName) {
+    fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
+      .then(r => r.json())
+      .then(json => {
+        const pages = json.query.pages;
+        const page = Object.values(pages)[0];
+        if (page.thumbnail && page.thumbnail.source) {
+          fishPhotoImg.src = page.thumbnail.source;
+          fishPhoto.style.setProperty('display', 'block', 'important');
+        }
+      })
+      .catch(() => {});
+  }
+
+  const badge = document.getElementById('statusBadge');
+  if (data.closedSeasonActive) {
+    badge.textContent = '🚫 지금은 금어기입니다';
+    badge.className = 'status-badge danger';
+  } else if (data.todayStatus === '체장확인필요') {
+    badge.textContent = '📏 체장을 확인하세요';
+    badge.className = 'status-badge caution';
+  } else {
+    badge.textContent = '✅ 포획 가능합니다';
+    badge.className = 'status-badge safe';
+  }
+  document.getElementById('resultFishName').textContent = data.fishName || '—';
+  document.getElementById('resultScientificName').textContent = data.scientificName || '';
+  const wb = document.getElementById('resultWaterType');
+  wb.textContent = data.waterType === 'fresh' ? '🏞️ 민물' : '🌊 바다';
+  wb.className = 'water-badge ' + (data.waterType === 'fresh' ? 'fresh' : 'sea');
+  const csv = document.getElementById('closedSeasonValue');
+  csv.textContent = data.closedSeason || '금어기 없음';
+  csv.className = 'reg-value' + (data.closedSeason ? (data.closedSeasonActive ? ' active' : '') : ' none');
+  const msv = document.getElementById('minSizeValue');
+  msv.textContent = data.minSize ? data.minSize + (data.minSizeUnit ? ' (' + data.minSizeUnit + ')' : '') : '제한 없음';
+  msv.className = 'reg-value' + (data.minSize ? '' : ' none');
+  const rn = document.getElementById('regionNote');
+  if (data.regionNote) {
+    document.getElementById('regionNoteText').textContent = data.regionNote;
+    rn.classList.remove('hidden');
+  } else {
+    rn.classList.add('hidden');
+  }
+  document.getElementById('resultHabitat').textContent = data.habitat || '—';
+  document.getElementById('resultSeason').textContent = data.season || '—';
+  document.getElementById('resultDescription').textContent = data.description || '—';
+
+  const wb2 = document.getElementById('warningBox');
+  if (data.warning) {
+    document.getElementById('warningText').textContent = '⚠️ ' + data.warning;
+    wb2.classList.remove('hidden');
+  } else {
+    wb2.classList.add('hidden');
+  }
+
+  ro.scrollIntoView({ behavior: 'smooth' });
+}
+
 
     document.getElementById('closeResult').addEventListener('click', () => {
       document.getElementById('resultOverlay').style.display = 'none';
