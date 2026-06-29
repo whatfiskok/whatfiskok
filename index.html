@@ -612,20 +612,7 @@
       document.getElementById('resultHabitat').textContent = data.habitat || '—';
       document.getElementById('resultSeason').textContent = data.season || '—';
       document.getElementById('resultDescription').textContent = data.description || '—';
-      const ss = document.getElementById('similarSection');
-      const sl = document.getElementById('similarList');
-      sl.innerHTML = '';
-      if (data.similarFish && data.similarFish.length > 0) {
-        ss.classList.remove('hidden');
-        data.similarFish.forEach((sf) => {
-          const d = document.createElement('div');
-          d.className = 'similar-item';
-          d.innerHTML = `<div class="similar-name">🐟 ${sf.name}</div><div>${sf.difference}</div>`;
-          sl.appendChild(d);
-        });
-      } else {
-        ss.classList.add('hidden');
-      }
+
       const wb2 = document.getElementById('warningBox');
       if (data.warning) {
         document.getElementById('warningText').textContent = '⚠️ ' + data.warning;
