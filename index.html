@@ -596,7 +596,6 @@
       const wb = document.getElementById('resultWaterType');
       wb.textContent = data.waterType === 'fresh' ? '🏞️ 민물' : '🌊 바다';
       wb.className = 'water-badge ' + (data.waterType === 'fresh' ? 'fresh' : 'sea');
-      document.getElementById('resultConfidence').textContent = data.confidence ? data.confidence + '%' : '—';
       const csv = document.getElementById('closedSeasonValue');
       csv.textContent = data.closedSeason || '금어기 없음';
       csv.className = 'reg-value' + (data.closedSeason ? (data.closedSeasonActive ? ' active' : '') : ' none');
