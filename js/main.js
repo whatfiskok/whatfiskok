@@ -262,24 +262,7 @@
     document.getElementById('resultSeason').textContent = data.season || '—';
     document.getElementById('resultDescription').textContent = data.description || '—';
 
-    // 유사어종
-    const similarSection = document.getElementById('similarSection');
-    const similarList = document.getElementById('similarList');
-    if (similarSection && similarList) {
-      similarList.innerHTML = '';
-      if (data.similarFish && data.similarFish.length > 0) {
-        similarSection.classList.remove('hidden');
-        data.similarFish.forEach((sf) => {
-          const div = document.createElement('div');
-          div.className = 'similar-item';
-          div.innerHTML = `<div class="similar-name">🐟 ${sf.name}</div><div class="similar-diff">${sf.difference}</div>`;
-          similarList.appendChild(div);
-        });
-      } else {
-        similarSection.classList.add('hidden');
-      }
-    }
-
+  
     // 경고
     const warningBox = document.getElementById('warningBox');
     if (warningBox) {
