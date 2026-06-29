@@ -5,38 +5,18 @@
 // ══════════════════════════════════════════
 // 내장 DB (2026.1.1. 해양수산부 기준)
 // ══════════════════════════════════════════
-const FISH_DB = {
-  '넙치': { aliases: ['광어'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 35, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '조피볼락': { aliases: ['우럭'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 23, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '감성돔': { aliases: [], waterType: 'sea', closedSeason: '5월 1일 ~ 5월 31일', closedSeasonActive: null, minSize: 25, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '참돔': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 24, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '돌돔': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 24, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '농어': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 30, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '볼락': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 15, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '쥐노래미': { aliases: ['놀래기'], waterType: 'sea', closedSeason: '11월 1일 ~ 12월 31일', closedSeasonActive: null, minSize: 20, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '문치가자미': { aliases: ['도다리'], waterType: 'sea', closedSeason: '12월 1일 ~ 1월 31일', closedSeasonActive: null, minSize: 20, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '참가자미': { aliases: ['가자미'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 20, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '대구': { aliases: [], waterType: 'sea', closedSeason: '1월 16일 ~ 2월 15일', closedSeasonActive: null, minSize: 35, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '고등어': { aliases: [], waterType: 'sea', closedSeason: '4월 1일 ~ 6월 30일 중 1개월(매년 고시)', closedSeasonActive: null, minSize: 21, minSizeUnit: 'cm', minSizeNote: '전장' },
-  '삼치': { aliases: [], waterType: 'sea', closedSeason: '5월 1일 ~ 5월 31일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '갈치': { aliases: [], waterType: 'sea', closedSeason: '7월 1일 ~ 7월 31일', closedSeasonActive: null, minSize: 18, minSizeUnit: 'cm', minSizeNote: '항문장' },
-  '붕장어': { aliases: ['장어', '아나고'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 35, minSizeUnit: 'cm', minSizeNote: '항문장' },
-  '살오징어': { aliases: ['오징어'], waterType: 'sea', closedSeason: '4월 1일 ~ 5월 31일', closedSeasonActive: null, minSize: 15, minSizeUnit: 'cm', minSizeNote: '외투장' },
-  '갑오징어': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '주꾸미': { aliases: [], waterType: 'sea', closedSeason: '5월 11일 ~ 8월 31일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '참문어': { aliases: ['문어'], waterType: 'sea', closedSeason: '5월 16일 ~ 6월 30일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '낙지': { aliases: [], waterType: 'sea', closedSeason: '6월 1일 ~ 6월 30일(시·도별 별도 지정)', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '꽃게': { aliases: [], waterType: 'sea', closedSeason: '6월 21일 ~ 9월 30일 중 2개월(매년 고시)', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: '두흉갑장 6.4cm 이하 포획 금지' },
-  '전어': { aliases: [], waterType: 'sea', closedSeason: '5월 1일 ~ 7월 15일(특별자치도·경북 제외)', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '방어': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '부시리': { aliases: ['히라스'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '전복': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: '각장 기준 지역별 상이' },
-  '붕어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '잉어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '쏘가리': { aliases: [], waterType: 'fresh', closedSeason: '5월 1일 ~ 6월 30일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '은어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-  '빙어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
-};
+// ── 외부 JSON DB 로드 ──────────────────────────────────────────────
+const path = require('path');
+const fs   = require('fs');
+
+let FISH_DB = {};
+try {
+  const dbPath = path.join(process.cwd(), 'data', 'fishDB.json');
+  FISH_DB = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+} catch (e) {
+  console.error('[FISH_DB] fishDB.json 로드 실패:', e.message);
+}
+
 function isClosedSeason(mm, dd, closedSeasonStr) {
   if (!closedSeasonStr) return false;
   // 단순 월 범위 파싱 (예: "5월 1일 ~ 5월 31일")
