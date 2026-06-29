@@ -2,6 +2,71 @@
 // 다중 API 폴백 구조: Fishial.AI → iNaturalist → Gemini Flash-Lite → Gemini Flash
 // 민물/바다 통합, 완전 무료, API 키 서버사이드 보호
 
+// ══════════════════════════════════════════
+// 내장 DB (2026.1.1. 해양수산부 기준)
+// ══════════════════════════════════════════
+const FISH_DB = {
+  '넙치': { aliases: ['광어'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 35, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '조피볼락': { aliases: ['우럭'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 23, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '감성돔': { aliases: [], waterType: 'sea', closedSeason: '5월 1일 ~ 5월 31일', closedSeasonActive: null, minSize: 25, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '참돔': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 24, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '돌돔': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 24, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '농어': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 30, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '볼락': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 15, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '쥐노래미': { aliases: ['놀래기'], waterType: 'sea', closedSeason: '11월 1일 ~ 12월 31일', closedSeasonActive: null, minSize: 20, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '문치가자미': { aliases: ['도다리'], waterType: 'sea', closedSeason: '12월 1일 ~ 1월 31일', closedSeasonActive: null, minSize: 20, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '참가자미': { aliases: ['가자미'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 20, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '대구': { aliases: [], waterType: 'sea', closedSeason: '1월 16일 ~ 2월 15일', closedSeasonActive: null, minSize: 35, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '고등어': { aliases: [], waterType: 'sea', closedSeason: '4월 1일 ~ 6월 30일 중 1개월(매년 고시)', closedSeasonActive: null, minSize: 21, minSizeUnit: 'cm', minSizeNote: '전장' },
+  '삼치': { aliases: [], waterType: 'sea', closedSeason: '5월 1일 ~ 5월 31일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '갈치': { aliases: [], waterType: 'sea', closedSeason: '7월 1일 ~ 7월 31일', closedSeasonActive: null, minSize: 18, minSizeUnit: 'cm', minSizeNote: '항문장' },
+  '붕장어': { aliases: ['장어', '아나고'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: 35, minSizeUnit: 'cm', minSizeNote: '항문장' },
+  '살오징어': { aliases: ['오징어'], waterType: 'sea', closedSeason: '4월 1일 ~ 5월 31일', closedSeasonActive: null, minSize: 15, minSizeUnit: 'cm', minSizeNote: '외투장' },
+  '갑오징어': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '주꾸미': { aliases: [], waterType: 'sea', closedSeason: '5월 11일 ~ 8월 31일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '참문어': { aliases: ['문어'], waterType: 'sea', closedSeason: '5월 16일 ~ 6월 30일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '낙지': { aliases: [], waterType: 'sea', closedSeason: '6월 1일 ~ 6월 30일(시·도별 별도 지정)', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '꽃게': { aliases: [], waterType: 'sea', closedSeason: '6월 21일 ~ 9월 30일 중 2개월(매년 고시)', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: '두흉갑장 6.4cm 이하 포획 금지' },
+  '전어': { aliases: [], waterType: 'sea', closedSeason: '5월 1일 ~ 7월 15일(특별자치도·경북 제외)', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '방어': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '부시리': { aliases: ['히라스'], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '전복': { aliases: [], waterType: 'sea', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: '각장 기준 지역별 상이' },
+  '붕어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '잉어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '쏘가리': { aliases: [], waterType: 'fresh', closedSeason: '5월 1일 ~ 6월 30일', closedSeasonActive: null, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '은어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+  '빙어': { aliases: [], waterType: 'fresh', closedSeason: null, closedSeasonActive: false, minSize: null, minSizeUnit: null, minSizeNote: null },
+};
+function isClosedSeason(mm, dd, closedSeasonStr) {
+  if (!closedSeasonStr) return false;
+  // 단순 월 범위 파싱 (예: "5월 1일 ~ 5월 31일")
+  const match = closedSeasonStr.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
+  if (!match) return false;
+  const [, sm, sd, em, ed] = match.map(Number);
+  const today = mm * 100 + dd;
+  const start = sm * 100 + sd;
+  const end = em * 100 + ed;
+  if (start <= end) return today >= start && today <= end;
+  // 연도 넘기는 경우 (예: 12월~1월)
+  return today >= start || today <= end;
+}
+
+function lookupFishDB(name) {
+  if (!name) return null;
+  const normalized = name.trim();
+  // 직접 매칭
+  if (FISH_DB[normalized]) return { ...FISH_DB[normalized], fishName: normalized, source: 'db' };
+  // 별칭 매칭
+  for (const [key, val] of Object.entries(FISH_DB)) {
+    if (val.aliases && val.aliases.includes(normalized)) {
+      return { ...val, fishName: key, source: 'db' };
+    }
+  }
+  return null;
+}
+
+
+
 const https = require('https');
 
 // ── 유틸: HTTPS fetch (Node 18 미만 대응) ──────────────────────────────────
@@ -257,6 +322,39 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ ...cached, _cached: true });
     }
 
+    // ① 내장 DB 먼저 조회
+    const dbResult = lookupFishDB(fishName);
+    if (dbResult) {
+      // 금어기 활성 여부 오늘 날짜로 계산
+      const todayObj = new Date(today);
+      const mm = todayObj.getMonth() + 1;
+      const dd = todayObj.getDate();
+      let closedSeasonActive = false;
+      if (dbResult.closedSeason) {
+        closedSeasonActive = isClosedSeason(mm, dd, dbResult.closedSeason);
+      }
+      const response = {
+        fishName: dbResult.fishName,
+        scientificName: null,
+        waterType: dbResult.waterType,
+        confidence: 1.0,
+        source: 'db',
+        closedSeason: dbResult.closedSeason,
+        closedSeasonActive,
+        minSize: dbResult.minSize ? `${dbResult.minSize}${dbResult.minSizeUnit} (${dbResult.minSizeNote})` : null,
+        regionNote: dbResult.minSizeNote || null,
+        habitat: null,
+        season: null,
+        description: null,
+        similarFish: [],
+        warning: null,
+        todayStatus: closedSeasonActive ? '포획금지' : (dbResult.minSize ? '체장확인필요' : '포획가능'),
+      };
+      setCache(cacheKey, response);
+      return res.status(200).json(response);
+    }
+
+    // ② DB에 없으면 Gemini 조회
     const result = await identifyAndGetRegulationWithGemini(apiKey, null, fishName, region, waterType, today);
     if (result) {
       setCache(cacheKey, result);
@@ -264,6 +362,7 @@ module.exports = async function handler(req, res) {
     }
     return res.status(500).json({ error: 'AI 조회에 실패했습니다. 잠시 후 다시 시도해주세요.' });
   }
+
 
   // ── 사진 검색: 다중 폴백 ──────────────────────────────────────────────
   // 1순위: Fishial.AI (바다 어종, 무제한)
@@ -286,7 +385,37 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: '어종을 식별하지 못했습니다. 더 선명한 사진을 시도해주세요.' });
   }
 
-  // 식별 성공 → Gemini로 규정 조회
+  // 식별 성공 → 내장 DB 먼저 조회
+  const dbResult = lookupFishDB(identified.name);
+  if (dbResult) {
+    const todayObj = new Date(today);
+    const mm = todayObj.getMonth() + 1;
+    const dd = todayObj.getDate();
+    let closedSeasonActive = false;
+    if (dbResult.closedSeason) {
+      closedSeasonActive = isClosedSeason(mm, dd, dbResult.closedSeason);
+    }
+    return res.status(200).json({
+      fishName: dbResult.fishName,
+      scientificName: identified.scientificName || null,
+      waterType: dbResult.waterType,
+      confidence: identified.confidence,
+      source: 'db',
+      _identifySource: identified.source,
+      closedSeason: dbResult.closedSeason,
+      closedSeasonActive,
+      minSize: dbResult.minSize ? `${dbResult.minSize}${dbResult.minSizeUnit} (${dbResult.minSizeNote})` : null,
+      regionNote: dbResult.minSizeNote || null,
+      habitat: null,
+      season: null,
+      description: null,
+      similarFish: [],
+      warning: null,
+      todayStatus: closedSeasonActive ? '포획금지' : (dbResult.minSize ? '체장확인필요' : '포획가능'),
+    });
+  }
+
+  // DB에 없으면 Gemini로 규정 조회
   const finalResult = await identifyAndGetRegulationWithGemini(
     apiKey, null, identified.name, region, waterType, today
   );
@@ -297,4 +426,5 @@ module.exports = async function handler(req, res) {
   }
 
   return res.status(500).json({ error: '규정 조회에 실패했습니다.' });
+
 };
