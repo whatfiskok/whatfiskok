@@ -200,8 +200,9 @@ function showResult(data) {
           const page = Object.values(pages)[0];
 if (page.thumbnail && page.thumbnail.source) {
   fishPhotoImg.src = page.thumbnail.source;
-  fishPhoto.style.display = 'block';
+  fishPhoto.style.setProperty('display', 'block', 'important');
 }
+
 
         })
         .catch(() => {});
