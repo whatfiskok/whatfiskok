@@ -345,14 +345,16 @@ module.exports = async function handler(req, res) {
         closedSeason: dbResult.closedSeason,
         closedSeasonActive,
         minSize: dbResult.minSize ? `${dbResult.minSize}${dbResult.minSizeUnit} (${dbResult.minSizeNote})` : null,
-        regionNote: dbResult.minSizeNote || null,
-        habitat: null,
-        season: null,
-        description: null,
-        similarFish: [],
-        warning: null,
+        regionNote: dbResult.regionNote || null,
+        habitat: dbResult.habitat || null,
+        season: dbResult.season || null,
+        description: dbResult.description || null,
+        similarFish: dbResult.similarFish || [],
+        warning: dbResult.warning || null,
         todayStatus: closedSeasonActive ? '포획금지' : (dbResult.minSize ? '체장확인필요' : '포획가능'),
+        dataSource: '해양수산부 수산자원관리법 시행령 (2026.1.1. 기준)',
       };
+
       setCache(cacheKey, response);
       return res.status(200).json(response);
     }
@@ -408,14 +410,16 @@ module.exports = async function handler(req, res) {
       closedSeason: dbResult.closedSeason,
       closedSeasonActive,
       minSize: dbResult.minSize ? `${dbResult.minSize}${dbResult.minSizeUnit} (${dbResult.minSizeNote})` : null,
-      regionNote: dbResult.minSizeNote || null,
-      habitat: null,
-      season: null,
-      description: null,
-      similarFish: [],
-      warning: null,
+      regionNote: dbResult.regionNote || null,
+      habitat: dbResult.habitat || null,
+      season: dbResult.season || null,
+      description: dbResult.description || null,
+      similarFish: dbResult.similarFish || [],
+      warning: dbResult.warning || null,
       todayStatus: closedSeasonActive ? '포획금지' : (dbResult.minSize ? '체장확인필요' : '포획가능'),
+      dataSource: '해양수산부 수산자원관리법 시행령 (2026.1.1. 기준)',
     });
+
   }
 
   // DB에 없으면 Gemini로 규정 조회
