@@ -649,19 +649,23 @@ function showResult(data) {
 
 
   const badge = document.getElementById('statusBadge');
+  const badgeWrap = badge.parentElement;
   if (data.todayStatus === '정보없음') {
-    badge.textContent = '❓ DB 미등록 어종';
-    badge.className = 'status-badge caution';
+    badgeWrap.style.display = 'none';
   } else if (data.closedSeasonActive) {
+    badgeWrap.style.display = 'block';
     badge.textContent = '🚫 지금은 금어기입니다';
     badge.className = 'status-badge danger';
   } else if (data.todayStatus === '체장확인필요') {
+    badgeWrap.style.display = 'block';
     badge.textContent = '📏 체장을 확인하세요';
     badge.className = 'status-badge caution';
   } else {
+    badgeWrap.style.display = 'block';
     badge.textContent = '✅ 포획 가능합니다';
     badge.className = 'status-badge safe';
   }
+
 
   document.getElementById('resultFishName').textContent = data.fishName || '—';
   document.getElementById('resultScientificName').textContent = data.scientificName || '';
