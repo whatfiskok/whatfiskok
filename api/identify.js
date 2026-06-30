@@ -231,10 +231,26 @@ module.exports = async function handler(req, res) {
     }
 
     // DB에 없는 어종
-    return res.status(404).json({
-      error: 'DB에 등록되지 않은 어종입니다.',
-      message: `'${fishName}'은(는) 아직 DB에 없습니다. 해양수산부(www.mof.go.kr)에서 확인해 주세요.`,
+    return res.status(200).json({
+      fishName:           fishName,
+      scientificName:     null,
+      waterType:          waterType || null,
+      confidence:         null,
+      source:             'not_found',
+      closedSeason:       null,
+      closedSeasonActive: null,
+      todayStatus:        '정보없음',
+      minSize:            null,
+      regionNote:         null,
+      habitat:            null,
+      season:             null,
+      description:        null,
+      similarFish:        [],
+      warning:            null,
+      message:            `'${fishName}'은(는) DB에 없습니다.`,
+      dataSource:         null,
     });
+
   }
 
   // ── 사진 검색 ──────────────────────────────────────────────────
