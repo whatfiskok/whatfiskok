@@ -650,7 +650,10 @@ function showResult(data) {
 
 
   document.getElementById('resultFishName').textContent = data.fishName || '—';
-  document.getElementById('resultScientificName').textContent = data.scientificName || '';
+const sciEl = document.getElementById('resultScientificName');
+sciEl.textContent = data.scientificName || '';
+sciEl.style.display = data.scientificName ? 'block' : 'none';
+
 
   // DB 미등록 어종 처리
   const calendarSection = document.getElementById('calendarSection');
