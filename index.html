@@ -602,9 +602,11 @@ ro.scrollIntoView({ behavior: 'smooth' });
   fishPhotoImg.src = '';
 
   // Wikipedia 사진 + 설명 조회
-  const requestSection = document.getElementById('requestSection');
-  const requestMailBtn = document.getElementById('requestMailBtn');
-  requestSection.style.display = 'none';
+ const requestSection = document.getElementById('requestSection');
+const requestMailBtn = document.getElementById('requestMailBtn');
+requestSection.style.display = 'none';
+document.getElementById('resultDescription').textContent = '';
+
 
   if (data.fishName) {
     fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
