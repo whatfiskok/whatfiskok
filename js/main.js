@@ -187,24 +187,47 @@
     fishPhoto.style.display = 'none';
     fishPhotoImg.src = '';
 
-    // Wikipedia 사진 조회
+    // Wikipedia 사진 + 설명 조회
+    const requestSection = document.getElementById('requestSection');
+    const requestMailBtn = document.getElementById('requestMailBtn');
+    requestSection.style.display = 'none';
+
     if (data.fishName) {
-      fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
+      fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
         .then(r => r.json())
         .then(json => {
           const pages = json.query.pages;
           const page = Object.values(pages)[0];
+
+          // 이미지
           if (page.thumbnail && page.thumbnail.source) {
             fishPhotoImg.src = page.thumbnail.source;
             fishPhoto.style.setProperty('display', 'block', 'important');
+          }
+
+          // DB 미등록 어종이면 Wikipedia 설명 표시 + 요청 버튼 표시
+          if (data.source === 'not_found') {
+            if (page.extract) {
+              const extract = page.extract.slice(0, 300).replace(/\n/g, ' ');
+              document.getElementById('resultDescription').textContent = extract + (page.extract.length > 300 ? '…' : '');
+            }
+            // 요청 메일 버튼 설정
+            const subject = encodeURIComponent(`[금어기 정보 요청] ${data.fishName}`);
+            const body = encodeURIComponent(
+              `어종명: ${data.fishName}\n\n위 어종의 금어기 및 금지체장 정보를 DB에 추가해 주세요.\n\n(앱에서 자동 발송)`
+            );
+            requestMailBtn.href = `mailto:webnjw@gmail.com?subject=${subject}&body=${body}`;
+            requestSection.style.display = 'block';
           }
         })
         .catch(() => {});
     }
 
-    // 상태 배지
     const badge = document.getElementById('statusBadge');
-    if (data.closedSeasonActive) {
+    if (data.todayStatus === '정보없음') {
+      badge.textContent = '❓ DB 미등록 어종';
+      badge.className = 'status-badge caution';
+    } else if (data.closedSeasonActive) {
       badge.textContent = '🚫 지금은 금어기입니다';
       badge.className = 'status-badge danger';
     } else if (data.todayStatus === '체장확인필요') {
@@ -214,6 +237,7 @@
       badge.textContent = '✅ 포획 가능합니다';
       badge.className = 'status-badge safe';
     }
+
 
     // 어종 기본 정보
     document.getElementById('resultFishName').textContent = data.fishName || '—';
