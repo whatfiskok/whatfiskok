@@ -658,7 +658,8 @@ function showResult(data) {
 
   // DB 미등록 어종 처리
   const calendarSection = document.getElementById('calendarSection');
-  const requestSection = document.getElementById('requestSection');
+  requestSection = document.getElementById('requestSection');
+
   const isNotFound = data.source === 'not_found';
 
   if (isNotFound) {
