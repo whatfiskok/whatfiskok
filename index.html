@@ -589,8 +589,10 @@ function showResult(data) {
   showLoading(false);
 
   // 모달 열기
-  const ro = document.getElementById('resultOverlay');
-  ro.style.display = 'block';
+const ro = document.getElementById('resultOverlay');
+ro.style.display = 'block';
+ro.scrollIntoView({ behavior: 'smooth' });
+
 
   // 어종 사진 초기화
   const fishPhoto = document.getElementById('fishPhoto');
@@ -661,7 +663,28 @@ const calendarSection = document.getElementById('calendarSection');
     // 달력 표시
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
-    renderCalendar(data.closedSeason, data.closedSeasonActive);
+   if (data.closedSeason) {
+  renderCalendar(data.closedSeason, data.closedSeasonActive);
+} else {
+  const bar = document.getElementById('calendarBar');
+  bar.innerHTML = '';
+  const calendarSection = document.getElementById('calendarSection');
+  calendarSection.innerHTML = `
+    <div style="
+      border: 1.5px solid rgba(255,255,255,0.6);
+      border-radius: 20px;
+      padding: 14px 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: white;
+      line-height: 1.8;
+    ">
+      금어기와 금지체장이 없으니 맛있게 드세요.<br>
+      다만, 너무 어린 개체는 놓아 주세요.
+    </div>
+  `;
+}
+
 
     // 금지체장 표시
     const minSizeInfo = document.getElementById('minSizeInfo');
