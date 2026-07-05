@@ -1068,18 +1068,19 @@ function handleAdminClick() {
   adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
   if (adminClickCount >= 5) {
     adminClickCount = 0;
-    fetch(SHEETS_URL)
-      .then(r => r.json())
-      .then(json => {
-        if (json.email === 'roh@impact7.kr') {
-          showAdminPanel();
-        } else {
-          alert('접근 권한이 없습니다.\n현재 계정: ' + (json.email || '알 수 없음'));
-        }
-      })
-      .catch(() => {
-        alert('오류가 발생했습니다.');
-      });
+fetch('/api/admin')
+  .then(r => r.json())
+  .then(json => {
+    if (json.email === 'roh@impact7.kr') {
+      showAdminPanel();
+    } else {
+      alert('접근 권한이 없습니다.\n현재 계정: ' + (json.email || '알 수 없음'));
+    }
+  })
+  .catch(() => {
+    alert('오류가 발생했습니다.');
+  });
+
   }
 }
 
