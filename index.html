@@ -976,12 +976,16 @@ function updateInfoCards(data) {
       ">
         <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
           <span style="font-size:1.3rem; font-weight:900; letter-spacing:2px;">금  어  기</span>
-          <span style="font-size:0.95rem; font-weight:700; color:#f4a261;">작은 건 놔주고 맛있게 드세요</span>
+            <span style="font-size:0.95rem; font-weight:700; color:#f4a261;">
+          ${sizeText ? sizeText + ' 이상만 잡을 수 있어요' : '작은 건 놔주고 맛있게 드세요'}
+        </span>
+
         </div>
         <div style="display:flex; justify-content:space-between; align-items:baseline;">
           <span style="font-size:1.1rem; font-weight:800; color:#aaa;">없  음</span>
           <span style="font-size:0.85rem; color:#aaa;">
-            ${seasonText ? `제철: ${seasonText}` : ''}
+         ${seasonText ? '제철: ' + seasonText : ''}
+
           </span>
         </div>
       </div>`;
@@ -1009,7 +1013,8 @@ function updateInfoCards(data) {
           ${closedText ? closedText : '없  음'}
         </span>
         <span style="font-size:0.85rem; color:#aaa;">
-          ${seasonText ? `제철: ${seasonText}` : ''}
+       ${seasonText ? '제철: ' + seasonText : ''}
+
         </span>
       </div>
     </div>
