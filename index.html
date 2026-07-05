@@ -1066,14 +1066,23 @@ function handleAdminClick() {
   adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
   if (adminClickCount >= 5) {
     adminClickCount = 0;
-    const pw = prompt('관리자 비밀번호:');
-    if (pw === '1234') {
-      showAdminPanel();
-    } else {
-      alert('비밀번호가 틀렸습니다.');
-    }
+    fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      credentials: 'include'
+    })
+    .then(r => r.json())
+    .then(info => {
+      if (info.email === 'roh@impact7.kr') {
+        showAdminPanel();
+      } else {
+        alert('접근 권한이 없습니다.');
+      }
+    })
+    .catch(() => {
+      alert('Google 로그인이 필요합니다.');
+    });
   }
 }
+
 
 function showAdminPanel() {
   fetch(SHEETS_URL)
