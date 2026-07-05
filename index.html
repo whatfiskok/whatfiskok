@@ -1045,7 +1045,8 @@ function updateInfoCards(data) {
       setTimeout(() => t.classList.add('hidden'), 3500);
     }
     // Google Sheets 기록
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx9yrE13NZVN733UItpwCoccKrWjRJjvuA5aXpEDSccQzQAPVhUW4dDHNuNzoCvf3Aj/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyYUYrk1y43Yp9y6Cj8Gznff6wLVqNiGQjJhcI49xx7A8pDSmkMLYkSoBohWQhUXErO/exec';
+
 
 function logSearch(fishName, method, tokens) {
   const now = new Date();
@@ -1066,20 +1067,18 @@ function handleAdminClick() {
   adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
   if (adminClickCount >= 5) {
     adminClickCount = 0;
-    fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-      credentials: 'include'
-    })
-    .then(r => r.json())
-    .then(info => {
-      if (info.email === 'roh@impact7.kr') {
-        showAdminPanel();
-      } else {
-        alert('접근 권한이 없습니다.');
-      }
-    })
-    .catch(() => {
-      alert('Google 로그인이 필요합니다.');
-    });
+    fetch(SHEETS_URL)
+      .then(r => r.json())
+      .then(json => {
+        if (json.email === 'roh@impact7.kr') {
+          showAdminPanel();
+        } else {
+          alert('접근 권한이 없습니다.\n현재 계정: ' + (json.email || '알 수 없음'));
+        }
+      })
+      .catch(() => {
+        alert('오류가 발생했습니다.');
+      });
   }
 }
 
