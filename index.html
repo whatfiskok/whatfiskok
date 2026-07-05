@@ -340,21 +340,7 @@
 
         <!-- 키워드 -->
         <div class="main-tab-content" id="mainKeywordArea">
-        <div class="keyword-input-wrap" style="position:relative; display:flex; align-items:center; gap:8px;">
-  <!-- + 버튼 -->
-  <button id="plusBtn" onclick="togglePlusMenu()" style="
-    flex-shrink:0;
-    width:42px; height:42px;
-    border-radius:50%;
-    border:1.5px solid rgba(255,255,255,0.4);
-    background:rgba(255,255,255,0.1);
-    color:white;
-    font-size:1.4rem;
-    font-weight:300;
-    cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-  ">+</button>
-
+<div style="position:relative;">
   <!-- + 메뉴 팝업 -->
   <div id="plusMenu" style="
     display:none;
@@ -385,26 +371,56 @@
     ">📍 현재 위치로 찾기</button>
   </div>
 
-  <input type="text" id="keywordInput" placeholder="어종 이름을 물어보세요" style="
-    flex:1;
-    padding:12px 16px;
-    border-radius:24px;
-    border:1.5px solid rgba(255,255,255,0.3);
+  <!-- 검색바 (+ 와 검색 버튼이 내부에 있는 형태) -->
+  <div style="
+    display:flex; align-items:center;
     background:rgba(255,255,255,0.1);
-    color:#fff;
-    font-size:0.95rem;
-  "/>
-  <button id="keywordBtn" style="
-    flex-shrink:0;
-    padding:12px 20px;
-    border-radius:24px;
-    border:none;
-    background:rgba(255,255,255,0.25);
-    color:#fff;
-    font-weight:700;
-    cursor:pointer;
-  ">검색</button>
+    border:1.5px solid rgba(255,255,255,0.3);
+    border-radius:28px;
+    padding:6px 6px 6px 14px;
+    gap:8px;
+  ">
+    <!-- + 버튼 (내부 왼쪽) -->
+    <button id="plusBtn" onclick="togglePlusMenu()" style="
+      flex-shrink:0;
+      width:32px; height:32px;
+      border-radius:50%;
+      border:1.5px solid rgba(255,255,255,0.4);
+      background:transparent;
+      color:white;
+      font-size:1.3rem;
+      font-weight:300;
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      line-height:1;
+    ">+</button>
+
+    <!-- 입력창 -->
+    <input type="text" id="keywordInput" placeholder="어종 이름을 물어보세요" style="
+      flex:1;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:#fff;
+      font-size:0.95rem;
+      padding:4px 0;
+    "/>
+
+    <!-- 검색 버튼 (내부 오른쪽) -->
+    <button id="keywordBtn" style="
+      flex-shrink:0;
+      padding:8px 18px;
+      border-radius:22px;
+      border:none;
+      background:rgba(255,255,255,0.25);
+      color:#fff;
+      font-weight:700;
+      font-size:0.9rem;
+      cursor:pointer;
+    ">검색</button>
+  </div>
 </div>
+
 
         </div>
 
