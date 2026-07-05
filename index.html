@@ -628,31 +628,21 @@ if (data.fishName) {
         fishPhoto.style.setProperty('display', 'block', 'important');
       }
 
-      // 두 번째 이미지
-      const fishPhoto2 = document.getElementById('fishPhoto2');
-      const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
-if (page.images && page.images.length > 1) {
-  const imageFiles = page.images.filter(img =>
-    /\.(jpg|jpeg|png)$/i.test(img.title) &&
-    !img.title.includes('icon') &&
-    !img.title.includes('logo') &&
-    !img.title.includes('Icon') &&
-    !img.title.includes('Logo')
-  );
-  const secondImg = imageFiles.find(img => img.title !== page.images[0].title);
-  if (!secondImg) return;
-  const secondTitle = secondImg.title;
-
-        fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(secondTitle)}&prop=imageinfo&iiprop=url&format=json&origin=*`)
-          .then(r2 => r2.json())
-          .then(json2 => {
-            const p2 = Object.values(json2.query.pages)[0];
-            if (p2.imageinfo && p2.imageinfo[0].url) {
-              fishPhotoImg2.src = p2.imageinfo[0].url;
-              fishPhoto2.style.setProperty('display', 'block', 'important');
-            }
-          }).catch(() => {});
+// 두 번째 이미지 - iNaturalist
+const fishPhoto2 = document.getElementById('fishPhoto2');
+const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
+fishPhoto2.style.display = 'none';
+fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(data.fishName)}&rank=species&locale=ko`)
+  .then(r2 => r2.json())
+  .then(json2 => {
+    if (json2.results && json2.results.length > 0) {
+      const taxon = json2.results[0];
+      if (taxon.default_photo && taxon.default_photo.medium_url) {
+        fishPhotoImg2.src = taxon.default_photo.medium_url;
+        fishPhoto2.style.setProperty('display', 'block', 'important');
       }
+    }
+  }).catch(() => {});
 
 
         // DB 미등록 어종이면 Wikipedia 설명 표시 + 요청 버튼 표시
