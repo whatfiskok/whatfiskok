@@ -894,75 +894,7 @@ function updateInfoCards(data) {
 }
 
 
-  
-  // 오늘
-  const now = new Date();
-  const todayM = now.getMonth() + 1;
-  const todayD = now.getDate();
 
-  months.forEach((label, idx) => {
-    const month = idx + 1;
-    const daysInMonth = days[idx];
-    const closedDays = [];
-    for (let d = 1; d <= daysInMonth; d++) {
-      if (isClosed(month, d)) closedDays.push(d);
-    }
-    const ratio = daysInMonth / totalDays;
-    const isCurrent = (month === todayM);
-
-    const cell = document.createElement('div');
-    cell.style.cssText = `
-      flex: ${ratio};
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      font-weight: 700;
-      border-right: 1px solid rgba(255,255,255,0.1);
-      position: relative;
-      cursor: default;
-    `;
-
-    const isFullyClosed = closedDays.length === daysInMonth;
-    const isPartiallyClosed = closedDays.length > 0 && !isFullyClosed;
-
-    if (isFullyClosed) {
-      cell.style.background = '#e63946';
-      cell.style.color = 'white';
-    } else if (isPartiallyClosed) {
-      cell.style.background = 'linear-gradient(to right, #e63946 ' + (closedDays.length/daysInMonth*100) + '%, #2a2a2a ' + (closedDays.length/daysInMonth*100) + '%)';
-      cell.style.color = 'white';
-    } else {
-      cell.style.background = '#2a2a2a';
-      cell.style.color = '#aaa';
-    }
-
-    // 오늘 표시
-    if (isCurrent) {
-      cell.style.outline = '2px solid #f4a261';
-      cell.style.outlineOffset = '-2px';
-    }
-
-    cell.innerHTML = `<span>${label}</span>`;
-
-    // 금어기 날짜 텍스트 표시
-    if (closedRanges.length > 0 && (isFullyClosed || isPartiallyClosed)) {
-      closedRanges.forEach(({ sm, sd, em, ed }) => {
-        if (sm === month || em === month) {
-          const startTxt = sm === month ? `${sd}일` : '1일';
-          const endTxt   = em === month ? `${ed}일` : `${daysInMonth}일`;
-          const sub = document.createElement('span');
-          sub.style.cssText = 'font-size:0.5rem; color:white; margin-top:2px;';
-          sub.textContent = `${startTxt}~${endTxt}`;
-          cell.appendChild(sub);
-        }
-      });
-    }
-
-    bar.appendChild(cell);
-  });
-}
 
     function showLoading(show, msg = '', sub = '') {
       const el = document.getElementById('loadingOverlay');
