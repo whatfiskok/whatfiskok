@@ -9,6 +9,10 @@
       }
     },
     {
+      "src": "api/admin.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "*.html",
       "use": "@vercel/static"
     },
@@ -25,6 +29,10 @@
     {
       "src": "/api/identify",
       "dest": "/api/identify.js"
+    },
+    {
+      "src": "/api/admin",
+      "dest": "/api/admin.js"
     },
     {
       "src": "/(.*)",
