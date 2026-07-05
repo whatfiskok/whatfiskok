@@ -360,25 +360,34 @@
     border-radius:12px;
     overflow:hidden;
     z-index:100;
-    min-width:160px;
+    min-width:180px;
   ">
-    <button onclick="switchMainTab('photo'); togglePlusMenu();" style="
+    <button onclick="document.getElementById('galleryInput').click(); togglePlusMenu();" style="
       display:block; width:100%;
       padding:12px 16px;
       background:transparent;
       border:none; border-bottom:1px solid rgba(255,255,255,0.1);
       color:white; font-size:0.9rem; font-weight:600;
       cursor:pointer; text-align:left;
-    ">📷 사진으로 찾기</button>
-    <button onclick="switchMainTab('location'); togglePlusMenu();" style="
+    ">🖼️ 사진으로 검색</button>
+    <button onclick="document.getElementById('cameraInput').click(); togglePlusMenu();" style="
+      display:block; width:100%;
+      padding:12px 16px;
+      background:transparent;
+      border:none; border-bottom:1px solid rgba(255,255,255,0.1);
+      color:white; font-size:0.9rem; font-weight:600;
+      cursor:pointer; text-align:left;
+    ">📷 카메라로 찍어서 검색</button>
+    <button onclick="searchByLocation(); togglePlusMenu();" style="
       display:block; width:100%;
       padding:12px 16px;
       background:transparent;
       border:none;
       color:white; font-size:0.9rem; font-weight:600;
       cursor:pointer; text-align:left;
-    ">📍 현재 위치로 찾기</button>
+    ">📍 현재 위치로 검색</button>
   </div>
+
 
   <!-- 검색바 (+ 와 검색 버튼이 내부에 있는 형태) -->
   <div style="
