@@ -417,12 +417,75 @@
             
             </div>
 <!-- 달력 + 금어기 표시 -->
+
 <div id="calendarSection" style="margin:14px 0; display:none;">
+  <!-- 인포그래픽 카드 3개 -->
+  <div id="infoCards" style="display:flex; gap:10px; justify-content:center; align-items:stretch; flex-wrap:wrap; margin-bottom:10px;">
 
-<div id="calendarBar" style="display:flex; width:100%; border-radius:8px; overflow:visible; min-height:48px;"></div>
+    <!-- 금어기 카드 -->
+    <div id="cardClosed" style="
+      flex:1; min-width:90px; max-width:140px;
+      background:rgba(255,255,255,0.07);
+      border:1.5px solid rgba(255,255,255,0.18);
+      border-radius:16px;
+      padding:12px 8px;
+      text-align:center;
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    ">
+      <div style="font-size:1.5rem;">🚫</div>
+      <div style="font-size:0.65rem; color:#aaa; font-weight:600; letter-spacing:0.5px;">금어기</div>
+      <div style="font-size:0.7rem; color:#e63946; font-weight:700; line-height:1.5;" id="cardClosedText"></div>
+      <div style="font-size:0.6rem; color:#aaa;">포획 금지</div>
+    </div>
 
-  <div id="minSizeInfo" style="margin-top:10px; text-align:center; font-size:0.88rem; color:white; display:none;"></div>
+    <!-- 금지체장 카드 -->
+    <div id="cardSize" style="
+      flex:1; min-width:90px; max-width:140px;
+      background:rgba(255,255,255,0.07);
+      border:1.5px solid rgba(255,255,255,0.18);
+      border-radius:16px;
+      padding:12px 8px;
+      text-align:center;
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    ">
+      <div style="font-size:1.5rem;">📏</div>
+      <div style="font-size:0.65rem; color:#aaa; font-weight:600; letter-spacing:0.5px;">금지체장</div>
+      <div style="font-size:1rem; color:white; font-weight:800;" id="cardSizeText"></div>
+      <div style="font-size:0.6rem; color:#aaa;">이상만 포획</div>
+    </div>
+
+    <!-- 제철 카드 -->
+    <div id="cardSeason" style="
+      flex:1; min-width:90px; max-width:140px;
+      background:rgba(255,255,255,0.07);
+      border:1.5px solid rgba(255,255,255,0.18);
+      border-radius:16px;
+      padding:12px 8px;
+      text-align:center;
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+    ">
+      <div style="font-size:1.5rem;">🍂</div>
+      <div style="font-size:0.65rem; color:#aaa; font-weight:600; letter-spacing:0.5px;">제철</div>
+      <div style="font-size:0.7rem; color:#f4a261; font-weight:700; line-height:1.5;" id="cardSeasonText"></div>
+    </div>
+
+  </div>
+
+  <!-- 기존 달력 바 (숨김, 내부용) -->
+  <div id="calendarBar" style="display:none;"></div>
 </div>
+
+<!-- minSizeInfo는 cardSize로 대체 -->
+<div id="minSizeInfo" style="display:none;"></div>
 
 
             <div class="region-note hidden" id="regionNote">
@@ -691,7 +754,9 @@ const calendarSection = document.getElementById('calendarSection');
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
    if (data.closedSeason) {
-  renderCalendar(data.closedSeason, data.closedSeasonActive);
+renderCalendar(data.closedSeason, data.closedSeasonActive);
+updateInfoCards(data);
+
 } else {
   const bar = document.getElementById('calendarBar');
 bar.innerHTML = `
@@ -796,6 +861,65 @@ function renderCalendar(closedSeason, closedSeasonActive) {
     });
   }
 
+function updateInfoCards(data) {
+  // 금어기 카드
+  const cardClosed = document.getElementById('cardClosed');
+  const cardClosedText = document.getElementById('cardClosedText');
+  if (data.closedSeason) {
+    cardClosedText.textContent = data.closedSeason.replace(/~/, '\n~\n').replace(/(\d+월\s*\d+일)\s*~\s*(\d+월\s*\d+일)/, '$1\n~\n$2');
+    // 간결하게 표시
+    const m = data.closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
+    if (m) {
+      cardClosedText.innerHTML = `${m[1]}/${m[2]}<br>~<br>${m[3]}/${m[4]}`;
+    } else {
+      cardClosedText.textContent = data.closedSeason;
+    }
+    cardClosed.style.display = 'flex';
+  } else {
+    cardClosed.style.display = 'none';
+  }
+
+  // 금지체장 카드
+  const cardSize = document.getElementById('cardSize');
+  const cardSizeText = document.getElementById('cardSizeText');
+  if (data.minSize) {
+    cardSizeText.textContent = `${data.minSize}${data.minSizeUnit || 'cm'}`;
+    cardSize.style.display = 'flex';
+  } else {
+    cardSize.style.display = 'none';
+  }
+
+  // 제철 카드
+  const cardSeason = document.getElementById('cardSeason');
+  const cardSeasonText = document.getElementById('cardSeasonText');
+  if (data.season) {
+    cardSeasonText.textContent = data.season;
+    cardSeason.style.display = 'flex';
+  } else {
+    cardSeason.style.display = 'none';
+  }
+
+  // 금어기·체장 모두 없으면 안내 메시지
+  if (!data.closedSeason && !data.minSize) {
+    document.getElementById('infoCards').innerHTML = `
+      <div style="
+        width:100%;
+        border:1.5px solid rgba(255,255,255,0.18);
+        border-radius:16px;
+        padding:14px 20px;
+        text-align:center;
+        font-size:0.85rem;
+        color:white;
+        line-height:1.8;
+      ">
+        금어기와 금지체장이 없으니 맛있게 드세요.<br>
+        다만, 너무 어린 개체는 놓아 주세요. 🐟
+      </div>`;
+  }
+}
+
+
+  
   // 오늘
   const now = new Date();
   const todayM = now.getMonth() + 1;
