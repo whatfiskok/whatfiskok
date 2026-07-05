@@ -376,14 +376,14 @@
           <div class="result-modal">
             <button class="close-btn" id="closeResult">✕</button>
 <!-- 어종 실사 사진 -->
-<div style="display:flex; gap:8px; margin-bottom:14px;">
-  <div id="fishPhoto" style="display:none; flex:1;">
+<div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+  <div id="fishPhoto" style="display:none;">
     <img id="fishPhotoImg" src="" alt="어종 사진"
-      style="width:100%; height:160px; object-fit:cover; border-radius:12px;">
+      style="width:100%; height:200px; object-fit:cover; border-radius:12px;">
   </div>
-  <div id="fishPhoto2" style="display:none; flex:1;">
+  <div id="fishPhoto2" style="display:none;">
     <img id="fishPhotoImg2" src="" alt="어종 사진 2"
-      style="width:100%; height:160px; object-fit:cover; border-radius:12px;">
+      style="width:100%; height:200px; object-fit:cover; border-radius:12px;">
   </div>
 </div>
 
@@ -419,7 +419,8 @@
 <!-- 달력 + 금어기 표시 -->
 <div id="calendarSection" style="margin:14px 0; display:none;">
 
-  <div id="calendarBar" style="display:flex; width:100%; border-radius:8px; overflow:hidden; height:48px;"></div>
+<div id="calendarBar" style="display:flex; width:100%; border-radius:8px; overflow:visible; min-height:48px;"></div>
+
   <div id="minSizeInfo" style="margin-top:10px; text-align:center; font-size:0.88rem; color:white; display:none;"></div>
 </div>
 
@@ -693,17 +694,21 @@ const calendarSection = document.getElementById('calendarSection');
   renderCalendar(data.closedSeason, data.closedSeasonActive);
 } else {
   const bar = document.getElementById('calendarBar');
-  bar.innerHTML = `
-    <div style="
-      width:100%;
-      border: 1.5px solid rgba(255,255,255,0.6);
-      border-radius: 20px;
-      padding: 14px 20px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: white;
-      line-height: 1.8;
-    ">
+bar.innerHTML = `
+  <div style="
+    width:100%;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    border-radius: 20px;
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: white;
+    line-height: 1.8;
+    overflow: visible;
+    white-space: normal;
+    word-break: keep-all;
+  ">
+
       금어기와 금지체장이 없으니 맛있게 드세요.<br>
       다만, 너무 어린 개체는 놓아 주세요.
     </div>
