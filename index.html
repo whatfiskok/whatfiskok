@@ -736,11 +736,13 @@ document.addEventListener('click', function(e) {
 function doSearch() {
   const kw = document.getElementById('keywordInput').value.trim();
   if (!kw) { showToast('어종 이름을 입력해주세요.'); return; }
+  logSearch(kw, '키워드', 0);
   callAPI({ fishName: kw, waterType: currentWaterType });
   const input = document.getElementById('keywordInput');
   input.value = '';
   input.blur();
 }
+
 
 
     document.getElementById('keywordBtn').addEventListener('click', doSearch);
@@ -1042,7 +1044,77 @@ function updateInfoCards(data) {
       t.classList.remove('hidden');
       setTimeout(() => t.classList.add('hidden'), 3500);
     }
+    // Google Sheets 기록
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx9yrE13NZVN733UItpwCoccKrWjRJjvuA5aXpEDSccQzQAPVhUW4dDHNuNzoCvf3Aj/exec';
+
+function logSearch(fishName, method, tokens) {
+  const now = new Date();
+  const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    body: JSON.stringify({ date, fishName, method, tokens: tokens || 0 }),
+  }).catch(() => {});
+}
+
+// 관리자 설정
+let adminClickCount = 0;
+let adminClickTimer = null;
+
+function handleAdminClick() {
+  adminClickCount++;
+  clearTimeout(adminClickTimer);
+  adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
+  if (adminClickCount >= 5) {
+    adminClickCount = 0;
+    const pw = prompt('관리자 비밀번호:');
+    if (pw === '1234') {
+      showAdminPanel();
+    } else {
+      alert('비밀번호가 틀렸습니다.');
+    }
+  }
+}
+
+function showAdminPanel() {
+  fetch(SHEETS_URL)
+    .then(r => r.json())
+    .then(json => {
+      const rows = json.data.slice(1);
+      let html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;overflow-y:auto;padding:20px;">';
+      html += '<div style="max-width:500px;margin:0 auto;color:white;">';
+      html += '<h2 style="margin-bottom:16px;">📊 검색 기록</h2>';
+      html += '<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">';
+      html += '<tr style="border-bottom:1px solid #444;"><th style="padding:8px;text-align:left;">날짜</th><th>어종</th><th>방법</th><th>토큰</th></tr>';
+      rows.forEach(r => {
+        html += `<tr style="border-bottom:1px solid #333;">
+          <td style="padding:6px;font-size:0.7rem;">${r[0]}</td>
+          <td style="padding:6px;text-align:center;">${r[1]}</td>
+          <td style="padding:6px;text-align:center;">${r[2]}</td>
+          <td style="padding:6px;text-align:center;">${r[3]}</td>
+        </tr>`;
+      });
+      html += '</table>';
+      html += '<button onclick="this.parentElement.parentElement.remove()" style="margin-top:20px;padding:10px 24px;border-radius:10px;border:none;background:white;color:black;font-weight:700;cursor:pointer;">닫기</button>';
+      html += '</div></div>';
+      document.body.insertAdjacentHTML('beforeend', html);
+    });
+}
+
   </script>
+<div onclick="handleAdminClick()" style="
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:100;
+  opacity:0.3;
+  font-size:1.3rem;
+">⚙️</div>
 
 </body>
 </html>
