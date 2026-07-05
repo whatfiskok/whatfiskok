@@ -829,36 +829,9 @@ const calendarSection = document.getElementById('calendarSection');
       document.getElementById('resultOverlay').style.display = 'none';
     });
 function renderCalendar(closedSeason, closedSeasonActive) {
-
-
   const bar = document.getElementById('calendarBar');
   bar.innerHTML = '';
-
-  const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-  const days   = [31,28,29,31,30,31,30,31,31,30,31,30,31];
-  const totalDays = 365;
-
-  // 금어기 범위 파싱
-  let closedRanges = [];
-  if (closedSeason) {
-    const matches = [...closedSeason.matchAll(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/g)];
-    matches.forEach(m => {
-      const sm = parseInt(m[1]), sd = parseInt(m[2]);
-      const em = parseInt(m[3]), ed = parseInt(m[4]);
-      closedRanges.push({ sm, sd, em, ed });
-    });
-  }
-
-  // 날짜가 금어기인지 확인
-  function isClosed(month, day) {
-    return closedRanges.some(({ sm, sd, em, ed }) => {
-      const cur   = month * 100 + day;
-      const start = sm * 100 + sd;
-      const end   = em * 100 + ed;
-      if (start <= end) return cur >= start && cur <= end;
-      return cur >= start || cur <= end;
-    });
-  }
+}
 
 function updateInfoCards(data) {
   const infoCards = document.getElementById('infoCards');
@@ -919,27 +892,6 @@ function updateInfoCards(data) {
     </div>
   `;
 }
-
-
-  // 금어기·체장 모두 없으면 안내 메시지
-  if (!data.closedSeason && !data.minSize) {
-    document.getElementById('infoCards').innerHTML = `
-      <div style="
-        width:100%;
-        border:1.5px solid rgba(255,255,255,0.18);
-        border-radius:16px;
-        padding:14px 20px;
-        text-align:center;
-        font-size:0.85rem;
-        color:white;
-        line-height:1.8;
-      ">
-        금어기와 금지체장이 없으니 맛있게 드세요.<br>
-        다만, 너무 어린 개체는 놓아 주세요. 🐟
-      </div>`;
-  }
-}
-
 
 
   
