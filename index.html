@@ -861,42 +861,65 @@ function renderCalendar(closedSeason, closedSeasonActive) {
   }
 
 function updateInfoCards(data) {
-  // 금어기 카드
-  const cardClosed = document.getElementById('cardClosed');
-  const cardClosedText = document.getElementById('cardClosedText');
-  if (data.closedSeason) {
-    cardClosedText.textContent = data.closedSeason.replace(/~/, '\n~\n').replace(/(\d+월\s*\d+일)\s*~\s*(\d+월\s*\d+일)/, '$1\n~\n$2');
-    // 간결하게 표시
+  const infoCards = document.getElementById('infoCards');
+
+  const closedText = (() => {
+    if (!data.closedSeason) return null;
     const m = data.closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
-    if (m) {
-      cardClosedText.innerHTML = `${m[1]}/${m[2]}<br>~<br>${m[3]}/${m[4]}`;
-    } else {
-      cardClosedText.textContent = data.closedSeason;
-    }
-    cardClosed.style.display = 'flex';
-  } else {
-    cardClosed.style.display = 'none';
+    if (m) return `${m[1]}/${m[2]} ~ ${m[3]}/${m[4]}`;
+    return data.closedSeason;
+  })();
+
+  const sizeText = data.minSize ? data.minSize : null;
+  const seasonText = data.season ? data.season : null;
+
+  if (!closedText && !sizeText && !seasonText) {
+    infoCards.innerHTML = `
+      <div style="
+        width:100%;
+        border:1.5px solid rgba(255,255,255,0.18);
+        border-radius:16px;
+        padding:14px 20px;
+        text-align:center;
+        font-size:0.85rem;
+        color:white;
+        line-height:1.8;
+      ">
+        금어기와 금지체장이 없으니 맛있게 드세요.<br>
+        다만, 너무 어린 개체는 놓아 주세요. 🐟
+      </div>`;
+    return;
   }
 
-  // 금지체장 카드
-  const cardSize = document.getElementById('cardSize');
-  const cardSizeText = document.getElementById('cardSizeText');
-  if (data.minSize) {
-    cardSizeText.textContent = `${data.minSize}${data.minSizeUnit || 'cm'}`;
-    cardSize.style.display = 'flex';
-  } else {
-    cardSize.style.display = 'none';
-  }
+  infoCards.innerHTML = `
+    <div style="
+      width:100%;
+      border:1.5px solid rgba(255,255,255,0.18);
+      border-radius:16px;
+      padding:16px 20px;
+      color:white;
+      line-height:1.0;
+    ">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+        <span style="font-size:1.3rem; font-weight:900; letter-spacing:2px;">
+          ${closedText ? '금  어  기' : ''}
+        </span>
+        <span style="font-size:0.95rem; font-weight:700; color:#f4a261;">
+          ${sizeText ? `${sizeText} 이상만 잡을 수 있어요` : ''}
+        </span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <span style="font-size:1.1rem; font-weight:800; color:#e63946;">
+          ${closedText || ''}
+        </span>
+        <span style="font-size:0.85rem; color:#aaa;">
+          ${seasonText ? `제철은 ${seasonText} 이에요.` : ''}
+        </span>
+      </div>
+    </div>
+  `;
+}
 
-  // 제철 카드
-  const cardSeason = document.getElementById('cardSeason');
-  const cardSeasonText = document.getElementById('cardSeasonText');
-  if (data.season) {
-    cardSeasonText.textContent = data.season;
-    cardSeason.style.display = 'flex';
-  } else {
-    cardSeason.style.display = 'none';
-  }
 
   // 금어기·체장 모두 없으면 안내 메시지
   if (!data.closedSeason && !data.minSize) {
