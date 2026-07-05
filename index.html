@@ -376,6 +376,13 @@
           <div class="result-modal">
             <button class="close-btn" id="closeResult">✕</button>
 <!-- 어종 실사 사진 -->
+<div class="fish-header">
+  <div class="fish-names">
+    <h2 id="resultFishName">—</h2>
+    <p id="resultScientificName" class="scientific-name" style="display:none;"></p>
+  </div>
+</div>
+
 <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
   <div id="fishPhoto" style="display:none;">
     <img id="fishPhotoImg" src="" alt="어종 사진"
@@ -387,18 +394,10 @@
   </div>
 </div>
 
-
 <div class="status-badge-wrap">
 <span class="status-badge" id="statusBadge" style="display:none;">확인 중</span>
 </div>
 
-<div class="fish-header">
-
-  <div class="fish-names">
-    <h2 id="resultFishName">—</h2>
-    <p id="resultScientificName" class="scientific-name" style="display:none;"></p>
-  </div>
-</div>
 
 <!-- 요청 버튼 (DB 미등록 어종) -->
 <div id="requestSection" style="display:none; text-align:center; width:100%; margin-top:10px;">
@@ -492,10 +491,9 @@
               <span>⚠️</span>
               <span id="regionNoteText"></span>
             </div>
-            <div class="fish-info">
-          <div style="margin:14px 0; font-size:0.88rem; color:#ccc; line-height:1.6;">
-  <span id="resultDescription"></span>
+<div class="fish-info">
 </div>
+
 
 
             </div>
