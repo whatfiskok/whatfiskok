@@ -418,7 +418,7 @@
 
 
     <!-- + 버튼 (내부 왼쪽) -->
-    <button id="plusBtn" onclick="togglePlusMenu()" style="
+    <button id="plusBtn" onclick="window.togglePlusMenu()" style="
       flex-shrink:0;
       width:36px; height:36px;
       border-radius:50%;
@@ -677,10 +677,11 @@
     }
 
     let currentWaterType = 'all';
-function togglePlusMenu() {
+window.togglePlusMenu = function() {
   const menu = document.getElementById('plusMenu');
   menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
 }
+
 
 // 외부 클릭시 메뉴 닫기
 document.addEventListener('click', function(e) {
