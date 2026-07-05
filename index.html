@@ -1068,25 +1068,20 @@ function handleAdminClick() {
   adminClickTimer = setTimeout(() => { adminClickCount = 0; }, 2000);
   if (adminClickCount >= 5) {
     adminClickCount = 0;
-fetch('/api/admin')
-  .then(r => r.json())
-  .then(json => {
-    if (json.email === 'roh@impact7.kr') {
+    const pw = prompt('관리자 비밀번호:');
+    if (pw === 'impact7') {
       showAdminPanel();
     } else {
-      alert('접근 권한이 없습니다.\n현재 계정: ' + (json.email || '알 수 없음'));
+      alert('비밀번호가 틀렸습니다.');
     }
-  })
-  .catch(() => {
-    alert('오류가 발생했습니다.');
-  });
-
   }
 }
 
 
+
 function showAdminPanel() {
-  fetch(SHEETS_URL)
+  fetch('https://script.google.com/macros/s/AKfycby1EntjYtDk5bY5Oj23xgMe_-ns1ZkX8qcLVqLHntnqIEo7v1CzpcrzS5LxWtl8MPFX/exec')
+
     .then(r => r.json())
     .then(json => {
       const rows = json.data.slice(1);
@@ -1109,6 +1104,7 @@ function showAdminPanel() {
       document.body.insertAdjacentHTML('beforeend', html);
     });
 }
+
 
   </script>
 <div onclick="handleAdminClick()" style="
