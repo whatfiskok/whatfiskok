@@ -349,7 +349,8 @@
 
         <!-- 키워드 -->
         <div class="main-tab-content" id="mainKeywordArea">
-<div style="position:relative; width:100%; box-sizing:border-box;">
+<div style="position:relative; width:100%; box-sizing:border-box; max-width:100%; overflow:hidden;">
+
 
   <!-- + 메뉴 팝업 -->
   <div id="plusMenu" style="
@@ -433,17 +434,20 @@
     "/>
 
     <!-- 검색 버튼 (내부 오른쪽) -->
-    <button id="keywordBtn" style="
-      flex-shrink:0;
-      padding:8px 18px;
-      border-radius:22px;
-      border:none;
-      background:rgba(255,255,255,0.25);
-      color:#fff;
-      font-weight:700;
-      font-size:0.9rem;
-      cursor:pointer;
-    ">검색</button>
+  <button id="keywordBtn" style="
+    flex-shrink:0;
+    width:60px;
+    padding:8px 0;
+    border-radius:22px;
+    border:none;
+    background:rgba(255,255,255,0.25);
+    color:#fff;
+    font-weight:700;
+    font-size:0.9rem;
+    cursor:pointer;
+    text-align:center;
+  ">검색</button>
+
   </div>
 </div>
 
