@@ -670,10 +670,9 @@ const calendarSection = document.getElementById('calendarSection');
   renderCalendar(data.closedSeason, data.closedSeasonActive);
 } else {
   const bar = document.getElementById('calendarBar');
-  bar.innerHTML = '';
-  const calendarSection = document.getElementById('calendarSection');
-  calendarSection.innerHTML = `
+  bar.innerHTML = `
     <div style="
+      width:100%;
       border: 1.5px solid rgba(255,255,255,0.6);
       border-radius: 20px;
       padding: 14px 20px;
@@ -687,6 +686,7 @@ const calendarSection = document.getElementById('calendarSection');
     </div>
   `;
 }
+
 
 
     // 금지체장 표시
