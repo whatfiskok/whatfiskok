@@ -631,8 +631,18 @@ if (data.fishName) {
       // 두 번째 이미지
       const fishPhoto2 = document.getElementById('fishPhoto2');
       const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
-      if (page.images && page.images.length > 1) {
-        const secondTitle = page.images[1].title;
+if (page.images && page.images.length > 1) {
+  const imageFiles = page.images.filter(img =>
+    /\.(jpg|jpeg|png)$/i.test(img.title) &&
+    !img.title.includes('icon') &&
+    !img.title.includes('logo') &&
+    !img.title.includes('Icon') &&
+    !img.title.includes('Logo')
+  );
+  const secondImg = imageFiles.find(img => img.title !== page.images[0].title);
+  if (!secondImg) return;
+  const secondTitle = secondImg.title;
+
         fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(secondTitle)}&prop=imageinfo&iiprop=url&format=json&origin=*`)
           .then(r2 => r2.json())
           .then(json2 => {
