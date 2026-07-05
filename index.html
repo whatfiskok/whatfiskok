@@ -296,6 +296,15 @@
     @media (max-width: 375px) {
       .main-title h1 { font-size: 1.5rem; }
     }
+    #keywordInput {
+  background: transparent !important;
+  color: white !important;
+}
+#keywordInput:focus {
+  background: transparent !important;
+  outline: none;
+}
+
   </style>
 </head>
 <body>
@@ -692,11 +701,15 @@ document.addEventListener('click', function(e) {
       if (currentImageBase64) callAPI({ imageBase64: currentImageBase64, waterType: currentWaterType });
     });
 
-    function doSearch() {
-      const kw = document.getElementById('keywordInput').value.trim();
-      if (!kw) { showToast('어종 이름을 입력해주세요.'); return; }
-      callAPI({ fishName: kw, waterType: currentWaterType });
-    }
+function doSearch() {
+  const kw = document.getElementById('keywordInput').value.trim();
+  if (!kw) { showToast('어종 이름을 입력해주세요.'); return; }
+  callAPI({ fishName: kw, waterType: currentWaterType });
+  const input = document.getElementById('keywordInput');
+  input.value = '';
+  input.blur();
+}
+
 
     document.getElementById('keywordBtn').addEventListener('click', doSearch);
     document.getElementById('keywordInput').addEventListener('keypress', (e) => {
