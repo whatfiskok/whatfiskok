@@ -349,7 +349,8 @@
 
         <!-- 키워드 -->
         <div class="main-tab-content" id="mainKeywordArea">
-<div style="position:relative;">
+<div style="position:relative; width:100%; box-sizing:border-box;">
+
   <!-- + 메뉴 팝업 -->
   <div id="plusMenu" style="
     display:none;
@@ -398,9 +399,12 @@
     background:rgba(255,255,255,0.1);
     border:1.5px solid rgba(255,255,255,0.3);
     border-radius:28px;
-    padding:4px 4px 4px 4px;
+    padding:4px;
     gap:8px;
+    width:100%;
+    box-sizing:border-box;
   ">
+
     <!-- + 버튼 (내부 왼쪽) -->
     <button id="plusBtn" onclick="togglePlusMenu()" style="
       flex-shrink:0;
