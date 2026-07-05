@@ -673,7 +673,7 @@ ro.scrollIntoView({ behavior: 'smooth' });
  const requestSection = document.getElementById('requestSection');
 const requestMailBtn = document.getElementById('requestMailBtn');
 requestSection.style.display = 'none';
-document.getElementById('resultDescription').textContent = '';
+
 
 
 if (data.fishName) {
@@ -710,7 +710,7 @@ fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(d
         if (data.source === 'not_found') {
           if (page.extract) {
             const extract = page.extract.slice(0, 300).replace(/\n/g, ' ');
-            document.getElementById('resultDescription').textContent = extract + (page.extract.length > 300 ? '…' : '');
+            
           }
           const subject = encodeURIComponent(`[금어기 정보 요청] ${data.fishName}`);
           const body = encodeURIComponent(
@@ -798,17 +798,7 @@ const calendarSection = document.getElementById('calendarSection');
     rn.classList.add('hidden');
   }
 
-  const descEl = document.getElementById('resultDescription');
-  if (isNotFound) {
-    // Wikipedia extract는 Wikipedia 조회 후 별도 설정
-    descEl.textContent = '';
-  } else {
-    const parts = [];
-    if (data.habitat) parts.push(data.habitat);
-    if (data.season) parts.push(`제철: ${data.season}`);
-    if (data.description) parts.push(data.description);
-    descEl.textContent = parts.join(' | ') || '—';
-  }
+
 
 
   const wb2 = document.getElementById('warningBox');
