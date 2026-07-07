@@ -959,40 +959,44 @@ function updateInfoCards(data) {
   const closedText = (() => {
     if (!data.closedSeason) return null;
     const m = data.closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
-    if (m) return `${m[1]}/${m[2]} ~ ${m[3]}/${m[4]}`;
+    if (m) return `${m[1]}월 ${m[2]}일 ~ ${m[3]}월 ${m[4]}일`;
     return data.closedSeason;
   })();
 
-  const sizeText = data.minSize ? data.minSize : null;
+  const sizeText = data.minSize ? (data.minSize + (data.minSizeUnit || 'cm') + (data.minSizeNote ? ' (' + data.minSizeNote + ')' : '')) : null;
   const seasonText = data.season ? data.season : null;
 
-  if (!closedText && !sizeText) {
-    infoCards.innerHTML = `
-      <div style="
-        width:100%;
-        border:1.5px solid rgba(255,255,255,0.18);
-        border-radius:16px;
-        padding:16px 20px;
-        color:white;
-        line-height:1.0;
-      ">
-        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
-          <span style="font-size:1.3rem; font-weight:900; letter-spacing:2px;">금  어  기</span>
-            <span style="font-size:0.95rem; font-weight:700; color:#f4a261;">
-          ${sizeText ? sizeText + ' 이상만 잡을 수 있어요' : '작은 건 놔주고 맛있게 드세요'}
+  infoCards.innerHTML = `
+    <div style="
+      width:100%;
+      border:1.5px solid rgba(255,255,255,0.18);
+      border-radius:16px;
+      padding:16px 20px;
+      color:white;
+      line-height:2.0;
+    ">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:0.85rem; color:#aaa; min-width:80px;">금어기 :</span>
+        <span style="font-size:0.95rem; font-weight:800; color:${closedText ? '#e63946' : '#aaa'};">
+          ${closedText ? closedText : '없음'}
         </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:0.85rem; color:#aaa; min-width:80px;">금지체장 :</span>
+        <span style="font-size:0.95rem; font-weight:800; color:${sizeText ? '#f4a261' : '#aaa'};">
+          ${sizeText ? sizeText + ' 이하 포획 금지' : '없음'}
+        </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:0.85rem; color:#aaa; min-width:80px;">제철 안내 :</span>
+        <span style="font-size:0.95rem; font-weight:700; color:#4fc3f7;">
+          ${seasonText ? seasonText : '정보 없음'}
+        </span>
+      </div>
+    </div>
+  `;
+}
 
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:baseline;">
-          <span style="font-size:1.1rem; font-weight:800; color:#aaa;">없  음</span>
-          <span style="font-size:0.85rem; color:#aaa;">
-         ${seasonText ? '제철: ' + seasonText : ''}
-
-          </span>
-        </div>
-      </div>`;
-    return;
-  }
 
 
   infoCards.innerHTML = `
