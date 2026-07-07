@@ -825,8 +825,9 @@
     "similarFish": [{"name": "송어", "difference": "송어는 민물에서만 살고 연어보다 작다"}],
     "warning": "금어기 외에도 포획 허가 필요. 반드시 관할 기관에 확인 후 조업하세요."
   },
-  "뱀장어": {
-    "aliases": ["민물장어"],
+"뱀장어": {
+  "aliases": ["민물장어", "장어"],
+
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 15,
