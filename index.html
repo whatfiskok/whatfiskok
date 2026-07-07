@@ -537,7 +537,8 @@
             </div>
 <!-- 달력 + 금어기 표시 -->
 
-<div id="calendarSection" style="margin:14px 0; display:none;">
+<div id="calendarSection" style="margin:14px 0; display:none; padding:0 4px;">
+
   <!-- 인포그래픽 카드 3개 -->
   <div id="infoCards" style="display:flex; gap:10px; justify-content:center; align-items:stretch; flex-wrap:wrap; margin-bottom:10px;">
 
@@ -963,9 +964,10 @@ function updateInfoCards(data) {
     return data.closedSeason;
   })();
 
-  const sizeText = data.minSize
-    ? data.minSize + (data.minSizeUnit || 'cm') + (data.minSizeNote ? ' (' + data.minSizeNote + ')' : '')
-    : null;
+const sizeText = data.minSize
+  ? data.minSize + 'cm' + (data.minSizeNote ? ' (' + data.minSizeNote + ')' : '')
+  : null;
+
   const seasonText = data.season || null;
 
   infoCards.innerHTML = `
