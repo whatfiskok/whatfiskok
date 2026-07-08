@@ -491,7 +491,8 @@
   },
 
   "참문어": {
-    "aliases": ["문어"],
+"aliases": [],
+
     "waterType": "sea",
     "closedSeason": "5월 16일 ~ 6월 30일",
     "minSize": null,
