@@ -241,25 +241,41 @@ module.exports = async function handler(req, res) {
     }
 
     // DB에 없는 어종
-    return res.status(200).json({
-      fishName:           fishName,
-      scientificName:     null,
-      waterType:          waterType || null,
-      confidence:         null,
-      source:             'not_found',
-      closedSeason:       null,
-      closedSeasonActive: null,
-      todayStatus:        '정보없음',
-      minSize:            null,
-      regionNote:         null,
-      habitat:            null,
-      season:             null,
-      description:        null,
-      similarFish:        [],
-      warning:            null,
-      message:            `'${fishName}'은(는) DB에 없습니다.`,
-      dataSource:         null,
-    });
+// DB에 없는 어종 - 유사 어종 추천
+const suggestions = {
+  '문어': ['참문어', '대문어'],
+  '오징어': ['살오징어', '갑오징어'],
+  '게': ['꽃게', '대게', '붉은대게'],
+  '새우': ['대하', '보리새우'],
+  '조개': ['키조개', '새조개', '코끼리조개'],
+  '가자미': ['문치가자미', '참가자미', '용가자미', '기름가자미'],
+};
+
+const relatedFish = suggestions[fishName] || [];
+
+return res.status(200).json({
+  fishName:           fishName,
+  scientificName:     null,
+  waterType:          waterType || null,
+  confidence:         null,
+  source:             'not_found',
+  closedSeason:       null,
+  closedSeasonActive: null,
+  todayStatus:        '정보없음',
+  minSize:            null,
+  regionNote:         null,
+  habitat:            null,
+  season:             null,
+  description:        null,
+  similarFish:        [],
+  warning:            null,
+  suggestions:        relatedFish,
+  message:            relatedFish.length > 0
+    ? `'${fishName}'은(는) DB에 없습니다. 아래 어종을 선택해 주세요.`
+    : `'${fishName}'은(는) DB에 없습니다.`,
+  dataSource:         null,
+});
+
 
   }
 
