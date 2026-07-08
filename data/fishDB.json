@@ -476,7 +476,7 @@
     "warning": "체장 측정 기준이 '외투장(다리 제외 몸통)'입니다."
   },
   "갑오징어": {
-    "aliases": ["갑오징어"],
+    "aliases": [],
     "waterType": "sea",
     "closedSeason": null,
     "minSize": null,
