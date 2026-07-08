@@ -849,18 +849,33 @@ fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(d
 
 
         // DB 미등록 어종이면 Wikipedia 설명 표시 + 요청 버튼 표시
-        if (data.source === 'not_found') {
-          if (page.extract) {
-            const extract = page.extract.slice(0, 300).replace(/\n/g, ' ');
-            
-          }
-          const subject = encodeURIComponent(`[금어기 정보 요청] ${data.fishName}`);
-          const body = encodeURIComponent(
-            `어종명: ${data.fishName}\n\n위 어종의 금어기 및 금지체장 정보를 DB에 추가해 주세요.\n\n(앱에서 자동 발송)`
-          );
-          requestMailBtn.href = `mailto:webnjw@gmail.com?subject=${subject}&body=${body}`;
-          requestSection.style.display = 'block';
-        }
+if (data.source === 'not_found') {
+  if (data.suggestions && data.suggestions.length > 0) {
+    const suggestionHtml = data.suggestions.map(name => `
+      <button onclick="searchFishName('${name}')" style="
+        margin: 4px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1.5px solid rgba(255,255,255,0.6);
+        background: rgba(255,255,255,0.15);
+        color: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+      ">${name}</button>
+    `).join('');
+    const suggestionBox = document.createElement('div');
+    suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
+    suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
+    requestSection.before(suggestionBox);
+  }
+  const subject = encodeURIComponent(`[금어기 정보 요청] ${data.fishName}`);
+  const body = encodeURIComponent(
+    `어종명: ${data.fishName}\n\n위 어종의 금어기 및 금지체장 정보를 DB에 추가해 주세요.\n\n(앱에서 자동 발송)`
+  );
+  requestMailBtn.href = `mailto:webnjw@gmail.com?subject=${subject}&body=${body}`;
+  requestSection.style.display = 'block';
+}
+
       })
       .catch(() => {});
   }
@@ -1088,6 +1103,10 @@ function showAdminPanel() {
     });
 }
 
+function searchFishName(name) {
+  document.getElementById('fishNameInput').value = name;
+  document.getElementById('searchBtn').click();
+}
 
   </script>
 <div onclick="handleAdminClick()" style="
