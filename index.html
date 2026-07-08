@@ -1104,9 +1104,9 @@ function showAdminPanel() {
 }
 
 function searchFishName(name) {
-  document.getElementById('keywordInput').value = name;
-  document.getElementById('searchBtn').click();
+  callAPI({ fishName: name });
 }
+
 
 
   </script>
