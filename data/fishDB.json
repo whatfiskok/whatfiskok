@@ -475,7 +475,7 @@
     "similarFish": [{"name": "갑오징어", "difference": "갑오징어는 몸통이 납작하고 내부에 석회질 갑 보유"}],
     "warning": "체장 측정 기준이 '외투장(다리 제외 몸통)'입니다."
   },
-  "갑오징어": {
+ "갑오징어": {
     "aliases": [],
     "waterType": "sea",
     "closedSeason": null,
@@ -489,6 +489,7 @@
     "similarFish": [{"name": "살오징어", "difference": "갑오징어는 몸통이 납작하고 더 통통한 체형"}],
     "warning": null
   },
+
   "참문어": {
     "aliases": ["문어"],
     "waterType": "sea",
