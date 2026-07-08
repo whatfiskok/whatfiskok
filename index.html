@@ -828,11 +828,22 @@ if (data.fishName) {
       const pages = json.query.pages;
       const page = Object.values(pages)[0];
 
-      // 첫 번째 이미지
-      if (page.thumbnail && page.thumbnail.source) {
-        fishPhotoImg.src = page.thumbnail.source;
+// 첫 번째 이미지
+if (page.thumbnail && page.thumbnail.source) {
+  fishPhotoImg.src = page.thumbnail.source;
+  fishPhoto.style.setProperty('display', 'block', 'important');
+} else if (data.scientificName) {
+  fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.scientificName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
+    .then(r2 => r2.json())
+    .then(json2 => {
+      const p2 = Object.values(json2.query.pages)[0];
+      if (p2.thumbnail && p2.thumbnail.source) {
+        fishPhotoImg.src = p2.thumbnail.source;
         fishPhoto.style.setProperty('display', 'block', 'important');
       }
+    }).catch(() => {});
+}
+
 
 // 두 번째 이미지 - iNaturalist
 const fishPhoto2 = document.getElementById('fishPhoto2');
