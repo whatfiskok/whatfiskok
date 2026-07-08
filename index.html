@@ -989,8 +989,9 @@ function updateInfoCards(data) {
   })();
 
 const sizeText = data.minSize
-  ? data.minSize + 'cm' + (data.minSizeNote ? ' (' + data.minSizeNote + ')' : '')
+  ? data.minSize + (data.minSizeUnit || 'cm') + (data.minSizeNote ? ' (' + data.minSizeNote + ')' : '')
   : null;
+
 
   const seasonText = data.season || null;
 
