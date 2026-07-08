@@ -838,7 +838,9 @@ if (data.fishName) {
 const fishPhoto2 = document.getElementById('fishPhoto2');
 const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
 fishPhoto2.style.display = 'none';
-fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(data.fishName)}&rank=species&locale=ko`)
+const searchName = data.scientificName || data.fishName;
+fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(searchName)}&rank=species&locale=ko`)
+
   .then(r2 => r2.json())
   .then(json2 => {
     if (json2.results && json2.results.length > 0) {
