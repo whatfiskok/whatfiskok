@@ -78,7 +78,9 @@ function buildDbResponse(dbResult, overrides = {}) {
     closedSeason:       closedSeason   || null,
     closedSeasonActive: closedSeasonActive,
     todayStatus,
-    minSize:            minSize ? `${minSize}${minSizeUnit} (${minSizeNote})` : null,
+    minSize:            minSize || null,
+    minSizeUnit:        minSizeUnit || null,
+    minSizeNote:        minSizeNote || null,
     regionNote:         dbResult.regionNote   || null,
     habitat:            dbResult.habitat      || null,
     season:             dbResult.season       || null,
@@ -88,6 +90,7 @@ function buildDbResponse(dbResult, overrides = {}) {
     dataSource:         '해양수산부 수산자원관리법 시행령 (2026.1.1. 기준)',
   };
 }
+
 
 // ── 유틸: HTTPS fetch ──────────────────────────────────────────────
 function fetchJson(url, options = {}) {
