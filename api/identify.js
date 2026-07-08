@@ -79,7 +79,8 @@ function buildDbResponse(dbResult, overrides = {}) {
 
   return {
     fishName:           dbResult.fishName,
-    scientificName:     overrides.scientificName || null,
+scientificName: overrides.scientificName || dbResult.scientificName || null,
+
     waterType:          dbResult.waterType,
     confidence:         overrides.confidence ?? 1.0,
     source:             'db',
