@@ -10,9 +10,11 @@ const https = require('https');
 function loadFishDB() {
   try {
     const dbPath = path.join(__dirname, '..', 'data', 'fishDB.json');
-    return JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+    const db = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+    console.log('[FISH_DB] 로드 성공, 어종 수:', Object.keys(db).length);
+    return db;
   } catch (e) {
-    console.error('[FISH_DB] fishDB.json 로드 실패:', e.message);
+    console.error('[FISH_DB] 로드 실패:', e.message, '경로:', path.join(__dirname, '..', 'data', 'fishDB.json'));
     return {};
   }
 }
