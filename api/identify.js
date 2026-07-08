@@ -9,7 +9,8 @@ const https = require('https');
 
 let FISH_DB = {};
 try {
-  const dbPath = path.join(process.cwd(), 'data', 'fishDB.json');
+const dbPath = path.join(__dirname, '..', 'data', 'fishDB.json');
+
   FISH_DB = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
   console.log('[FISH_DB] 로드 성공, 어종 수:', Object.keys(FISH_DB).length);
 } catch (e) {
