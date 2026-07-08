@@ -194,17 +194,15 @@ async function identifyWithINaturalist(imageBase64) {
 
 // ── 서버 캐시 (1시간) ──────────────────────────────────────────────
 const serverCache = new Map();
-const CACHE_TTL   = 60 * 60 * 1000;
+const CACHE_TTL   = 0; // 캐시 비활성화
 
 function getCached(key) {
-  const entry = serverCache.get(key);
-  if (!entry) return null;
-  if (Date.now() - entry.time > CACHE_TTL) { serverCache.delete(key); return null; }
-  return entry.data;
+  return null; // 항상 캐시 미사용
 }
 function setCache(key, data) {
-  serverCache.set(key, { data, time: Date.now() });
+  // 캐시 저장 안 함
 }
+
 
 // ── 메인 핸들러 ────────────────────────────────────────────────────
 module.exports = async function handler(req, res) {
