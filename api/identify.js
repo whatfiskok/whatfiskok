@@ -8,14 +8,21 @@ const fs    = require('fs');
 const https = require('https');
 
 function loadFishDB() {
-  try {
-    const dbPath = path.join(__dirname, '..', 'data', 'fishDB.json');
-    return JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
-  } catch (e) {
-    console.error('[FISH_DB] fishDB.json 로드 실패:', e.message);
-    return {};
+  const tries = [
+    path.join(__dirname, '..', 'data', 'fishDB.json'),
+    path.join(process.cwd(), 'data', 'fishDB.json'),
+    '/var/task/data/fishDB.json'
+  ];
+  for (const dbPath of tries) {
+    try {
+      if (fs.existsSync(dbPath)) {
+        return JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+      }
+    } catch (e) {}
   }
+  return {};
 }
+
 
 
 // ── 금어기 날짜 계산 ───────────────────────────────────────────────
