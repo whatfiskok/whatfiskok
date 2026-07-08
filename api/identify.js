@@ -7,15 +7,16 @@ const path  = require('path');
 const fs    = require('fs');
 const https = require('https');
 
-let FISH_DB = {};
-try {
-const dbPath = path.join(__dirname, '..', 'data', 'fishDB.json');
-
-  FISH_DB = JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
-  console.log('[FISH_DB] 로드 성공, 어종 수:', Object.keys(FISH_DB).length);
-} catch (e) {
-  console.error('[FISH_DB] fishDB.json 로드 실패:', e.message);
+function loadFishDB() {
+  try {
+    const dbPath = path.join(__dirname, '..', 'data', 'fishDB.json');
+    return JSON.parse(fs.readFileSync(dbPath, 'utf-8'));
+  } catch (e) {
+    console.error('[FISH_DB] fishDB.json 로드 실패:', e.message);
+    return {};
+  }
 }
+
 
 // ── 금어기 날짜 계산 ───────────────────────────────────────────────
 function isClosedSeason(mm, dd, closedSeasonStr) {
@@ -32,7 +33,9 @@ function isClosedSeason(mm, dd, closedSeasonStr) {
 
 // ── DB 조회 ────────────────────────────────────────────────────────
 function lookupFishDB(name) {
+  const FISH_DB = loadFishDB();
   if (!name) return null;
+
   const normalized = name.trim();
 
   let entry    = null;
