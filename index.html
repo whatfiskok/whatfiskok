@@ -798,6 +798,9 @@ function doSearch() {
 
 function showResult(data) {
   showLoading(false);
+  const oldBox = document.getElementById('suggestionBox');
+  if (oldBox) oldBox.remove();
+
 
   // 모달 열기
 const ro = document.getElementById('resultOverlay');
@@ -863,10 +866,15 @@ if (data.source === 'not_found') {
         cursor: pointer;
       ">${name}</button>
     `).join('');
-    const suggestionBox = document.createElement('div');
-    suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
-    suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
-    requestSection.before(suggestionBox);
+let suggestionBox = document.getElementById('suggestionBox');
+if (!suggestionBox) {
+  suggestionBox = document.createElement('div');
+  suggestionBox.id = 'suggestionBox';
+  requestSection.before(suggestionBox);
+}
+suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
+suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
+
   }
   const subject = encodeURIComponent(`[금어기 정보 요청] ${data.fishName}`);
   const body = encodeURIComponent(
