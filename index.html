@@ -322,7 +322,8 @@
     <div id="mainContent">
 
       <div class="main-title">
-<h1>
+<h1 onclick="location.href='/'" style="cursor:pointer;">
+
   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 100 60" fill="white" style="vertical-align:middle; margin-right:8px;">
     <!-- 몸통 -->
     <ellipse cx="45" cy="30" rx="35" ry="18"/>
@@ -468,12 +469,7 @@
 
         <!-- 사진 -->
         <div class="main-tab-content" id="mainPhotoArea" style="display:none;">
-          <div class="photo-btns">
-            <label class="photo-btn" for="cameraInput">📷 카메라</label>
-            <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none"/>
-            <label class="photo-btn" for="galleryInput">🖼️ 갤러리</label>
-            <input type="file" id="galleryInput" accept="image/*" style="display:none"/>
-          </div>
+      
           <div id="photoPreviewWrap" style="display:none; margin-top:12px; text-align:center;">
             <img id="previewImg" style="max-width:100%; max-height:200px; border-radius:12px;"/>
             <br/>
