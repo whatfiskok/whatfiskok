@@ -714,17 +714,32 @@ document.addEventListener('click', function(e) {
 
 function handleImage(file) {
   if (!file || !file.type.startsWith('image/')) return;
+  const img = new Image();
   const reader = new FileReader();
   reader.onload = (e) => {
-    currentImageBase64 = e.target.result.split(',')[1];
-    const preview = document.getElementById('previewImg');
-    preview.src = e.target.result;
-    document.getElementById('photoPreviewWrap').style.display = 'block';
-    document.getElementById('analyzeBtn').disabled = false;
-    switchMainTab('photo');
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const max = 800;
+      let w = img.width, h = img.height;
+      if (w > max || h > max) {
+        if (w > h) { h = Math.round(h * max / w); w = max; }
+        else { w = Math.round(w * max / h); h = max; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const compressed = canvas.toDataURL('image/jpeg', 0.7);
+      currentImageBase64 = compressed.split(',')[1];
+      const preview = document.getElementById('previewImg');
+      preview.src = compressed;
+      document.getElementById('photoPreviewWrap').style.display = 'block';
+      document.getElementById('analyzeBtn').disabled = false;
+      switchMainTab('photo');
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
+
 
     
     document.getElementById('analyzeBtn').addEventListener('click', () => {
