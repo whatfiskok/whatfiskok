@@ -777,7 +777,8 @@ window.addEventListener('load', function() {
       }
       showLoading(true,
         payload.imageBase64 ? '모든 수단과 방법으로 찾는중...' : '오늘도 열심히 조회 중....',
-        payload.imageBase64 ? ' : '잠시만요....'
+       payload.imageBase64 ? '' : '잠시만요....'
+
       );
       try {
         const res = await fetch('/api/identify', {
