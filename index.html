@@ -726,8 +726,7 @@ function handleImage(file) {
   reader.readAsDataURL(file);
 }
 
-    document.getElementById('cameraInput').addEventListener('change', (e) => handleImage(e.target.files[0]));
-    document.getElementById('galleryInput').addEventListener('change', (e) => handleImage(e.target.files[0]));
+    
     document.getElementById('analyzeBtn').addEventListener('click', () => {
       if (currentImageBase64) callAPI({ imageBase64: currentImageBase64, waterType: currentWaterType });
     });
