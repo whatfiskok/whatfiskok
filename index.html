@@ -716,18 +716,19 @@ document.addEventListener('click', function(e) {
 
     let currentImageBase64 = null;
 
-    function handleImage(file) {
-      if (!file || !file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        currentImageBase64 = e.target.result.split(',')[1];
-        const preview = document.getElementById('previewImg');
-        preview.src = e.target.result;
-        document.getElementById('photoPreviewWrap').style.display = 'block';
-        document.getElementById('analyzeBtn').disabled = false;
-      };
-      reader.readAsDataURL(file);
-    }
+function handleImage(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    currentImageBase64 = e.target.result.split(',')[1];
+    const preview = document.getElementById('previewImg');
+    preview.src = e.target.result;
+    document.getElementById('photoPreviewWrap').style.display = 'block';
+    document.getElementById('analyzeBtn').disabled = false;
+    switchMainTab('photo');
+  };
+  reader.readAsDataURL(file);
+}
 
     document.getElementById('cameraInput').addEventListener('change', (e) => handleImage(e.target.files[0]));
     document.getElementById('galleryInput').addEventListener('change', (e) => handleImage(e.target.files[0]));
