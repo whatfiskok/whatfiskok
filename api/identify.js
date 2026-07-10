@@ -247,9 +247,15 @@ identified = await identifyWithGemini(imageBase64);
 
 
 if (!identified) {
+    const testRes = await fetchJson(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: '안녕' }] }] }) }
+    );
     return res.status(422).json({
       error: '어종을 식별하지 못했습니다.',
-      debug: { geminiKeyExists: !!process.env.GEMINI_API_KEY },
+      debug: { geminiKeyExists: !!process.env.GEMINI_API_KEY, geminiTest: testRes.body },
+
 
       message: '더 선명하고 가까운 사진으로 다시 시도해 주세요.',
     });
