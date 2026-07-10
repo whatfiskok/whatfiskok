@@ -818,6 +818,9 @@ function showResult(data) {
   showLoading(false);
   const oldBox = document.getElementById('suggestionBox');
   if (oldBox) oldBox.remove();
+  document.getElementById('photoPreviewWrap').style.display = 'none';
+  switchMainTab('keyword');
+
 
 
   // 모달 열기
