@@ -238,10 +238,9 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  let identified = null;
-  if (waterType !== 'fresh') identified = await identifyWithFishial(imageBase64);
-  if (!identified) identified = await identifyWithINaturalist(imageBase64);
-  if (!identified) identified = await identifyWithGemini(imageBase64);
+let identified = null;
+identified = await identifyWithGemini(imageBase64);
+
 
   if (!identified) {
     return res.status(422).json({
