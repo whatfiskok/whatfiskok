@@ -182,9 +182,11 @@ async function identifyWithGemini(imageBase64) {
     );
     if (res.status === 200 && res.body?.candidates?.[0]?.content?.parts?.[0]?.text) {
       const name = res.body.candidates[0].content.parts[0].text.trim();
-      if (name && name !== '없음') {
-        return { source: 'gemini', name, confidence: 85 };
-      }
+console.log('[Gemini] 응답:', name);
+if (name && name !== '없음') {
+  return { source: 'gemini', name, confidence: 85 };
+}
+
     }
     return null;
   } catch { return null; }
