@@ -244,9 +244,11 @@ let identified = null;
 identified = await identifyWithGemini(imageBase64);
 
 
-  if (!identified) {
+if (!identified) {
     return res.status(422).json({
       error: '어종을 식별하지 못했습니다.',
+      debug: { geminiKeyExists: !!process.env.GEMINI_API_KEY },
+
       message: '더 선명하고 가까운 사진으로 다시 시도해 주세요.',
     });
   }
