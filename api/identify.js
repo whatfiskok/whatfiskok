@@ -164,7 +164,9 @@ async function identifyWithINaturalist(imageBase64) {
 async function identifyWithGemini(imageBase64) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
+    console.log('[Gemini] API Key 존재:', !!apiKey);
     if (!apiKey) return null;
+
     const res = await fetchJson(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
