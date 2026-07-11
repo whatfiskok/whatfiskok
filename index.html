@@ -527,14 +527,13 @@
 </div>
 
 <!-- 면책 문구 -->
-<div style="text-align:center; margin-top:20px; padding: 0 10px;">
+<div id="disclaimerBox" style="display:none; text-align:center; margin-top:20px; padding: 0 10px;">
   <p style="font-size:0.75rem; color:rgba(255,255,255,0.45); line-height:1.6;">
     본 앱의 정보는 참고용입니다.<br>
     정확한 금어기·금지체장은<br>
     <a href="https://www.mof.go.kr" target="_blank" style="color:rgba(255,255,255,0.6); text-decoration:underline;">해양수산부 공식 사이트</a>에서 확인하세요.
   </p>
 </div>
-
 
 
 
@@ -851,6 +850,10 @@ ro.scrollIntoView({ behavior: 'smooth' });
  const requestSection = document.getElementById('requestSection');
 const requestMailBtn = document.getElementById('requestMailBtn');
 requestSection.style.display = 'none';
+document.getElementById('disclaimerBox').style.display = 'none';
+
+
+
 
 
 
@@ -928,7 +931,9 @@ suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size
     e.preventDefault();
     logRequest(data.fishName);
   };
-  requestSection.style.display = 'block';
+requestSection.style.display = 'block';
+document.getElementById('disclaimerBox').style.display = 'block';
+
 }
 
 
@@ -960,10 +965,15 @@ const calendarSection = document.getElementById('calendarSection');
     // 달력 숨기고 요청 버튼만 표시
     calendarSection.style.display = 'none';
     requestSection.style.display = 'block';
+    document.getElementById('disclaimerBox').style.display = 'none';
   } else {
+
     // 달력 표시
     calendarSection.style.display = 'block';
-    requestSection.style.display = 'none';
+requestSection.style.display = 'none';
+document.getElementById('disclaimerBox').style.display = 'none';
+
+
     if (data.closedSeason) {
       renderCalendar(data.closedSeason, data.closedSeasonActive);
     } else {
