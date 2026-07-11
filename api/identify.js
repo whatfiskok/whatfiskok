@@ -77,8 +77,10 @@ function buildDbResponse(dbResult, overrides = {}) {
     season:             dbResult.season      || null,
     description:        dbResult.description || null,
     similarFish:        dbResult.similarFish || [],
-    warning:            dbResult.warning     || null,
-    dataSource:         '해양수산부 수산자원관리법 시행령 (2026.1.1. 기준)',
+warning:            dbResult.warning     || null,
+wikiTitle:          dbResult.wikiTitle   || null,
+dataSource:         '해양수산부 수산자원관리법 시행령 (2026.1.1. 기준)',
+
   };
 }
 
