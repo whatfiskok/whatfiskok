@@ -1011,9 +1011,11 @@
     "similarFish": [],
     "warning": null
   },
-  "배스": {
+ "배스": {
     "aliases": ["큰입우럭"],
+    "wikiTitle": "배스 (어류)",
     "waterType": "fresh",
+
     "closedSeason": null,
     "minSize": null,
     "minSizeUnit": null,
