@@ -958,7 +958,8 @@
   "참게": {
     "aliases": [],
     "waterType": "fresh",
-    "closedSeason": "8월 4일 ~ 11월 30일",
+ "closedSeason": "8월 1일 ~ 11월 30일",
+
     "minSize": 5,
     "minSizeUnit": "cm",
     "minSizeNote": "갑폭 (등딱지 너비)",
