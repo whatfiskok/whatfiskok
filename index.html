@@ -518,7 +518,8 @@
 
 <!-- 요청 버튼 (DB 미등록 어종) -->
 <div id="requestSection" style="display:none; text-align:center; width:100%; margin-top:10px;">
-  <a id="requestMailBtn" href="#"
+<a id="requestMailBtn" href="#" onclick="logRequest()"
+
     style="display:inline-block; background:transparent; color:white; padding:8px 18px; border-radius:20px; font-size:0.85rem; font-weight:700; text-decoration:none; border:1.5px solid rgba(255,255,255,0.6);">
     오!! 이걸 검색 할 줄은 몰랐네요...<br>개발자에게 요청 하기
 
@@ -1113,6 +1114,20 @@ function logSearch(fishName, method, tokens) {
   }).catch(() => {});
 }
 
+function logRequest() {
+  const fishName = document.getElementById('resultFishName').textContent;
+  if (!fishName || fishName === '—') return;
+  const now = new Date();
+  const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    body: JSON.stringify({ date, fishName, method: '어종요청', tokens: 0, sheet: '어종 요청' }),
+  }).catch(() => {});
+  showToast('요청이 전송되었습니다! 감사합니다 🙏');
+}
+
+    
+    
 // 관리자 설정
 let adminClickCount = 0;
 let adminClickTimer = null;
