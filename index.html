@@ -787,8 +787,9 @@ window.addEventListener('load', function() {
     async function callAPI(payload) {
       if (payload.fishName && !payload.imageBase64) {
         const ck = `${payload.fishName}_${payload.waterType}_${window.userRegion || 'all'}`;
-        const cached = getCache(ck);
-        if (cached) { showResult(cached); return; }
+const cached = null; // getCache(ck);
+// if (cached) { showResult(cached); return; }
+
       }
       showLoading(true,
         payload.imageBase64 ? '모든 수단과 방법으로 찾는중...' : '오늘도 열심히 조회 중....',
