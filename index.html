@@ -924,13 +924,13 @@ suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
 suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
 
   }
-  const subject = encodeURIComponent(`[금어기 정보 요청] ${data.fishName}`);
-  const body = encodeURIComponent(
-    `어종명: ${data.fishName}\n\n위 어종의 금어기 및 금지체장 정보를 DB에 추가해 주세요.\n\n(앱에서 자동 발송)`
-  );
-  requestMailBtn.href = `mailto:webnjw@gmail.com?subject=${subject}&body=${body}`;
+  requestMailBtn.onclick = function(e) {
+    e.preventDefault();
+    logRequest(data.fishName);
+  };
   requestSection.style.display = 'block';
 }
+
 
       })
       .catch(() => {});
@@ -1104,7 +1104,6 @@ ${sizeText ? sizeText + ' 이하 포획 금지' : '작은건 놔주고 큰거만
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwY6AV3DADM23UsuKB31BY8zDc02-p6GADL9JBA2TxkOQqGTowtD5_QkGgfLY10toam/exec';
 
 
-
 function logSearch(fishName, method, tokens) {
   const now = new Date();
   const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
@@ -1113,20 +1112,8 @@ function logSearch(fishName, method, tokens) {
     body: JSON.stringify({ date, fishName, method, tokens: tokens || 0 }),
   }).catch(() => {});
 }
-function logRequest() {
-  const fishName = document.getElementById('resultFishName').textContent;
-  if (!fishName || fishName === '—') return;
-  const now = new Date();
-  const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
-  fetch(SHEETS_URL, {
-    method: 'POST',
-    body: JSON.stringify({ date, fishName, method: '어종요청', tokens: 0, sheet: '어종 요청' }),
-  }).catch(() => {});
-  showToast('요청이 전송되었습니다! 감사합니다 🙏');
-}
 
-function logRequest() {
-  const fishName = document.getElementById('resultFishName').textContent;
+function logRequest(fishName) {
   if (!fishName || fishName === '—') return;
   const now = new Date();
   const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
