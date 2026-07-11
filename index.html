@@ -843,7 +843,9 @@ requestSection.style.display = 'none';
 
 
 if (data.fishName) {
-  fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.fishName)}&prop=pageimages|images|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
+  const wikiTitle = data.wikiTitle || data.fishName;
+fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(wikiTitle)}&prop=pageimages|images|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
+
     .then(r => r.json())
     .then(json => {
       const pages = json.query.pages;
