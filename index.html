@@ -1113,6 +1113,17 @@ function logSearch(fishName, method, tokens) {
     body: JSON.stringify({ date, fishName, method, tokens: tokens || 0 }),
   }).catch(() => {});
 }
+function logRequest() {
+  const fishName = document.getElementById('resultFishName').textContent;
+  if (!fishName || fishName === '—') return;
+  const now = new Date();
+  const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    body: JSON.stringify({ date, fishName, method: '어종요청', tokens: 0, sheet: '어종 요청' }),
+  }).catch(() => {});
+  showToast('요청이 전송되었습니다! 감사합니다 🙏');
+}
 
 function logRequest() {
   const fishName = document.getElementById('resultFishName').textContent;
