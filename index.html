@@ -1118,6 +1118,7 @@ function logSearch(fishName, method, tokens) {
   const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
   fetch(SHEETS_URL, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ date, fishName, method, tokens: tokens || 0 }),
   }).catch(() => {});
 }
@@ -1128,6 +1129,7 @@ function logRequest(fishName) {
   const date = now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR');
   fetch(SHEETS_URL, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ date, fishName, method: '어종요청', tokens: 0, sheet: '어종 요청' }),
   }).catch(() => {});
   showToast('요청이 전송되었습니다! 감사합니다 🙏');
