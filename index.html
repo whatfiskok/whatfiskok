@@ -849,6 +849,8 @@ const cached = null; // getCache(ck);
 
 function showResult(data) {
   showLoading(false);
+  document.getElementById('introBox').style.display = 'none';
+
   const oldBox = document.getElementById('suggestionBox');
   if (oldBox) oldBox.remove();
   document.getElementById('photoPreviewWrap').style.display = 'none';
@@ -1049,9 +1051,11 @@ const calendarSection = document.getElementById('calendarSection');
 }
 
 
-    document.getElementById('closeResult').addEventListener('click', () => {
-      document.getElementById('resultOverlay').style.display = 'none';
-    });
+document.getElementById('closeResult').addEventListener('click', () => {
+  document.getElementById('resultOverlay').style.display = 'none';
+  document.getElementById('introBox').style.display = 'block';
+});
+
 function renderCalendar(closedSeason, closedSeasonActive) {
   const bar = document.getElementById('calendarBar');
   bar.innerHTML = '';
