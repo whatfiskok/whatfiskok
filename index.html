@@ -1048,7 +1048,11 @@ function showResult(data) {
 
 
 
+setTimeout(() => {
+  alert('최종확인: ' + document.getElementById('disclaimerBox').style.display);
+}, 3000);
 ro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
 
 
 }
