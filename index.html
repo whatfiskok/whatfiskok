@@ -1048,8 +1048,10 @@ function showResult(data) {
 
   document.getElementById('disclaimerBox').style.display = 'block';
   document.getElementById('sponsorBox').style.display = 'block';
+  alert('여기까지 실행됨: ' + document.getElementById('disclaimerBox').style.display);
 
 ro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
 
 setTimeout(() => {
   const disclaimer = document.getElementById('disclaimerBox');
