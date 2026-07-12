@@ -659,7 +659,8 @@
 </div>
 
 <!-- 면책 문구 + 후원 안내 통합 -->
-<div id="sponsorBox" style="display:none; margin-top:20px; margin-bottom:40px; padding:20px 16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;">
+<div id="sponsorBox" style="margin-top:20px; margin-bottom:40px; padding:20px 16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;">
+
   <div id="disclaimerBox" style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.15);">
     <p style="font-size:0.75rem; color:rgba(255,255,255,0.6); line-height:1.6;">
       본 앱의 정보는 참고용입니다.<br>
@@ -964,12 +965,11 @@ function showResult(data) {
           };
           requestSection.style.display = 'block';
         }
-        document.getElementById('sponsorBox').style.display = 'block';
 
       })
       .catch(() => {
-        document.getElementById('sponsorBox').style.display = 'block';
       });
+
 
   }
 
