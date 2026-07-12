@@ -1263,7 +1263,8 @@ async function searchByLocation() {
 
   let db;
   try {
-    const res = await fetch('/fishDB.json');
+    const res = await fetch('/data/fishDB.json');
+
     db = await res.json();
   } catch (e) {
     showToast('어종 DB를 불러오지 못했습니다.');
