@@ -964,15 +964,15 @@ function showResult(data) {
           };
           requestSection.style.display = 'block';
         }
-
-        document.getElementById('disclaimerBox').style.display = 'block';
+        document.getElementById('disclaimerBox').style.removeProperty('display');
         document.getElementById('sponsorBox').style.display = 'block';
 
       })
       .catch(() => {
-        document.getElementById('disclaimerBox').style.display = 'block';
+        document.getElementById('disclaimerBox').style.removeProperty('display');
         document.getElementById('sponsorBox').style.display = 'block';
       });
+
   }
 
   const badge = document.getElementById('statusBadge');
