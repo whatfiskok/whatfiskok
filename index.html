@@ -624,7 +624,8 @@
   </div>
 
   <!-- 기존 달력 바 (숨김, 내부용) -->
-  <div id="calendarBar" style="display:none;"></div>
+<div id="calendarBar"></div>
+
 </div>
 
 <!-- minSizeInfo는 cardSize로 대체 -->
@@ -894,7 +895,10 @@ ro.scrollIntoView({ behavior: 'smooth' });
  const requestSection = document.getElementById('requestSection');
 const requestMailBtn = document.getElementById('requestMailBtn');
 requestSection.style.display = 'none';
-document.getElementById('disclaimerBox').style.display = 'none';
+  document.getElementById('disclaimerBox').style.display = 'none';
+  document.getElementById('sponsorBox').style.display = 'none';
+
+
 
 
 
@@ -1005,8 +1009,9 @@ const calendarSection = document.getElementById('calendarSection');
 
   const isNotFound = data.source === 'not_found';
 
-   document.getElementById('disclaimerBox').style.display = 'block';
+  document.getElementById('disclaimerBox').style.display = 'block';
   document.getElementById('sponsorBox').style.display = 'block';
+
 
   if (isNotFound) {
     calendarSection.style.display = 'none';
