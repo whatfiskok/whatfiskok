@@ -975,8 +975,10 @@ function showResult(data) {
   }
 
   const badge = document.getElementById('statusBadge');
-  const badgeWrap = badge.parentElement;
-  badgeWrap.style.display = 'none';
+  if (badge && badge.parentElement) {
+    badge.parentElement.style.display = 'none';
+  }
+
 
   document.getElementById('resultFishName').textContent = data.fishName || '—';
   const sciEl = document.getElementById('resultScientificName');
