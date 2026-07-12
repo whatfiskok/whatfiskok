@@ -178,12 +178,14 @@
     }
 
     /* 결과 */
-    #resultOverlay {
-      display: none;
-      width: 100%;
-      max-width: 420px;
-      margin-top: 20px;
-    }
+#resultOverlay {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 20px;
+  padding-bottom: 80px;
+}
+
 .result-modal {
   background: transparent;
   border-radius: 20px;
@@ -1036,7 +1038,12 @@ function showResult(data) {
     wb2.classList.add('hidden');
   }
 
-  ro.scrollIntoView({ behavior: 'smooth' });
+ro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+setTimeout(() => {
+  const disclaimer = document.getElementById('disclaimerBox');
+  if (disclaimer) disclaimer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}, 2000);
+
 }
 
 
@@ -1422,7 +1429,12 @@ function showLocationList(fishList) {
 
   const menuWrap = document.querySelector('.menu-wrap');
   menuWrap.insertAdjacentHTML('beforeend', html);
-  document.getElementById('locationListBox').scrollIntoView({ behavior: 'smooth' });
+document.getElementById('locationListBox').scrollIntoView({ behavior: 'smooth' });
+setTimeout(() => {
+  const box = document.getElementById('locationListBox');
+  if (box) box.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}, 1500);
+
 }
 
 
