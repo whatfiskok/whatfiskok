@@ -645,7 +645,8 @@
             </div>
 
 <!-- 면책 문구 -->
-<div id="disclaimerBox" style="display:none; text-align:center; margin-top:20px; padding: 0 10px;">
+<div id="disclaimerBox" style="display:none; text-align:center; margin-top:20px; padding: 0 10px; padding-bottom:60px;">
+
   <p style="font-size:0.75rem; color:rgba(255,255,255,0.45); line-height:1.6;">
     본 앱의 정보는 참고용입니다.<br>
     정확한 금어기·금지체장은<br>
@@ -887,141 +888,103 @@ function showResult(data) {
   document.getElementById('photoPreviewWrap').style.display = 'none';
   switchMainTab('keyword');
 
+  const ro = document.getElementById('resultOverlay');
+  ro.style.display = 'block';
 
-
-  // 모달 열기
-const ro = document.getElementById('resultOverlay');
-ro.style.display = 'block';
-ro.scrollIntoView({ behavior: 'smooth' });
-
-
-  // 어종 사진 초기화
   const fishPhoto = document.getElementById('fishPhoto');
   const fishPhotoImg = document.getElementById('fishPhotoImg');
   fishPhoto.style.display = 'none';
   fishPhotoImg.src = '';
 
-  // Wikipedia 사진 + 설명 조회
- const requestSection = document.getElementById('requestSection');
-const requestMailBtn = document.getElementById('requestMailBtn');
-requestSection.style.display = 'none';
+  const requestSection = document.getElementById('requestSection');
+  const requestMailBtn = document.getElementById('requestMailBtn');
+  requestSection.style.display = 'none';
+
   document.getElementById('disclaimerBox').style.display = 'none';
   document.getElementById('sponsorBox').style.display = 'none';
 
+  if (data.fishName) {
+    const wikiTitle = data.wikiTitle || data.fishName;
+    fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(wikiTitle)}&prop=pageimages|images|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
+      .then(r => r.json())
+      .then(json => {
+        const pages = json.query.pages;
+        const page = Object.values(pages)[0];
 
+        if (page.thumbnail && page.thumbnail.source) {
+          fishPhotoImg.src = page.thumbnail.source;
+          fishPhoto.style.setProperty('display', 'block', 'important');
+        } else if (data.scientificName) {
+          fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.scientificName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
+            .then(r2 => r2.json())
+            .then(json2 => {
+              const p2 = Object.values(json2.query.pages)[0];
+              if (p2.thumbnail && p2.thumbnail.source) {
+                fishPhotoImg.src = p2.thumbnail.source;
+                fishPhoto.style.setProperty('display', 'block', 'important');
+              }
+            }).catch(() => {});
+        }
 
+        const fishPhoto2 = document.getElementById('fishPhoto2');
+        const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
+        fishPhoto2.style.display = 'none';
+        const searchName = data.scientificName || data.fishName;
+        fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(searchName)}&rank=species&locale=ko`)
+          .then(r2 => r2.json())
+          .then(json2 => {
+            if (json2.results && json2.results.length > 0) {
+              const taxon = json2.results[0];
+              if (taxon.default_photo && taxon.default_photo.medium_url) {
+                fishPhotoImg2.src = taxon.default_photo.medium_url;
+                fishPhoto2.style.setProperty('display', 'block', 'important');
+              }
+            }
+          }).catch(() => {});
 
-
-
-
-
-if (data.fishName) {
-  const wikiTitle = data.wikiTitle || data.fishName;
-fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(wikiTitle)}&prop=pageimages|images|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
-
-    .then(r => r.json())
-    .then(json => {
-      const pages = json.query.pages;
-      const page = Object.values(pages)[0];
-
-// 첫 번째 이미지
-if (page.thumbnail && page.thumbnail.source) {
-  fishPhotoImg.src = page.thumbnail.source;
-  fishPhoto.style.setProperty('display', 'block', 'important');
-} else if (data.scientificName) {
-  fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.scientificName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
-    .then(r2 => r2.json())
-    .then(json2 => {
-      const p2 = Object.values(json2.query.pages)[0];
-      if (p2.thumbnail && p2.thumbnail.source) {
-        fishPhotoImg.src = p2.thumbnail.source;
-        fishPhoto.style.setProperty('display', 'block', 'important');
-      }
-    }).catch(() => {});
-}
-
-
-// 두 번째 이미지 - iNaturalist
-const fishPhoto2 = document.getElementById('fishPhoto2');
-const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
-fishPhoto2.style.display = 'none';
-const searchName = data.scientificName || data.fishName;
-fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(searchName)}&rank=species&locale=ko`)
-
-  .then(r2 => r2.json())
-  .then(json2 => {
-    if (json2.results && json2.results.length > 0) {
-      const taxon = json2.results[0];
-      if (taxon.default_photo && taxon.default_photo.medium_url) {
-        fishPhotoImg2.src = taxon.default_photo.medium_url;
-        fishPhoto2.style.setProperty('display', 'block', 'important');
-      }
-    }
-  }).catch(() => {});
-
-
-        // DB 미등록 어종이면 Wikipedia 설명 표시 + 요청 버튼 표시
-if (data.source === 'not_found') {
-  if (data.suggestions && data.suggestions.length > 0) {
-    const suggestionHtml = data.suggestions.map(name => `
-      <button onclick="searchFishName('${name}')" style="
-        margin: 4px;
-        padding: 8px 16px;
-        border-radius: 20px;
-        border: 1.5px solid rgba(255,255,255,0.6);
-        background: rgba(255,255,255,0.15);
-        color: white;
-        font-size: 0.9rem;
-        cursor: pointer;
-      ">${name}</button>
-    `).join('');
-let suggestionBox = document.getElementById('suggestionBox');
-if (!suggestionBox) {
-  suggestionBox = document.createElement('div');
-  suggestionBox.id = 'suggestionBox';
-  requestSection.before(suggestionBox);
-}
-suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
-suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
-
-  }
-  requestMailBtn.onclick = function(e) {
-    e.preventDefault();
-    logRequest(data.fishName);
-  };
-requestSection.style.display = 'block';
-
-
-}
-
-
+        if (data.source === 'not_found') {
+          if (data.suggestions && data.suggestions.length > 0) {
+            const suggestionHtml = data.suggestions.map(name => `
+              <button onclick="searchFishName('${name}')" style="
+                margin: 4px; padding: 8px 16px; border-radius: 20px;
+                border: 1.5px solid rgba(255,255,255,0.6);
+                background: rgba(255,255,255,0.15);
+                color: white; font-size: 0.9rem; cursor: pointer;
+              ">${name}</button>
+            `).join('');
+            let suggestionBox = document.getElementById('suggestionBox');
+            if (!suggestionBox) {
+              suggestionBox = document.createElement('div');
+              suggestionBox.id = 'suggestionBox';
+              requestSection.before(suggestionBox);
+            }
+            suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
+            suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
+          }
+          requestMailBtn.onclick = function(e) {
+            e.preventDefault();
+            logRequest(data.fishName);
+          };
+          requestSection.style.display = 'block';
+        }
       })
       .catch(() => {});
   }
 
-
-const badge = document.getElementById('statusBadge');
-const badgeWrap = badge.parentElement;
-badgeWrap.style.display = 'none';
-
-
+  const badge = document.getElementById('statusBadge');
+  const badgeWrap = badge.parentElement;
+  badgeWrap.style.display = 'none';
 
   document.getElementById('resultFishName').textContent = data.fishName || '—';
-const sciEl = document.getElementById('resultScientificName');
-sciEl.textContent = data.scientificName || '';
-sciEl.style.display = data.scientificName ? 'block' : 'none';
+  const sciEl = document.getElementById('resultScientificName');
+  sciEl.textContent = data.scientificName || '';
+  sciEl.style.display = data.scientificName ? 'block' : 'none';
 
-
-// DB 미등록 어종 처리
-const calendarSection = document.getElementById('calendarSection');
-
-
-
+  const calendarSection = document.getElementById('calendarSection');
   const isNotFound = data.source === 'not_found';
 
   document.getElementById('disclaimerBox').style.display = 'block';
   document.getElementById('sponsorBox').style.display = 'block';
-
 
   if (isNotFound) {
     calendarSection.style.display = 'none';
@@ -1029,11 +992,6 @@ const calendarSection = document.getElementById('calendarSection');
   } else {
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
-
-
-
-
-
 
     if (data.closedSeason) {
       renderCalendar(data.closedSeason, data.closedSeasonActive);
@@ -1059,12 +1017,7 @@ const calendarSection = document.getElementById('calendarSection');
       `;
     }
     updateInfoCards(data);
-
-
-
-
   }
-
 
   const rn = document.getElementById('regionNote');
   if (data.regionNote) {
@@ -1073,9 +1026,6 @@ const calendarSection = document.getElementById('calendarSection');
   } else {
     rn.classList.add('hidden');
   }
-
-
-
 
   const wb2 = document.getElementById('warningBox');
   if (data.warning) {
