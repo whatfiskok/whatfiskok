@@ -1240,8 +1240,11 @@ function showAdminPanel() {
 }
 
 function searchFishName(name) {
+  const box = document.getElementById('locationListBox');
+  if (box) box.remove();
   callAPI({ fishName: name });
 }
+
 
 async function searchByLocation() {
   showLoading(true, '위치 확인 중...', 'GPS를 가져오는 중입니다');
