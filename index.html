@@ -1054,7 +1054,8 @@ function showResult(data) {
   sb.style.setProperty('display', 'block', 'important');
   db.setAttribute('style', 'display:block !important; text-align:center; margin-top:20px; padding:0 10px; padding-bottom:20px;');
   sb.setAttribute('style', 'display:block !important; margin-top:20px; margin-bottom:40px; padding:20px 16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;');
-  alert('강제적용 후: ' + db.style.display);
+  alert('개수: ' + document.querySelectorAll('#disclaimerBox').length + ' / display: ' + db.style.display);
+
 
 
 ro.scrollIntoView({ behavior: 'smooth', block: 'start' });
