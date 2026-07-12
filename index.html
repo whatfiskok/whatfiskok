@@ -1003,17 +1003,16 @@ const calendarSection = document.getElementById('calendarSection');
 
   const isNotFound = data.source === 'not_found';
 
+   document.getElementById('disclaimerBox').style.display = 'block';
+  document.getElementById('sponsorBox').style.display = 'block';
+
   if (isNotFound) {
     calendarSection.style.display = 'none';
     requestSection.style.display = 'block';
-    document.getElementById('disclaimerBox').style.display = 'none';
-    document.getElementById('sponsorBox').style.display = 'block';
   } else {
-
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
-    document.getElementById('disclaimerBox').style.display = 'block';
-    document.getElementById('sponsorBox').style.display = 'block';
+
 
 
 
