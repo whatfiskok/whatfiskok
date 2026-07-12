@@ -23,6 +23,10 @@
     {
       "src": "js/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "data/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
