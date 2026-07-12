@@ -1267,7 +1267,8 @@ async function searchByLocation() {
 
   showLoading(false);
 
-  if (!window.userRegion) return;
+  if (!window.userRegion) window.userRegion = '전국';
+
 
 
   let db;
