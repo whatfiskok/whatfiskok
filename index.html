@@ -659,31 +659,31 @@ body {
   <span id="warningText"></span>
 </div>
 
-<!-- 면책 문구 + 후원 안내 통합 -->
-<div id="infoContainer" style="display:none; margin-top:20px; margin-bottom:40px; padding:20px 16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;">
+<!-- 1. 면책 문구 -->
+<div id="legalNoticeBox" style="display:none; margin-top:20px; margin-bottom:15px; padding:16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;">
+  <p style="font-size:0.75rem; color:rgba(255,255,255,0.6); line-height:1.6; margin:0;">
+    본 앱의 정보는 참고용입니다.<br>
+    정확한 금어기·금지체장은<br>
+    <a href="https://www.mof.go.kr" target="_blank" style="color:rgba(255,255,255,0.8); text-decoration:underline; font-weight:bold;">해양수산부 공식 사이트</a>에서 확인하세요.
+  </p>
+</div>
 
-
-
-  <div id="disclaimerBox" style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.15);">
-    <p style="font-size:0.75rem; color:rgba(255,255,255,0.6); line-height:1.6;">
-      본 앱의 정보는 참고용입니다.<br>
-      정확한 금어기·금지체장은<br>
-      <a href="https://www.mof.go.kr" target="_blank" style="color:rgba(255,255,255,0.8); text-decoration:underline;">해양수산부 공식 사이트</a>에서 확인하세요.
-    </p>
-  </div>
+<!-- 2. 후원 상자 -->
+<div id="supportActionBox" style="display:none; margin-bottom:40px; padding:20px 16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;">
   <p style="font-size:0.85rem; line-height:1.9; margin-bottom:16px;">
     무료 서비스를 유지할 수 있는 건 여러분 덕분입니다 ❤️<br>
-    아래 링크를 통해 쇼핑하시면<br>
+    아래 버튼을 통해 쇼핑하시면<br>
     <b>추가 비용 없이 운영에 힘이 됩니다.</b>
   </p>
-  <a href="https://link.coupang.com/a/euybU7VMWq" target="_blank" style="display:block; margin-bottom:10px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); color:white; text-decoration:none; font-size:0.9rem;">🛒 쿠팡에서 쇼핑하기</a>
-  <a href="https://naver.me/56XCYmzm" target="_blank" style="display:block; margin-bottom:10px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); color:white; text-decoration:none; font-size:0.9rem;">🛒 네이버쇼핑에서 쇼핑하기</a>
-  <a href="https://s.click.aliexpress.com/e/_DCXE6EZ" target="_blank" style="display:block; margin-bottom:16px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); color:white; text-decoration:none; font-size:0.9rem;">🛒 알리익스프레스에서 쇼핑하기</a>
-  <p style="font-size:0.72rem; color:rgba(255,255,255,0.45); line-height:1.6;">
+  <button onclick="window.open('https://link.coupang.com/a/euybU7VMWq', '_blank')" style="display:block; width:100%; margin-bottom:10px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); color:white; font-size:0.9rem; cursor:pointer;">🛒 쿠팡에서 쇼핑하기</button>
+  <button onclick="window.open('https://naver.me/56XCYmzm', '_blank')" style="display:block; width:100%; margin-bottom:10px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); color:white; font-size:0.9rem; cursor:pointer;">🛒 네이버쇼핑에서 쇼핑하기</button>
+  <button onclick="window.open('https://s.click.aliexpress.com/e/_DCXE6EZ', '_blank')" style="display:block; width:100%; margin-bottom:16px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2); color:white; font-size:0.9rem; cursor:pointer;">🛒 알리익스프레스에서 쇼핑하기</button>
+  <p style="font-size:0.72rem; color:rgba(255,255,255,0.45); line-height:1.6; margin:0;">
     이 링크는 파트너스 활동의 일환으로,<br>
     이에 따른 일정액의 수수료를 제공받습니다.
   </p>
 </div>
+
 
 
 
@@ -1040,7 +1040,9 @@ function showResult(data) {
     wb2.classList.add('hidden');
   }
 
-   document.getElementById('infoContainer').style.display = 'block';
+   document.getElementById('legalNoticeBox').style.display = 'block';
+document.getElementById('supportActionBox').style.display = 'block';
+
 
 
 
