@@ -970,8 +970,15 @@ function showResult(data) {
           };
           requestSection.style.display = 'block';
         }
+
+        document.getElementById('disclaimerBox').style.display = 'block';
+        document.getElementById('sponsorBox').style.display = 'block';
+
       })
-      .catch(() => {});
+      .catch(() => {
+        document.getElementById('disclaimerBox').style.display = 'block';
+        document.getElementById('sponsorBox').style.display = 'block';
+      });
   }
 
   const badge = document.getElementById('statusBadge');
@@ -986,8 +993,6 @@ function showResult(data) {
   const calendarSection = document.getElementById('calendarSection');
   const isNotFound = data.source === 'not_found';
 
-  document.getElementById('disclaimerBox').style.display = 'block';
-  document.getElementById('sponsorBox').style.display = 'block';
 
   if (isNotFound) {
     calendarSection.style.display = 'none';
