@@ -1075,8 +1075,11 @@ const calendarSection = document.getElementById('calendarSection');
 
 document.getElementById('closeResult').addEventListener('click', () => {
   document.getElementById('resultOverlay').style.display = 'none';
+  const box = document.getElementById('locationListBox');
+  if (box) box.remove();
   document.getElementById('introBox').style.display = 'block';
 });
+
 
 function renderCalendar(closedSeason, closedSeasonActive) {
   const bar = document.getElementById('calendarBar');
