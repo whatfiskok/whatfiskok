@@ -1043,7 +1043,11 @@ function showResult(data) {
     wb2.classList.add('hidden');
   }
 
+  document.getElementById('disclaimerBox').style.display = 'block';
+  document.getElementById('sponsorBox').style.display = 'block';
+
 ro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
 setTimeout(() => {
   const disclaimer = document.getElementById('disclaimerBox');
   if (disclaimer) disclaimer.scrollIntoView({ behavior: 'smooth', block: 'end' });
