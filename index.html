@@ -1243,6 +1243,182 @@ function searchFishName(name) {
   callAPI({ fishName: name });
 }
 
+async function searchByLocation() {
+  showLoading(true, '위치 확인 중...', 'GPS를 가져오는 중입니다');
+
+  await new Promise((resolve) => {
+    if (window.userRegion) { resolve(); return; }
+    if (!navigator.geolocation) { resolve(); return; }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        window.userRegion = getRegion(pos.coords.latitude, pos.coords.longitude);
+        resolve();
+      },
+      () => { resolve(); },
+      { timeout: 8000 }
+    );
+  });
+
+  showLoading(false);
+
+  let db;
+  try {
+    const res = await fetch('/fishDB.json');
+    db = await res.json();
+  } catch (e) {
+    showToast('어종 DB를 불러오지 못했습니다.');
+    return;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  function getNextReleaseDate(closedSeason) {
+    if (!closedSeason) return null;
+    const m = closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
+    if (!m) return null;
+    const year = today.getFullYear();
+    const endMonth = parseInt(m[3]) - 1;
+    const endDay   = parseInt(m[4]);
+    let endDate = new Date(year, endMonth, endDay);
+    endDate.setHours(0, 0, 0, 0);
+    if (endDate < today) {
+      endDate = new Date(year + 1, endMonth, endDay);
+    }
+    return endDate;
+  }
+
+  function isInClosedSeason(closedSeason) {
+    if (!closedSeason) return false;
+    const m = closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
+    if (!m) return false;
+    const year = today.getFullYear();
+    let start = new Date(year, parseInt(m[1]) - 1, parseInt(m[2]));
+    let end   = new Date(year, parseInt(m[3]) - 1, parseInt(m[4]));
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+    if (start > end) return today >= start || today <= end;
+    return today >= start && today <= end;
+  }
+
+  const fishList = Object.entries(db)
+    .filter(([name, info]) => info.closedSeason)
+    .map(([name, info]) => {
+      const releaseDate = getNextReleaseDate(info.closedSeason);
+      const inSeason    = isInClosedSeason(info.closedSeason);
+      const daysLeft    = releaseDate
+        ? Math.ceil((releaseDate - today) / (1000 * 60 * 60 * 24))
+        : null;
+      return { name, info, releaseDate, inSeason, daysLeft };
+    })
+    .filter(f => f.releaseDate !== null)
+    .sort((a, b) => a.releaseDate - b.releaseDate);
+
+  showLocationList(fishList);
+}
+
+function showLocationList(fishList) {
+  document.getElementById('introBox').style.display = 'none';
+  document.getElementById('resultOverlay').style.display = 'none';
+
+  const old = document.getElementById('locationListBox');
+  if (old) old.remove();
+
+  const region = window.userRegion || '전국';
+
+  let html = `
+    <div id="locationListBox" style="
+      width:100%; max-width:420px;
+      margin-top:20px;
+      padding:0 4px;
+      box-sizing:border-box;
+    ">
+      <div style="
+        background:rgba(255,255,255,0.07);
+        border:1.5px solid rgba(255,255,255,0.15);
+        border-radius:16px;
+        padding:20px 16px;
+        color:white;
+      ">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div>
+            <div style="font-size:1rem; font-weight:800;">📍 ${region}</div>
+            <div style="font-size:0.75rem; color:rgba(255,255,255,0.5); margin-top:2px;">
+              금어기 해제일 순서
+            </div>
+          </div>
+          <button onclick="closeLocationList()" style="
+            background:rgba(255,255,255,0.15);
+            border:none; border-radius:50%;
+            width:32px; height:32px;
+            color:white; font-size:1rem;
+            cursor:pointer;
+          ">✕</button>
+        </div>
+  `;
+
+  if (fishList.length === 0) {
+    html += `<div style="text-align:center; color:rgba(255,255,255,0.5); padding:20px;">
+      금어기 정보가 있는 어종이 없습니다.
+    </div>`;
+  } else {
+    fishList.forEach((f) => {
+      const releaseDateStr = f.releaseDate
+        ? `${f.releaseDate.getMonth() + 1}월 ${f.releaseDate.getDate()}일`
+        : '';
+      const daysStr = f.daysLeft === 0
+        ? '오늘 해제!'
+        : f.daysLeft === 1
+        ? '내일 해제!'
+        : `${f.daysLeft}일 후 해제`;
+
+      const statusColor = f.inSeason ? '#e63946' : '#4fc3f7';
+      const statusLabel = f.inSeason ? '🚫 금어기 중' : '✅ 포획 가능';
+
+      html += `
+        <div onclick="searchFishName('${f.name}')" style="
+          display:flex; align-items:center; justify-content:space-between;
+          padding:12px 14px;
+          margin-bottom:8px;
+          background:rgba(255,255,255,0.06);
+          border:1px solid rgba(255,255,255,0.12);
+          border-radius:12px;
+          cursor:pointer;
+        "
+        onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+        onmouseout="this.style.background='rgba(255,255,255,0.06)'"
+        >
+          <div>
+            <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px;">${f.name}</div>
+            <div style="font-size:0.72rem; color:rgba(255,255,255,0.5);">
+              금어기: ${f.info.closedSeason}
+            </div>
+          </div>
+          <div style="text-align:right; flex-shrink:0; margin-left:12px;">
+            <div style="font-size:0.75rem; color:${statusColor}; font-weight:700; margin-bottom:4px;">
+              ${statusLabel}
+            </div>
+            <div style="font-size:0.72rem; color:rgba(255,255,255,0.6);">
+              ${f.inSeason ? '해제: ' + releaseDateStr + ' (' + daysStr + ')' : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  html += `</div></div>`;
+
+  const menuWrap = document.querySelector('.menu-wrap');
+  menuWrap.insertAdjacentHTML('beforeend', html);
+  document.getElementById('locationListBox').scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeLocationList() {
+  const box = document.getElementById('locationListBox');
+  if (box) box.remove();
+  document.getElementById('introBox').style.display = 'block';
+}
 
 
   </script>
