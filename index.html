@@ -888,6 +888,8 @@ const cached = null; // getCache(ck);
 function showResult(data) {
   showLoading(false);
   document.getElementById('introBox').style.display = 'none';
+  alert('disclaimerBox: ' + document.getElementById('disclaimerBox').style.display);
+
 
   const oldBox = document.getElementById('suggestionBox');
   if (oldBox) oldBox.remove();
