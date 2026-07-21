@@ -888,11 +888,14 @@ function doSearch() {
 
   const input = document.getElementById('keywordInput');
 
-  // 별칭이면 실제 어종명으로 변환 (예: 돌문어 → 참문어)
+   // 별칭이면 실제 어종명으로 변환 (예: 돌문어 → 참문어)
   if (FISH_ALIASES[kw]) {
-    showToast(`'${kw}'의 정식 명칭은 '${FISH_ALIASES[kw]}'입니다.`);
+    window.lastAliasSearch = { alias: kw, real: FISH_ALIASES[kw] };
     kw = FISH_ALIASES[kw];
+  } else {
+    window.lastAliasSearch = null;
   }
+
 
   // 그룹 단어면 목록을 먼저 보여줌
   if (FISH_GROUPS[kw]) {
@@ -1149,7 +1152,33 @@ function showResult(data) {
 
 
   document.getElementById('resultFishName').textContent = data.fishName || '—';
+
+  // 별칭으로 검색한 경우, 고정 안내 표시
+  const oldAlias = document.getElementById('aliasNoticeBox');
+  if (oldAlias) oldAlias.remove();
+  if (window.lastAliasSearch && window.lastAliasSearch.real === data.fishName) {
+    const noticeHtml = `
+      <div id="aliasNoticeBox" style="
+        margin: 10px 0 4px;
+        padding: 10px 14px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 12px;
+        color: white;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        text-align: center;
+      ">
+        🔎 '<b>${window.lastAliasSearch.alias}</b>'(으)로 검색하셨습니다.<br>
+        정식 명칭은 '<b>${window.lastAliasSearch.real}</b>'입니다.
+      </div>
+    `;
+    const nameEl = document.getElementById('resultFishName');
+    nameEl.parentElement.insertAdjacentHTML('afterend', noticeHtml);
+  }
+
   const sciEl = document.getElementById('resultScientificName');
+
   sciEl.textContent = data.scientificName || '';
   sciEl.style.display = data.scientificName ? 'block' : 'none';
 
