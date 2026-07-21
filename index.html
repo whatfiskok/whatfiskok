@@ -731,20 +731,20 @@ body {
     }
 
     function getRegion(lat, lon) {
-      // 주요 바다 지점 (대표 좌표)
+      // 주요 바다 지점 (sea = 서해/남해/동해/제주 중 하나)
       const seas = [
-        { name: '인천 앞바다 (서해)', lat: 37.45, lon: 126.60 },
-        { name: '서해 (충남 앞바다)', lat: 36.30, lon: 126.50 },
-        { name: '서해 (전북 앞바다)', lat: 35.80, lon: 126.40 },
-        { name: '서남해 (전남 앞바다)', lat: 34.60, lon: 126.30 },
-        { name: '남해 (여수·통영 앞바다)', lat: 34.70, lon: 128.00 },
-        { name: '남해 (부산 앞바다)', lat: 35.05, lon: 129.05 },
-        { name: '동해 (경북 앞바다)', lat: 36.30, lon: 129.50 },
-        { name: '동해 (강원 앞바다)', lat: 37.80, lon: 128.95 },
-        { name: '제주 앞바다', lat: 33.35, lon: 126.55 },
+        { name: '인천 앞바다', sea: '서해', lat: 37.45, lon: 126.60 },
+        { name: '충남 앞바다', sea: '서해', lat: 36.30, lon: 126.50 },
+        { name: '전북 앞바다', sea: '서해', lat: 35.80, lon: 126.40 },
+        { name: '전남 앞바다', sea: '남해', lat: 34.60, lon: 126.30 },
+        { name: '여수·통영 앞바다', sea: '남해', lat: 34.70, lon: 128.00 },
+        { name: '부산 앞바다', sea: '남해', lat: 35.05, lon: 129.05 },
+        { name: '경북 앞바다', sea: '동해', lat: 36.30, lon: 129.50 },
+        { name: '강원 앞바다', sea: '동해', lat: 37.80, lon: 128.95 },
+        { name: '제주 앞바다', sea: '제주', lat: 33.35, lon: 126.55 },
       ];
 
-      // 주요 강·호수 지점 (대표 좌표)
+      // 주요 강·호수 지점
       const rivers = [
         { name: '한강', lat: 37.55, lon: 126.99 },
         { name: '북한강·소양호', lat: 37.90, lon: 127.75 },
@@ -754,7 +754,6 @@ body {
         { name: '섬진강', lat: 35.20, lon: 127.65 },
       ];
 
-      // 두 좌표 사이 거리 계산 (단순 근사)
       function dist(a, b) {
         const dLat = a.lat - b.lat;
         const dLon = (a.lon - b.lon) * Math.cos(a.lat * Math.PI / 180);
@@ -763,21 +762,24 @@ body {
 
       const here = { lat, lon };
 
-      // 가장 가까운 바다 찾기
       let nearestSea = seas[0];
       for (const s of seas) {
         if (dist(here, s) < dist(here, nearestSea)) nearestSea = s;
       }
 
-      // 가장 가까운 강 찾기
       let nearestRiver = rivers[0];
       for (const r of rivers) {
         if (dist(here, r) < dist(here, nearestRiver)) nearestRiver = r;
       }
 
-      // "가까운 바다 / 가까운 강" 형태로 반환
-      return `${nearestSea.name} · ${nearestRiver.name}`;
+      // 화면 표시용 이름과, 어종 필터용 바다 구분을 함께 저장
+      window.userSea = nearestSea.sea;                 // 예: '서해'
+      window.userSeaName = nearestSea.name;            // 예: '인천 앞바다'
+      window.userRiverName = nearestRiver.name;        // 예: '한강'
+
+      return `${nearestSea.name} (${nearestSea.sea}) · ${nearestRiver.name}`;
     }
+
 
 
     let currentWaterType = 'all';
