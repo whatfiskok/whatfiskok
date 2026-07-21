@@ -923,7 +923,14 @@ function showFishGroup(groupName, names) {
   const oldGroup = document.getElementById('fishGroupBox');
   if (oldGroup) oldGroup.remove();
 
+
   let buttons = names.map(function(name) {
+    // 이 어종의 별칭들을 FISH_ALIASES에서 찾아옴
+    const aliasList = Object.keys(FISH_ALIASES).filter(function(a) {
+      return FISH_ALIASES[a] === name;
+    });
+    const aliasText = aliasList.length > 0 ? aliasList.join(', ') : '';
+
     return `
       <div onclick="searchFishName('${name}')" style="
         display:flex; align-items:center; justify-content:space-between;
@@ -938,11 +945,15 @@ function showFishGroup(groupName, names) {
       onmouseover="this.style.background='rgba(255,255,255,0.12)'"
       onmouseout="this.style.background='rgba(255,255,255,0.06)'"
       >
-        <div style="font-size:0.98rem; font-weight:800;">${name}</div>
+        <div>
+          <div style="font-size:0.98rem; font-weight:800;">${name}</div>
+          ${aliasText ? `<div style="font-size:0.72rem; color:rgba(255,255,255,0.5); margin-top:3px;">별칭: ${aliasText}</div>` : ''}
+        </div>
         <div style="font-size:0.9rem; color:rgba(255,255,255,0.5);">›</div>
       </div>
     `;
   }).join('');
+
 
   const html = `
     <div id="fishGroupBox" style="
@@ -960,7 +971,8 @@ function showFishGroup(groupName, names) {
       ">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
           <div>
-            <div style="font-size:1rem; font-weight:800;">'${groupName}' 관련 어종</div>
+            <div style="font-size:1rem; font-weight:800;">${groupName}의 종류</div>
+
             <div style="font-size:0.75rem; color:rgba(255,255,255,0.5); margin-top:2px;">
               찾으시는 어종을 선택하세요
             </div>
