@@ -1456,7 +1456,43 @@ function closeLocationList() {
 }
 
 
+const stickyScrollTarget = document.getElementById('mainScreen');
+if (stickyScrollTarget) {
+  stickyScrollTarget.addEventListener('scroll', handleStickyBar);
+}
+window.addEventListener('scroll', handleStickyBar);
+
+function handleStickyBar() {
+  const bar = document.getElementById('stickyBar');
+  const target = document.getElementById('legalNoticeBox');
+
+  if (!bar || !target || target.style.display === 'none') {
+    if (bar) {
+      bar.style.transform = 'translateY(100%)';
+      bar.style.display = 'none';
+    }
+    return;
+  }
+
+  const rect = target.getBoundingClientRect();
+
+  if (rect.top < window.innerHeight) {
+    bar.style.display = 'flex';
+    requestAnimationFrame(() => {
+      bar.style.transform = 'translateY(0)';
+    });
+  } else {
+    bar.style.transform = 'translateY(100%)';
+    setTimeout(() => {
+      const r = target.getBoundingClientRect();
+      if (r.top >= window.innerHeight) bar.style.display = 'none';
+    }, 300);
+  }
+}
+
+
   </script>
+
 <div onclick="handleAdminClick()" style="
   position:fixed;
   bottom:20px;
@@ -1473,6 +1509,39 @@ function closeLocationList() {
 ">⚙️</div>
 <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none"/>
 <input type="file" id="galleryInput" accept="image/*" style="display:none"/>
+<!-- 하단 고정 후원 바 -->
+<div id="stickyBar" style="
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(20,20,20,0.97);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  z-index: 400;
+  box-sizing: border-box;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+">
+  <div style="color:white; line-height:1.4;">
+    <div style="font-size:0.75rem; color:rgba(255,255,255,0.6);">무료 서비스 유지를 위한</div>
+    <div style="font-size:1rem; font-weight:800;">무료 후원하기</div>
+  </div>
+  <button onclick="document.getElementById('supportActionBox').scrollIntoView({behavior:'smooth', block:'center'})" style="
+    flex-shrink:0;
+    padding: 12px 22px;
+    border-radius: 24px;
+    border: none;
+    background: #e63946;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+  ">후원하기</button>
+</div>
 
 </body>
 </html>
