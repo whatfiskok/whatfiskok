@@ -1463,10 +1463,11 @@ function showLocationList(fishList) {
   html += `
       </div>
 
-    <div style="text-align:center; margin-top:20px; padding: 0 10px;">
+    <div id="locationLegalNotice" style="text-align:center; margin-top:20px; padding: 0 10px;">
 
       <p style="font-size:0.75rem; color:rgba(255,255,255,0.45); line-height:1.6;">
         본 앱의 정보는 참고용입니다.<br>
+
         정확한 금어기·금지체장은<br>
         <a href="https://www.mof.go.kr" target="_blank" style="color:rgba(255,255,255,0.6); text-decoration:underline;">해양수산부 공식 사이트</a>에서 확인하세요.
       </p>
@@ -1523,14 +1524,21 @@ if (stickyScrollTarget) {
 window.addEventListener('scroll', handleStickyBar);
 
 function handleStickyBar() {
+function handleStickyBar() {
   const bar = document.getElementById('stickyBar');
-  const target = document.getElementById('legalNoticeBox');
+  if (!bar) return;
 
-  if (!bar || !target || target.style.display === 'none') {
-    if (bar) {
-      bar.style.transform = 'translateY(100%)';
-      bar.style.display = 'none';
-    }
+  // 결과 화면 면책 문구 또는 위치 검색 화면 면책 문구 중, 현재 화면에 있는 것을 기준으로 삼음
+  const box1 = document.getElementById('legalNoticeBox');
+  const box2 = document.getElementById('locationLegalNotice');
+
+  let target = null;
+  if (box1 && box1.style.display !== 'none') target = box1;
+  else if (box2) target = box2;
+
+  if (!target) {
+    bar.style.transform = 'translateY(100%)';
+    bar.style.display = 'none';
     return;
   }
 
@@ -1549,6 +1557,7 @@ function handleStickyBar() {
     }, 300);
   }
 }
+
 
 
   </script>
