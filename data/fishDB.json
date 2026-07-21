@@ -526,7 +526,8 @@
     "warning": null
   },
   "참문어": {
-    "aliases": [],
+    "aliases": ["돌문어", "왜문어", "왜꼴두기", "문어"],
+
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "5월 16일 ~ 6월 30일",
@@ -541,7 +542,8 @@
     "warning": "지역별로 금어기가 다를 수 있어 출조 전 시·도 고시 확인 필요"
   },
   "대문어": {
-    "aliases": ["왕문어"],
+    "aliases": ["왕문어", "피문어", "물문어", "대왕문어"],
+
     "scientificName": "Enteroctopus dofleini",
     "waterType": "sea",
     "seaRegion": ["동해"],
