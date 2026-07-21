@@ -1435,8 +1435,21 @@ function showAdminPanel() {
 function searchFishName(name) {
   const box = document.getElementById('locationListBox');
   if (box) box.remove();
+
+  // 문어 등 그룹 목록이 열려 있으면 닫기
+  const groupBox = document.getElementById('fishGroupBox');
+  if (groupBox) groupBox.remove();
+
+  // 하단 고정바 숨기기 (새 결과가 뜨면 다시 판단)
+  const bar = document.getElementById('stickyBar');
+  if (bar) {
+    bar.style.transform = 'translateY(100%)';
+    bar.style.display = 'none';
+  }
+
   callAPI({ fishName: name });
 }
+
 
 
 async function searchByLocation() {
