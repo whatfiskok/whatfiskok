@@ -1348,7 +1348,8 @@ async function searchByLocation() {
 
   const fishList = Object.entries(db)
     .filter(([name, info]) => {
-      if (!info.closedSeason) return false;           // 금어기 있는 것만
+      // 금어기 또는 금지체장 중 하나라도 있는 어종만
+      if (!info.closedSeason && !info.minSize) return false;
       // 바다 어종이면, 현재 바다에서 잡히는 것만
       if (info.waterType === 'sea' && mySea) {
         if (!info.seaRegion || !info.seaRegion.includes(mySea)) return false;
@@ -1356,17 +1357,31 @@ async function searchByLocation() {
       return true;
     })
     .map(([name, info]) => {
-      const releaseDate = getNextReleaseDate(info.closedSeason);
-      const inSeason    = isInClosedSeason(info.closedSeason);
+      const releaseDate = info.closedSeason ? getNextReleaseDate(info.closedSeason) : null;
+      const inSeason    = info.closedSeason ? isInClosedSeason(info.closedSeason) : false;
       const daysLeft    = releaseDate
         ? Math.ceil((releaseDate - today) / (1000 * 60 * 60 * 24))
         : null;
-      return { name, info, releaseDate, inSeason, daysLeft };
+      const hasSize     = !!info.minSize;
+      return { name, info, releaseDate, inSeason, daysLeft, hasSize };
     })
-    .filter(f => f.releaseDate !== null)
-    .sort((a, b) => a.releaseDate - b.releaseDate);
+    .sort((a, b) => {
+      // 1순위: 지금 금어기 중인 것 (해제일 가까운 순)
+      // 2순위: 금어기는 있지만 지금은 아님 (해제일 순)
+      // 3순위: 금어기 없이 금지체장만 있는 것
+      function rank(f) {
+        if (f.inSeason) return 0;
+        if (f.releaseDate) return 1;
+        return 2;
+      }
+      const ra = rank(a), rb = rank(b);
+      if (ra !== rb) return ra - rb;
+      if (a.releaseDate && b.releaseDate) return a.releaseDate - b.releaseDate;
+      return a.name.localeCompare(b.name, 'ko');
+    });
 
   showLocationList(fishList);
+
 
 }
 
