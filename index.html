@@ -1518,31 +1518,39 @@ function handleStickyBar() {
   background: rgba(20,20,20,0.97);
   border-top: 1px solid rgba(255,255,255,0.15);
   display: none;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
   z-index: 400;
   box-sizing: border-box;
   transform: translateY(100%);
   transition: transform 0.3s ease;
 ">
-  <div style="color:white; line-height:1.4;">
-    <div style="font-size:0.75rem; color:rgba(255,255,255,0.6);">무료 서비스를 유지할 수 있는 건</div>
-    <div style="font-size:1rem; font-weight:800;">여러분 덕분입니다 ❤️</div>
+  <div style="
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    box-sizing: border-box;
+  ">
+    <div style="color:white; line-height:1.4;">
+      <div style="font-size:0.75rem; color:rgba(255,255,255,0.6);">무료 서비스를 유지할 수 있는 건</div>
+      <div style="font-size:1rem; font-weight:800;">여러분 덕분입니다 ❤️</div>
+    </div>
+    <button onclick="document.getElementById('supportActionBox').scrollIntoView({behavior:'smooth', block:'center'})" style="
+      flex-shrink:0;
+      padding: 12px 22px;
+      border-radius: 24px;
+      border: none;
+      background: #e63946;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+    ">무료 후원하기</button>
   </div>
-  <button onclick="document.getElementById('supportActionBox').scrollIntoView({behavior:'smooth', block:'center'})" style="
-    flex-shrink:0;
-    padding: 12px 22px;
-    border-radius: 24px;
-    border: none;
-    background: #e63946;
-    color: white;
-    font-size: 0.95rem;
-    font-weight: 800;
-    cursor: pointer;
-  ">무료 후원하기</button>
-
 </div>
+
 
 </body>
 </html>
