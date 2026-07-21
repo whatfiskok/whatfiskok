@@ -882,13 +882,21 @@ const FISH_ALIASES = {
 
 
 function doSearch() {
-  const kw = document.getElementById('keywordInput').value.trim();
+  let kw = document.getElementById('keywordInput').value.trim();
+
   if (!kw) { showToast('어종 이름을 입력해주세요.'); return; }
 
   const input = document.getElementById('keywordInput');
 
+  // 별칭이면 실제 어종명으로 변환 (예: 돌문어 → 참문어)
+  if (FISH_ALIASES[kw]) {
+    showToast(`'${kw}'의 정식 명칭은 '${FISH_ALIASES[kw]}'입니다.`);
+    kw = FISH_ALIASES[kw];
+  }
+
   // 그룹 단어면 목록을 먼저 보여줌
   if (FISH_GROUPS[kw]) {
+
     logSearch(kw, '키워드(그룹)', 0);
     showFishGroup(kw, FISH_GROUPS[kw]);
     input.value = '';
