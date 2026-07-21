@@ -855,15 +855,129 @@ function handleImage(file) {
       if (currentImageBase64) callAPI({ imageBase64: currentImageBase64, waterType: currentWaterType });
     });
 
+// 한 단어로 묶이는 어종 그룹 (검색 시 목록을 먼저 보여줌)
+const FISH_GROUPS = {
+  '문어': ['참문어', '대문어'],
+  '가자미': ['문치가자미', '참가자미', '용가자미', '기름가자미'],
+  '오징어': ['살오징어', '갑오징어'],
+  '장어': ['붕장어', '갯장어'],
+  '가리비': ['참가리비'],
+  '조개': ['새조개', '키조개', '코끼리조개', '참가리비'],
+  '게': ['꽃게', '대게', '붉은대게'],
+  '대게': ['대게', '붉은대게'],
+  '돔': ['감성돔', '참돔', '돌돔', '벵에돔', '옥돔'],
+  '볼락': ['조피볼락', '볼락']
+};
+
+// 별칭 → 실제 어종명 (검색어를 자동으로 바꿔줌)
+const FISH_ALIASES = {
+  '돌문어': '참문어',
+  '왜문어': '참문어',
+  '왜꼴두기': '참문어',
+  '피문어': '대문어',
+  '물문어': '대문어',
+  '대왕문어': '대문어',
+  '왕문어': '대문어'
+};
+
+
 function doSearch() {
   const kw = document.getElementById('keywordInput').value.trim();
   if (!kw) { showToast('어종 이름을 입력해주세요.'); return; }
+
+  const input = document.getElementById('keywordInput');
+
+  // 그룹 단어면 목록을 먼저 보여줌
+  if (FISH_GROUPS[kw]) {
+    logSearch(kw, '키워드(그룹)', 0);
+    showFishGroup(kw, FISH_GROUPS[kw]);
+    input.value = '';
+    input.blur();
+    return;
+  }
+
   logSearch(kw, '키워드', 0);
   callAPI({ fishName: kw, waterType: currentWaterType });
-  const input = document.getElementById('keywordInput');
   input.value = '';
   input.blur();
 }
+
+// 그룹 어종 선택 목록 표시
+function showFishGroup(groupName, names) {
+  document.getElementById('introBox').style.display = 'none';
+  document.getElementById('resultOverlay').style.display = 'none';
+
+  const old = document.getElementById('locationListBox');
+  if (old) old.remove();
+  const oldGroup = document.getElementById('fishGroupBox');
+  if (oldGroup) oldGroup.remove();
+
+  let buttons = names.map(function(name) {
+    return `
+      <div onclick="searchFishName('${name}')" style="
+        display:flex; align-items:center; justify-content:space-between;
+        padding:14px 16px;
+        margin-bottom:8px;
+        background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.12);
+        border-radius:12px;
+        cursor:pointer;
+        color:white;
+      "
+      onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+      onmouseout="this.style.background='rgba(255,255,255,0.06)'"
+      >
+        <div style="font-size:0.98rem; font-weight:800;">${name}</div>
+        <div style="font-size:0.9rem; color:rgba(255,255,255,0.5);">›</div>
+      </div>
+    `;
+  }).join('');
+
+  const html = `
+    <div id="fishGroupBox" style="
+      width:100%; max-width:420px;
+      margin-top:20px;
+      padding:0 4px;
+      box-sizing:border-box;
+    ">
+      <div style="
+        background:rgba(255,255,255,0.07);
+        border:1.5px solid rgba(255,255,255,0.15);
+        border-radius:16px;
+        padding:20px 16px;
+        color:white;
+      ">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div>
+            <div style="font-size:1rem; font-weight:800;">'${groupName}' 관련 어종</div>
+            <div style="font-size:0.75rem; color:rgba(255,255,255,0.5); margin-top:2px;">
+              찾으시는 어종을 선택하세요
+            </div>
+          </div>
+          <button onclick="closeFishGroup()" style="
+            background:rgba(255,255,255,0.15);
+            border:none; border-radius:50%;
+            width:32px; height:32px;
+            color:white; font-size:1rem;
+            cursor:pointer;
+          ">✕</button>
+        </div>
+        ${buttons}
+      </div>
+    </div>
+  `;
+
+  const menuWrap = document.querySelector('.menu-wrap');
+  menuWrap.insertAdjacentHTML('beforeend', html);
+  document.getElementById('fishGroupBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeFishGroup() {
+  const box = document.getElementById('fishGroupBox');
+  if (box) box.remove();
+  document.getElementById('introBox').style.display = 'block';
+}
+
 
 
 
