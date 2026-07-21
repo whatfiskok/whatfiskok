@@ -1473,10 +1473,11 @@ function showLocationList(fishList) {
       </p>
     </div>
 
-    <div style="margin-top:20px; padding:20px 16px;
+    <div id="locationSupportBox" style="display:none; margin-top:20px; padding:20px 16px;
       background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; text-align:center; color:white;">
       <p style="font-size:0.85rem; line-height:1.9; margin-bottom:16px;">
         무료 서비스를 유지할 수 있는 건 여러분 덕분입니다 ❤️<br>
+
         아래 링크를 통해 쇼핑하시면<br>
         <b>추가 비용 없이 운영에 힘이 됩니다.</b>
       </p>
@@ -1492,13 +1493,9 @@ function showLocationList(fishList) {
 
   const menuWrap = document.querySelector('.menu-wrap');
   menuWrap.insertAdjacentHTML('beforeend', html);
-document.getElementById('locationListBox').scrollIntoView({ behavior: 'smooth' });
-setTimeout(() => {
-  const box = document.getElementById('locationListBox');
-  if (box) box.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'end' });
-}, 1500);
-
+  document.getElementById('locationListBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
 
 
 function closeLocationList() {
@@ -1508,13 +1505,26 @@ function closeLocationList() {
 }
 
 function showSupportBox() {
-  const box = document.getElementById('supportActionBox');
+  // 결과 화면 후원 박스와 위치 검색 화면 후원 박스 중, 현재 화면에 있는 것을 표시
+  const box1 = document.getElementById('supportActionBox');
+  const box2 = document.getElementById('locationSupportBox');
+
+  let box = null;
+  if (box1 && box1.closest('#resultOverlay') && document.getElementById('resultOverlay').style.display !== 'none') {
+    box = box1;
+  } else if (box2) {
+    box = box2;
+  } else if (box1) {
+    box = box1;
+  }
+
   if (!box) return;
   box.style.setProperty('display', 'block', 'important');
   setTimeout(function() {
     box.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 100);
 }
+
 
 
 const stickyScrollTarget = document.getElementById('mainScreen');
