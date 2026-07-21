@@ -1456,6 +1456,15 @@ function closeLocationList() {
   document.getElementById('introBox').style.display = 'block';
 }
 
+function showSupportBox() {
+  const box = document.getElementById('supportActionBox');
+  if (!box) return;
+  box.style.setProperty('display', 'block', 'important');
+  setTimeout(function() {
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
+}
+
 
 const stickyScrollTarget = document.getElementById('mainScreen');
 if (stickyScrollTarget) {
