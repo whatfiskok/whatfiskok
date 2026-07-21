@@ -1344,8 +1344,17 @@ async function searchByLocation() {
     return today >= start && today <= end;
   }
 
+  const mySea = window.userSea || null;  // 예: '서해'
+
   const fishList = Object.entries(db)
-    .filter(([name, info]) => info.closedSeason)
+    .filter(([name, info]) => {
+      if (!info.closedSeason) return false;           // 금어기 있는 것만
+      // 바다 어종이면, 현재 바다에서 잡히는 것만
+      if (info.waterType === 'sea' && mySea) {
+        if (!info.seaRegion || !info.seaRegion.includes(mySea)) return false;
+      }
+      return true;
+    })
     .map(([name, info]) => {
       const releaseDate = getNextReleaseDate(info.closedSeason);
       const inSeason    = isInClosedSeason(info.closedSeason);
@@ -1358,6 +1367,7 @@ async function searchByLocation() {
     .sort((a, b) => a.releaseDate - b.releaseDate);
 
   showLocationList(fishList);
+
 }
 
 function showLocationList(fishList) {
