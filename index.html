@@ -1202,23 +1202,37 @@ function showResult(data) {
     calendarSection.style.display = 'none';
     requestSection.style.display = 'block';
 
+  if (isNotFound) {
+    calendarSection.style.display = 'none';
+
     const oldSim = document.getElementById('suggestionBox');
     if (oldSim) oldSim.remove();
 
-    findSimilarFish(data.fishName || '').then(function(similar) {
-      if (!similar || similar.length === 0) return;
-      const btns = similar.map(function(name) {
-        return '<button onclick="searchFishName(\'' + name + '\')" style="margin:4px; padding:8px 16px; border-radius:20px; border:1.5px solid rgba(255,255,255,0.6); background:rgba(255,255,255,0.15); color:white; font-size:0.9rem; cursor:pointer;">' + name + '</button>';
-      }).join('');
+    // 먼저 요청 버튼은 숨겨두고, 비슷한 어종 검색 결과에 따라 결정
+    requestSection.style.display = 'none';
 
-      const boxEl = document.createElement('div');
-      boxEl.id = 'suggestionBox';
-      boxEl.style.cssText = 'text-align:center; margin:12px 0;';
-      boxEl.innerHTML = '<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>' + btns;
-      requestSection.before(boxEl);
+    findSimilarFish(data.fishName || '').then(function(similar) {
+      if (similar && similar.length > 0) {
+        // 비슷한 어종이 있으면: 추천만 보여주고 요청 버튼은 숨김
+        const btns = similar.map(function(name) {
+          return '<button onclick="searchFishName(\'' + name + '\')" style="margin:4px; padding:8px 16px; border-radius:20px; border:1.5px solid rgba(255,255,255,0.6); background:rgba(255,255,255,0.15); color:white; font-size:0.9rem; cursor:pointer;">' + name + '</button>';
+        }).join('');
+
+        const boxEl = document.createElement('div');
+        boxEl.id = 'suggestionBox';
+        boxEl.style.cssText = 'text-align:center; margin:12px 0;';
+        boxEl.innerHTML = '<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>' + btns;
+        requestSection.before(boxEl);
+
+        requestSection.style.display = 'none';
+      } else {
+        // 비슷한 어종이 하나도 없으면: 요청 버튼 표시
+        requestSection.style.display = 'block';
+      }
     });
 
   } else {
+
 
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
