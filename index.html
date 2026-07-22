@@ -1104,9 +1104,19 @@ function showResult(data) {
               if (p2.thumbnail && p2.thumbnail.source) {
                 fishPhotoImg.src = p2.thumbnail.source;
                 fishPhoto.style.setProperty('display', 'block', 'important');
+              } else {
+                fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(data.scientificName)}`)
+                  .then(r3 => r3.json())
+                  .then(json3 => {
+                    if (json3.results && json3.results[0] && json3.results[0].default_photo) {
+                      fishPhotoImg.src = json3.results[0].default_photo.medium_url;
+                      fishPhoto.style.setProperty('display', 'block', 'important');
+                    }
+                  }).catch(() => {});
               }
             }).catch(() => {});
         }
+
 
         const fishPhoto2 = document.getElementById('fishPhoto2');
         const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
