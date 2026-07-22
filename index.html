@@ -1213,23 +1213,33 @@ function showResult(data) {
   if (window.lastAliasSearch && window.lastAliasSearch.real === data.fishName) {
     const noticeHtml = `
       <div id="aliasNoticeBox" style="
-        margin: 10px 0 4px;
-        padding: 10px 14px;
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.25);
+        width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0 14px;
+        padding: 12px 16px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.2);
         border-radius: 12px;
         color: white;
-        font-size: 0.82rem;
-        line-height: 1.5;
-        text-align: center;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        text-align: left;
       ">
-        🔎 '<b>${window.lastAliasSearch.alias}</b>'(으)로 검색하셨습니다.<br>
+      ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-1px; margin-right:4px;">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="21" y1="21" x2="16.5" y2="16.5"/>
+        </svg>'<b>${window.lastAliasSearch.alias}</b>'(으)로 검색하셨습니다.
         정식 명칭은 '<b>${window.lastAliasSearch.real}</b>'입니다.
       </div>
+
     `;
-    const nameEl = document.getElementById('resultFishName');
-    nameEl.parentElement.insertAdjacentHTML('afterend', noticeHtml);
+    const headerEl = document.querySelector('.fish-header');
+    if (headerEl) {
+      headerEl.insertAdjacentHTML('afterend', noticeHtml);
+    }
   }
+
 
   const sciEl = document.getElementById('resultScientificName');
 
