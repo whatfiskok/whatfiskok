@@ -1097,26 +1097,48 @@ function showResult(data) {
         if (page.thumbnail && page.thumbnail.source) {
           fishPhotoImg.src = page.thumbnail.source;
           fishPhoto.style.setProperty('display', 'block', 'important');
-        } else if (data.scientificName) {
-          fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.scientificName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
-            .then(r2 => r2.json())
-            .then(json2 => {
-              const p2 = Object.values(json2.query.pages)[0];
-              if (p2.thumbnail && p2.thumbnail.source) {
-                fishPhotoImg.src = p2.thumbnail.source;
-                fishPhoto.style.setProperty('display', 'block', 'important');
-              } else {
-                fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(data.scientificName)}`)
-                  .then(r3 => r3.json())
-                  .then(json3 => {
-                    if (json3.results && json3.results[0] && json3.results[0].default_photo) {
-                      fishPhotoImg.src = json3.results[0].default_photo.medium_url;
-                      fishPhoto.style.setProperty('display', 'block', 'important');
-                    }
-                  }).catch(() => {});
-              }
-            }).catch(() => {});
+        } else {
+          // 학명이 있으면 영문 위키 → iNaturalist(학명), 없으면 곧바로 iNaturalist(한국어 이름)
+          const tryInatByKorean = function() {
+            fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(data.fishName)}&locale=ko`)
+              .then(r4 => r4.json())
+              .then(json4 => {
+                if (json4.results && json4.results[0] && json4.results[0].default_photo) {
+                  fishPhotoImg.src = json4.results[0].default_photo.medium_url;
+                  fishPhoto.style.setProperty('display', 'block', 'important');
+                }
+              }).catch(() => {});
+          };
+
+          if (data.scientificName) {
+            fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(data.scientificName)}&prop=pageimages&format=json&pithumbsize=400&origin=*`)
+              .then(r2 => r2.json())
+              .then(json2 => {
+                const p2 = Object.values(json2.query.pages)[0];
+                if (p2.thumbnail && p2.thumbnail.source) {
+                  fishPhotoImg.src = p2.thumbnail.source;
+                  fishPhoto.style.setProperty('display', 'block', 'important');
+                } else {
+                  // 영문 위키 실패 → iNaturalist(학명)
+                  fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(data.scientificName)}`)
+                    .then(r3 => r3.json())
+                    .then(json3 => {
+                      if (json3.results && json3.results[0] && json3.results[0].default_photo) {
+                        fishPhotoImg.src = json3.results[0].default_photo.medium_url;
+                        fishPhoto.style.setProperty('display', 'block', 'important');
+                      } else {
+                        // 그래도 실패 → 한국어 이름으로 마지막 시도
+                        tryInatByKorean();
+                      }
+                    }).catch(() => { tryInatByKorean(); });
+                }
+              }).catch(() => { tryInatByKorean(); });
+          } else {
+            // 학명이 아예 없는 어종 → 한국어 이름으로 iNaturalist 시도
+            tryInatByKorean();
+          }
         }
+
 
 
         const fishPhoto2 = document.getElementById('fishPhoto2');
