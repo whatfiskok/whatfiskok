@@ -1525,8 +1525,9 @@ async function findSimilarFish(keyword) {
 
   const scored = candidates
     .map(function(c) { return { name: c.name, s: score(keyword, c.target) }; })
-    .filter(function(c) { return c.s >= 30; })
+    .filter(function(c) { return c.s >= 18; })
     .sort(function(a, b) { return b.s - a.s; });
+
 
   const seen = {};
   const result = [];
