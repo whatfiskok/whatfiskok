@@ -1123,17 +1123,26 @@ function showResult(data) {
         const fishPhotoImg2 = document.getElementById('fishPhotoImg2');
         fishPhoto2.style.display = 'none';
         const searchName = data.scientificName || data.fishName;
+        // 1단계: 종 ID 찾기
         fetch(`https://api.inaturalist.org/v1/taxa/autocomplete?q=${encodeURIComponent(searchName)}&rank=species&locale=ko`)
           .then(r2 => r2.json())
           .then(json2 => {
-            if (json2.results && json2.results.length > 0) {
-              const taxon = json2.results[0];
-              if (taxon.default_photo && taxon.default_photo.medium_url) {
-                fishPhotoImg2.src = taxon.default_photo.medium_url;
-                fishPhoto2.style.setProperty('display', 'block', 'important');
-              }
-            }
+            if (!json2.results || json2.results.length === 0) return;
+            const taxonId = json2.results[0].id;
+            // 2단계: 그 종의 사진 여러 장 가져오기
+            return fetch(`https://api.inaturalist.org/v1/taxa/${taxonId}`)
+              .then(r3 => r3.json())
+              .then(json3 => {
+                if (!json3.results || json3.results.length === 0) return;
+                const photos = json3.results[0].taxon_photos || [];
+                // 두 번째 사진 사용 (없으면 아무것도 안 함 → 중복 방지)
+                if (photos.length >= 2 && photos[1].photo && photos[1].photo.medium_url) {
+                  fishPhotoImg2.src = photos[1].photo.medium_url;
+                  fishPhoto2.style.setProperty('display', 'block', 'important');
+                }
+              });
           }).catch(() => {});
+
 
         if (data.source === 'not_found') {
           if (data.suggestions && data.suggestions.length > 0) {
