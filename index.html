@@ -1200,13 +1200,10 @@ function showResult(data) {
 
   if (isNotFound) {
     calendarSection.style.display = 'none';
-    requestSection.style.display = 'block';
-
-  if (isNotFound) {
-    calendarSection.style.display = 'none';
 
     const oldSim = document.getElementById('suggestionBox');
     if (oldSim) oldSim.remove();
+
 
     // 먼저 요청 버튼은 숨겨두고, 비슷한 어종 검색 결과에 따라 결정
     requestSection.style.display = 'none';
