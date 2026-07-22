@@ -1201,7 +1201,25 @@ function showResult(data) {
   if (isNotFound) {
     calendarSection.style.display = 'none';
     requestSection.style.display = 'block';
+
+    const oldSim = document.getElementById('suggestionBox');
+    if (oldSim) oldSim.remove();
+
+    findSimilarFish(data.fishName || '').then(function(similar) {
+      if (!similar || similar.length === 0) return;
+      const btns = similar.map(function(name) {
+        return '<button onclick="searchFishName(\'' + name + '\')" style="margin:4px; padding:8px 16px; border-radius:20px; border:1.5px solid rgba(255,255,255,0.6); background:rgba(255,255,255,0.15); color:white; font-size:0.9rem; cursor:pointer;">' + name + '</button>';
+      }).join('');
+
+      const boxEl = document.createElement('div');
+      boxEl.id = 'suggestionBox';
+      boxEl.style.cssText = 'text-align:center; margin:12px 0;';
+      boxEl.innerHTML = '<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>' + btns;
+      requestSection.before(boxEl);
+    });
+
   } else {
+
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
 
@@ -1461,6 +1479,54 @@ function searchFishName(name) {
   }
 
   callAPI({ fishName: name });
+}
+
+// 등록된 어종 중 검색어와 비슷한 이름을 찾아 최대 5개 반환
+async function findSimilarFish(keyword) {
+  let db;
+  try {
+    const res = await fetch('/data/fishDB.json');
+    db = await res.json();
+  } catch (e) {
+    return [];
+  }
+
+  const names = Object.keys(db);
+  const candidates = [];
+  names.forEach(function(name) {
+    candidates.push({ name: name, target: name });
+    const aliases = db[name].aliases || [];
+    aliases.forEach(function(a) {
+      candidates.push({ name: name, target: a });
+    });
+  });
+
+  function score(a, b) {
+    if (!a || !b) return 0;
+    if (a === b) return 100;
+    if (b.indexOf(a) !== -1 || a.indexOf(b) !== -1) return 80;
+    let common = 0;
+    for (const ch of a) {
+      if (b.indexOf(ch) !== -1) common++;
+    }
+    return common / Math.max(a.length, b.length) * 60;
+  }
+
+  const scored = candidates
+    .map(function(c) { return { name: c.name, s: score(keyword, c.target) }; })
+    .filter(function(c) { return c.s >= 30; })
+    .sort(function(a, b) { return b.s - a.s; });
+
+  const seen = {};
+  const result = [];
+  for (const c of scored) {
+    if (!seen[c.name]) {
+      seen[c.name] = true;
+      result.push(c.name);
+    }
+    if (result.length >= 5) break;
+  }
+  return result;
 }
 
 
