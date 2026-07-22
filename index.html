@@ -1143,12 +1143,12 @@ function showResult(data) {
             suggestionBox.style.cssText = 'text-align:center; margin: 12px 0;';
             suggestionBox.innerHTML = `<div style="color:white; margin-bottom:8px; font-size:0.9rem;">혹시 이 어종을 찾으시나요?</div>${suggestionHtml}`;
           }
-          requestMailBtn.onclick = function(e) {
+               requestMailBtn.onclick = function(e) {
             e.preventDefault();
             logRequest(data.fishName);
           };
-          requestSection.style.display = 'block';
         }
+
 
       })
       .catch(() => {
