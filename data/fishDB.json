@@ -90,8 +90,15 @@
     "warning": null
   },
   "농어": {
-    "aliases": ["껄떼기"],
+    "aliases": ["깔따구", "깔다구", "까지메기", "가지메기", "따오기"],
+    "growthStages": [
+      {"name": "깔따구", "size": "약 20cm 이하", "desc": "주로 여름철에 많이 잡히는 어린 농어"},
+      {"name": "까지메기", "size": "약 20~40cm", "desc": "어느 정도 자란 준치급 크기"},
+      {"name": "농어", "size": "약 40~60cm 이상", "desc": "시장에서 흔히 볼 수 있는 성어"},
+      {"name": "따오기", "size": "약 80cm 이상", "desc": "다 자란 대형 농어를 뜻하는 낚시계의 은어"}
+    ],
     "waterType": "sea",
+
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": null,
     "minSize": 30,
