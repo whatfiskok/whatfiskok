@@ -1293,6 +1293,9 @@ const sizeText = data.minSize
 
   const seasonText = data.season || null;
 
+  const isProtected = data.protected === true || (data.closedSeason && data.closedSeason.includes('금지'));
+
+
   infoCards.innerHTML = `
     <div style="
       width:100%;
