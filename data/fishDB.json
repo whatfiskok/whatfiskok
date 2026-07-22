@@ -1,6 +1,7 @@
 {
   "넙치": {
     "aliases": ["광어"],
+    "scientificName": "Paralichthys olivaceus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": null,
@@ -16,6 +17,7 @@
   },
   "조피볼락": {
     "aliases": ["우럭"],
+    "scientificName": "Sebastes schlegelii",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": null,
@@ -31,6 +33,7 @@
   },
   "감성돔": {
     "aliases": [],
+    "scientificName": "Acanthopagrus schlegelii",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": "5월 1일 ~ 5월 31일",
@@ -46,6 +49,7 @@
   },
   "참돔": {
     "aliases": ["도미"],
+    "scientificName": "Pagrus major",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": null,
@@ -61,6 +65,7 @@
   },
   "돌돔": {
     "aliases": [],
+    "scientificName": "Oplegnathus fasciatus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -76,6 +81,7 @@
   },
   "벵에돔": {
     "aliases": ["긴꼬리벵에돔"],
+    "scientificName": "Girella punctata",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -91,6 +97,7 @@
   },
   "농어": {
     "aliases": ["깔따구", "깔다구", "까지메기", "가지메기", "따오기"],
+    "scientificName": "Lateolabrax japonicus",
     "growthStages": [
       {"name": "깔따구", "size": "약 20cm 이하", "desc": "주로 여름철에 많이 잡히는 어린 농어"},
       {"name": "까지메기", "size": "약 20~40cm", "desc": "어느 정도 자란 준치급 크기"},
@@ -98,7 +105,6 @@
       {"name": "따오기", "size": "약 80cm 이상", "desc": "다 자란 대형 농어를 뜻하는 낚시계의 은어"}
     ],
     "waterType": "sea",
-
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": null,
     "minSize": 30,
@@ -113,6 +119,7 @@
   },
   "볼락": {
     "aliases": [],
+    "scientificName": "Sebastes inermis",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -128,6 +135,7 @@
   },
   "쥐노래미": {
     "aliases": ["노래미"],
+    "scientificName": "Hexagrammos otakii",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": "11월 1일 ~ 12월 31일",
@@ -143,6 +151,7 @@
   },
   "문치가자미": {
     "aliases": ["도다리"],
+    "scientificName": "Pseudopleuronectes yokohamae",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": "12월 1일 ~ 1월 31일",
@@ -158,6 +167,7 @@
   },
   "참가자미": {
     "aliases": ["가자미"],
+    "scientificName": "Pleuronectes herzensteini",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
@@ -173,6 +183,7 @@
   },
   "용가자미": {
     "aliases": ["미주구리"],
+    "scientificName": "Cleisthenes pinetorum",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
@@ -188,6 +199,7 @@
   },
   "기름가자미": {
     "aliases": [],
+    "scientificName": "Glyptocephalus stelleri",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
@@ -203,6 +215,7 @@
   },
   "대구": {
     "aliases": [],
+    "scientificName": "Gadus macrocephalus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해"],
     "closedSeason": "1월 16일 ~ 2월 15일",
@@ -218,6 +231,7 @@
   },
   "명태": {
     "aliases": ["황태", "코다리", "노가리"],
+    "scientificName": "Gadus chalcogrammus",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": "1월 1일 ~ 12월 31일 (연중 금지)",
@@ -233,6 +247,7 @@
   },
   "청어": {
     "aliases": [],
+    "scientificName": "Clupea pallasii",
     "waterType": "sea",
     "seaRegion": ["동해", "남해"],
     "closedSeason": null,
@@ -248,6 +263,7 @@
   },
   "고등어": {
     "aliases": [],
+    "scientificName": "Scomber japonicus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "4월 1일 ~ 6월 30일 중 1개월 (매년 장관 고시로 확정)",
@@ -263,6 +279,7 @@
   },
   "삼치": {
     "aliases": [],
+    "scientificName": "Scomberomorus niphonius",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": "5월 1일 ~ 5월 31일",
@@ -278,6 +295,7 @@
   },
   "학꽁치": {
     "aliases": ["꽁치"],
+    "scientificName": "Hyporhamphus sajori",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": null,
@@ -293,6 +311,7 @@
   },
   "숭어": {
     "aliases": [],
+    "scientificName": "Mugil cephalus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": null,
@@ -308,6 +327,7 @@
   },
   "갈치": {
     "aliases": [],
+    "scientificName": "Trichiurus lepturus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "7월 1일 ~ 7월 31일",
@@ -323,6 +343,7 @@
   },
   "말쥐치": {
     "aliases": ["쥐치", "쥐포"],
+    "scientificName": "Thamnaconus modestus",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": "5월 1일 ~ 7월 31일",
@@ -336,9 +357,9 @@
     "similarFish": [],
     "warning": null
   },
-
   "도루묵": {
     "aliases": [],
+    "scientificName": "Arctoscopus japonicus",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
@@ -354,6 +375,7 @@
   },
   "민어": {
     "aliases": [],
+    "scientificName": "Miichthys miiuy",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": null,
@@ -369,6 +391,7 @@
   },
   "방어": {
     "aliases": [],
+    "scientificName": "Seriola quinqueradiata",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -384,6 +407,7 @@
   },
   "부시리": {
     "aliases": ["히라스"],
+    "scientificName": "Seriola lalandi",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -399,6 +423,7 @@
   },
   "참홍어": {
     "aliases": ["홍어"],
+    "scientificName": "Beringraja pulchra",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "6월 1일 ~ 7월 15일",
@@ -414,6 +439,7 @@
   },
   "참조기": {
     "aliases": ["조기", "굴비"],
+    "scientificName": "Larimichthys polyactis",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "7월 1일 ~ 7월 31일",
@@ -429,6 +455,7 @@
   },
   "전어": {
     "aliases": [],
+    "scientificName": "Konosirus punctatus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "5월 1일 ~ 7월 15일",
@@ -444,6 +471,7 @@
   },
   "옥돔": {
     "aliases": [],
+    "scientificName": "Branchiostegus japonicus",
     "waterType": "sea",
     "seaRegion": ["제주", "남해"],
     "closedSeason": "7월 21일 ~ 8월 20일",
@@ -459,6 +487,7 @@
   },
   "붕장어": {
     "aliases": ["아나고", "바다장어"],
+    "scientificName": "Conger myriaster",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": null,
@@ -474,6 +503,7 @@
   },
   "갯장어": {
     "aliases": ["하모"],
+    "scientificName": "Muraenesox cinereus",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -489,6 +519,7 @@
   },
   "미거지": {
     "aliases": ["곰치"],
+    "scientificName": "Liparis ingens",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
@@ -504,6 +535,7 @@
   },
   "살오징어": {
     "aliases": ["오징어"],
+    "scientificName": "Todarodes pacificus",
     "waterType": "sea",
     "seaRegion": ["동해", "남해", "제주"],
     "closedSeason": "4월 1일 ~ 5월 31일",
@@ -519,6 +551,7 @@
   },
   "갑오징어": {
     "aliases": [],
+    "scientificName": "Sepia esculenta",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": null,
@@ -534,7 +567,7 @@
   },
   "참문어": {
     "aliases": ["돌문어", "왜문어", "왜꼴두기", "문어"],
-
+    "scientificName": "Octopus vulgaris",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "5월 16일 ~ 6월 30일",
@@ -550,7 +583,6 @@
   },
   "대문어": {
     "aliases": ["왕문어", "피문어", "물문어", "대왕문어"],
-
     "scientificName": "Enteroctopus dofleini",
     "waterType": "sea",
     "seaRegion": ["동해"],
@@ -567,6 +599,7 @@
   },
   "주꾸미": {
     "aliases": ["쭈꾸미", "쭈구미"],
+    "scientificName": "Amphioctopus fangsiao",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "5월 11일 ~ 8월 31일",
@@ -582,6 +615,7 @@
   },
   "낙지": {
     "aliases": [],
+    "scientificName": "Octopus minor",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "6월 1일 ~ 6월 30일",
@@ -597,6 +631,7 @@
   },
   "꽃게": {
     "aliases": [],
+    "scientificName": "Portunus trituberculatus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "6월 21일 ~ 9월 30일 중 2개월 (매년 장관 고시로 확정)",
@@ -612,6 +647,7 @@
   },
   "대게": {
     "aliases": ["영덕대게"],
+    "scientificName": "Chionoecetes opilio",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": "6월 1일 ~ 11월 30일",
@@ -627,6 +663,7 @@
   },
   "붉은대게": {
     "aliases": ["홍게"],
+    "scientificName": "Chionoecetes japonicus",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": "7월 10일 ~ 8월 25일",
@@ -642,6 +679,7 @@
   },
   "대하": {
     "aliases": ["왕새우"],
+    "scientificName": "Penaeus chinensis",
     "waterType": "sea",
     "seaRegion": ["서해"],
     "closedSeason": "5월 1일 ~ 6월 30일",
@@ -657,6 +695,7 @@
   },
   "전복": {
     "aliases": [],
+    "scientificName": "Haliotis discus hannai",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": "9월 1일 ~ 10월 31일",
@@ -672,6 +711,7 @@
   },
   "오분자기": {
     "aliases": ["떡조개"],
+    "scientificName": "Haliotis diversicolor",
     "waterType": "sea",
     "seaRegion": ["제주"],
     "closedSeason": "9월 1일 ~ 10월 31일",
@@ -687,6 +727,7 @@
   },
   "소라": {
     "aliases": [],
+    "scientificName": "Turbo cornutus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "5월 1일 ~ 6월 30일",
@@ -702,6 +743,7 @@
   },
   "새조개": {
     "aliases": [],
+    "scientificName": "Fulvia mutica",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "6월 16일 ~ 9월 15일",
@@ -717,6 +759,7 @@
   },
   "키조개": {
     "aliases": [],
+    "scientificName": "Atrina pectinata",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "5월 1일 ~ 6월 30일",
@@ -732,6 +775,7 @@
   },
   "코끼리조개": {
     "aliases": ["개조개"],
+    "scientificName": "Panopea japonica",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": "5월 1일 ~ 6월 30일",
@@ -747,6 +791,7 @@
   },
   "참가리비": {
     "aliases": ["가리비"],
+    "scientificName": "Mizuhopecten yessoensis",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": "3월 1일 ~ 6월 30일",
@@ -762,6 +807,7 @@
   },
   "해삼": {
     "aliases": [],
+    "scientificName": "Apostichopus japonicus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": "6월 1일 ~ 8월 31일",
@@ -777,6 +823,7 @@
   },
   "성게": {
     "aliases": ["보라성게", "말똥성게"],
+    "scientificName": "Heliocidaris crassispina",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "6월 1일 ~ 8월 31일",
@@ -792,6 +839,7 @@
   },
   "우뭇가사리": {
     "aliases": ["한천"],
+    "scientificName": "Gelidium amansii",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": "11월 1일 ~ 3월 31일",
@@ -807,6 +855,7 @@
   },
   "톳": {
     "aliases": [],
+    "scientificName": "Sargassum fusiforme",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": "10월 1일 ~ 1월 31일",
@@ -822,6 +871,7 @@
   },
   "넓미역": {
     "aliases": ["미역"],
+    "scientificName": "Undaria peterseniana",
     "waterType": "sea",
     "seaRegion": ["제주"],
     "closedSeason": "9월 1일 ~ 11월 30일",
@@ -837,6 +887,7 @@
   },
   "쏘가리": {
     "aliases": [],
+    "scientificName": "Siniperca scherzeri",
     "waterType": "fresh",
     "closedSeason": "5월 1일 ~ 6월 10일",
     "minSize": 20,
@@ -851,6 +902,7 @@
   },
   "황복": {
     "aliases": ["복어"],
+    "scientificName": "Takifugu obscurus",
     "waterType": "fresh",
     "closedSeason": "4월 1일 ~ 6월 30일",
     "minSize": 20,
@@ -865,6 +917,7 @@
   },
   "은어": {
     "aliases": [],
+    "scientificName": "Plecoglossus altivelis",
     "waterType": "fresh",
     "closedSeason": "9월 15일 ~ 11월 15일",
     "minSize": null,
@@ -879,6 +932,7 @@
   },
   "연어": {
     "aliases": [],
+    "scientificName": "Oncorhynchus keta",
     "waterType": "fresh",
     "closedSeason": "10월 11일 ~ 11월 30일",
     "minSize": 30,
@@ -893,6 +947,7 @@
   },
   "뱀장어": {
     "aliases": ["민물장어", "장어"],
+    "scientificName": "Anguilla japonica",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 15,
@@ -907,6 +962,7 @@
   },
   "빙어": {
     "aliases": [],
+    "scientificName": "Hypomesus nipponensis",
     "waterType": "fresh",
     "closedSeason": "3월 1일 ~ 3월 20일",
     "minSize": null,
@@ -921,6 +977,7 @@
   },
   "열목어": {
     "aliases": [],
+    "scientificName": "Brachymystax lenok",
     "waterType": "fresh",
     "closedSeason": "1월 1일 ~ 4월 30일",
     "minSize": null,
@@ -935,6 +992,7 @@
   },
   "산천어": {
     "aliases": [],
+    "scientificName": "Oncorhynchus masou",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 20,
@@ -949,6 +1007,7 @@
   },
   "송어": {
     "aliases": [],
+    "scientificName": "Oncorhynchus masou",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 12,
@@ -963,6 +1022,7 @@
   },
   "붕어": {
     "aliases": [],
+    "scientificName": "Carassius auratus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -977,6 +1037,7 @@
   },
   "잉어": {
     "aliases": [],
+    "scientificName": "Cyprinus carpio",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 25,
@@ -991,6 +1052,7 @@
   },
   "메기": {
     "aliases": [],
+    "scientificName": "Silurus asotus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 20,
@@ -1005,6 +1067,7 @@
   },
   "강준치": {
     "aliases": [],
+    "scientificName": "Erythroculter erythropterus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1019,6 +1082,7 @@
   },
   "참게": {
     "aliases": [],
+    "scientificName": "Eriocheir sinensis",
     "waterType": "fresh",
     "closedSeason": "8월 1일 ~ 11월 30일",
     "minSize": 5,
@@ -1033,6 +1097,7 @@
   },
   "다슬기": {
     "aliases": ["올갱이", "민물고둥"],
+    "scientificName": "Semisulcospira libertina",
     "waterType": "fresh",
     "closedSeason": "12월 1일 ~ 2월 28일",
     "minSize": 1.5,
@@ -1047,6 +1112,7 @@
   },
   "기수재첩": {
     "aliases": ["재첩"],
+    "scientificName": "Corbicula japonica",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 1.5,
@@ -1061,6 +1127,7 @@
   },
   "말조개": {
     "aliases": [],
+    "scientificName": "Unio douglasiae",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 9,
@@ -1076,6 +1143,7 @@
   "배스": {
     "aliases": ["큰입우럭"],
     "wikiTitle": "배스 (어류)",
+    "scientificName": "Micropterus salmoides",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1089,6 +1157,7 @@
   },
   "블루길": {
     "aliases": [],
+    "scientificName": "Lepomis macrochirus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1102,6 +1171,7 @@
   },
   "다금바리": {
     "aliases": ["자바리"],
+    "scientificName": "Niphon spinosus",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -1117,6 +1187,7 @@
   },
   "붉바리": {
     "aliases": [],
+    "scientificName": "Epinephelus akaara",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -1132,6 +1203,7 @@
   },
   "보리멸": {
     "aliases": [],
+    "scientificName": "Sillago japonica",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": null,
@@ -1147,6 +1219,7 @@
   },
   "양태": {
     "aliases": ["장대"],
+    "scientificName": "Platycephalus indicus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": null,
@@ -1162,6 +1235,7 @@
   },
   "돗양태": {
     "aliases": [],
+    "scientificName": "Repomucenus lunatus",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -1177,6 +1251,7 @@
   },
   "전갱이": {
     "aliases": ["아지", "매가리"],
+    "scientificName": "Trachurus japonicus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -1192,6 +1267,7 @@
   },
   "줄삼치": {
     "aliases": [],
+    "scientificName": "Sarda orientalis",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -1207,6 +1283,7 @@
   },
   "참다랑어": {
     "aliases": ["참치", "혼마구로"],
+    "scientificName": "Thunnus orientalis",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -1222,6 +1299,7 @@
   },
   "강도다리": {
     "aliases": [],
+    "scientificName": "Platichthys stellatus",
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
@@ -1237,6 +1315,7 @@
   },
   "달고기": {
     "aliases": [],
+    "scientificName": "Zeus faber",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -1252,6 +1331,7 @@
   },
   "넙치농어": {
     "aliases": [],
+    "scientificName": "Lateolabrax latus",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
@@ -1267,6 +1347,7 @@
   },
   "점농어": {
     "aliases": [],
+    "scientificName": "Lateolabrax maculatus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": null,
@@ -1282,6 +1363,7 @@
   },
   "쏨뱅이": {
     "aliases": ["삼뱅이"],
+    "scientificName": "Sebastiscus marmoratus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -1297,6 +1379,7 @@
   },
   "자리돔": {
     "aliases": ["자리"],
+    "scientificName": "Chromis notata",
     "waterType": "sea",
     "seaRegion": ["제주", "남해"],
     "closedSeason": null,
@@ -1312,6 +1395,7 @@
   },
   "밴댕이": {
     "aliases": ["뒤포리"],
+    "scientificName": "Sardinella zunasi",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": null,
@@ -1325,23 +1409,24 @@
     "similarFish": [{"name": "전어", "difference": "밴댕이가 더 납작하고 은빛이 강함"}],
     "warning": null
   },
-   "뱅에돔": {
+  "뱅에돔": {
     "aliases": [],
     "wikiTitle": "벵에돔",
+    "scientificName": "Girella punctata",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
     "minSize": null,
     "minSizeUnit": null,
     "minSizeNote": null,
-      "regionNote": null,
+    "regionNote": null,
     "habitat": "제주·남해 연안 암초 지대",
     "season": "가을~겨울 (9월~2월)",
     "description": "벵에돔과 같은 어종으로 지역에 따라 부르는 이름이 다릅니다. 갯바위 낚시 대상어입니다.",
     "similarFish": [{"name": "벵에돔", "difference": "사실상 동일 어종"}],
     "warning": null
   },
- "긴꼬리뱅에돔": {
+  "긴꼬리뱅에돔": {
     "aliases": ["긴꼬리벵에돔"],
     "wikiTitle": "벵에돔",
     "scientificName": "Girella leonina",
@@ -1360,6 +1445,7 @@
   },
   "군평선이": {
     "aliases": ["금풍쉥이", "딱돔"],
+    "scientificName": "Hapalogenys mucronatus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
     "closedSeason": null,
@@ -1375,6 +1461,7 @@
   },
   "무늬오징어": {
     "aliases": ["흰꼴뚜기", "미즈이카"],
+    "scientificName": "Sepioteuthis lessoniana",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -1390,6 +1477,7 @@
   },
   "한치": {
     "aliases": ["창꼴뚜기", "화살오징어"],
+    "scientificName": "Uroteuthis chinensis",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
     "closedSeason": null,
@@ -1405,6 +1493,7 @@
   },
   "먹장어": {
     "aliases": ["꼼장어", "곰장어"],
+    "scientificName": "Eptatretus burgeri",
     "waterType": "sea",
     "seaRegion": ["남해", "동해"],
     "closedSeason": null,
@@ -1420,6 +1509,7 @@
   },
   "멸치": {
     "aliases": [],
+    "scientificName": "Engraulis japonicus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": null,
@@ -1435,6 +1525,7 @@
   },
   "가물치": {
     "aliases": [],
+    "scientificName": "Channa argus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1449,6 +1540,7 @@
   },
   "누치": {
     "aliases": [],
+    "scientificName": "Hemibarbus labeo",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1463,6 +1555,7 @@
   },
   "동자개": {
     "aliases": ["빠가사리"],
+    "scientificName": "Tachysurus fulvidraco",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1477,6 +1570,7 @@
   },
   "무지개송어": {
     "aliases": [],
+    "scientificName": "Oncorhynchus mykiss",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": 12,
@@ -1491,6 +1585,7 @@
   },
   "모래무지": {
     "aliases": ["모래무치"],
+    "scientificName": "Pseudogobio esocinus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1505,6 +1600,7 @@
   },
   "밀어": {
     "aliases": [],
+    "scientificName": "Rhinogobius brunneus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1533,6 +1629,7 @@
   },
   "버들치": {
     "aliases": [],
+    "scientificName": "Rhynchocypris oxycephalus",
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1548,6 +1645,7 @@
   "가시고기": {
     "aliases": [],
     "protected": true,
+    "scientificName": "Pungitius sinensis",
     "waterType": "fresh",
     "closedSeason": "연중 포획 금지 (멸종위기 야생생물)",
     "minSize": null,
@@ -1563,6 +1661,7 @@
   "쉬리": {
     "aliases": [],
     "protected": true,
+    "scientificName": "Coreoleuciscus splendidus",
     "waterType": "fresh",
     "closedSeason": "포획 자제 권고 (한국 고유종)",
     "minSize": null,
@@ -1578,6 +1677,7 @@
   "어름치": {
     "aliases": [],
     "protected": true,
+    "scientificName": "Hemibarbus mylodon",
     "waterType": "fresh",
     "closedSeason": "연중 포획 금지 (천연기념물·멸종위기종)",
     "minSize": null,
@@ -1593,6 +1693,7 @@
   "무태장어": {
     "aliases": [],
     "protected": true,
+    "scientificName": "Anguilla marmorata",
     "waterType": "fresh",
     "closedSeason": "포획 제한 (천연기념물 서식지 보호)",
     "minSize": null,
@@ -1608,6 +1709,7 @@
   "눈볼개": {
     "aliases": [],
     "protected": true,
+    "scientificName": "Squalidus gracilis majimae",
     "waterType": "fresh",
     "closedSeason": "포획 자제 권고 (한국 고유종)",
     "minSize": null,
@@ -1623,6 +1725,7 @@
   "돌고래": {
     "aliases": [],
     "protected": true,
+    "scientificName": "Tursiops truncatus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해", "제주"],
     "closedSeason": "연중 포획 전면 금지 (해양보호생물)",
@@ -1637,9 +1740,9 @@
     "warning": "해양보호생물로 포획·채취·유통이 전면 금지됩니다. 혼획 시 즉시 방류해야 합니다."
   },
   "향유고래": {
-    "scientificName": "Physeter macrocephalus",
     "aliases": [],
     "protected": true,
+    "scientificName": "Physeter macrocephalus",
     "waterType": "sea",
     "seaRegion": ["동해", "남해", "제주"],
     "closedSeason": "연중 포획 전면 금지 (해양보호생물)",
