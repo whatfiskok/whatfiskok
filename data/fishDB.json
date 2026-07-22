@@ -1334,8 +1334,10 @@
     "similarFish": [{"name": "벵에돔", "difference": "사실상 동일 어종"}],
     "warning": null
   },
-  "긴꼬리뱅에돔": {
+ "긴꼬리뱅에돔": {
     "aliases": ["긴꼬리벵에돔"],
+    "wikiTitle": "벵에돔",
+    "scientificName": "Girella leonina",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
