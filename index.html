@@ -1515,18 +1515,26 @@ async function findSimilarFish(keyword) {
   function score(a, b) {
     if (!a || !b) return 0;
     if (a === b) return 100;
-    if (b.indexOf(a) !== -1 || a.indexOf(b) !== -1) return 80;
+    if (b.indexOf(a) !== -1 || a.indexOf(b) !== -1) return 90;
+
+    // 검색어(a)의 글자 중 상대 이름(b)에 들어있는 비율
     let common = 0;
     for (const ch of a) {
       if (b.indexOf(ch) !== -1) common++;
     }
-    return common / Math.max(a.length, b.length) * 60;
+    const ratioA = common / a.length;        // 검색어 글자가 상대에 얼마나 있나
+    // 겹치는 글자가 2자 이상이고, 검색어의 절반 이상이 겹칠 때만 유효
+    if (common >= 2 && ratioA >= 0.5) {
+      return ratioA * 70;
+    }
+    return 0;
   }
 
   const scored = candidates
     .map(function(c) { return { name: c.name, s: score(keyword, c.target) }; })
-    .filter(function(c) { return c.s >= 18; })
+    .filter(function(c) { return c.s >= 40; })
     .sort(function(a, b) { return b.s - a.s; });
+
 
 
   const seen = {};
