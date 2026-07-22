@@ -1637,6 +1637,7 @@
     "warning": "해양보호생물로 포획·채취·유통이 전면 금지됩니다. 혼획 시 즉시 방류해야 합니다."
   },
   "향유고래": {
+    "scientificName": "Physeter macrocephalus",
     "aliases": [],
     "protected": true,
     "waterType": "sea",
