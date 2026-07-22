@@ -1185,22 +1185,49 @@ function showResult(data) {
 
   document.getElementById('resultFishName').textContent = data.fishName || '—';
 
-  // 제목 아래 별칭 목록 표시
+  // 제목 아래 별칭 목록 표시 — fishDB.json + FISH_ALIASES 모두 반영
   const oldNick = document.getElementById('nicknameBox');
   if (oldNick) oldNick.remove();
   if (data.fishName) {
-    const nicks = Object.keys(FISH_ALIASES).filter(function(a) {
+    // 1) index.html의 FISH_ALIASES에서 이 어종을 가리키는 별칭
+    const nicksFromCode = Object.keys(FISH_ALIASES).filter(function(a) {
       return FISH_ALIASES[a] === data.fishName;
     });
-    if (nicks.length > 0) {
-      const nickHtml =
-        '<div id="nicknameBox" style="margin:2px 0 6px; font-size:0.78rem; color:rgba(255,255,255,0.55);">' +
-        '별칭: ' + nicks.join(', ') +
-        '</div>';
-      const sciEl2 = document.getElementById('resultScientificName');
-      sciEl2.insertAdjacentHTML('afterend', nickHtml);
-    }
+
+    // 2) fishDB.json에서 이 어종의 aliases를 읽어와 합치기
+    fetch('/data/fishDB.json')
+      .then(function(r) { return r.json(); })
+      .then(function(db) {
+        const info = db[data.fishName];
+        const nicksFromDB = (info && info.aliases) ? info.aliases : [];
+
+        // 두 목록을 합치고 중복 제거
+        const all = [];
+        nicksFromCode.concat(nicksFromDB).forEach(function(n) {
+          if (n && all.indexOf(n) === -1) all.push(n);
+        });
+
+        if (all.length === 0) return;
+
+        const nickHtml =
+          '<div id="nicknameBox" style="margin:2px 0 6px; font-size:0.78rem; color:rgba(255,255,255,0.55);">' +
+          '별칭: ' + all.join(', ') +
+          '</div>';
+        const sciEl2 = document.getElementById('resultScientificName');
+        sciEl2.insertAdjacentHTML('afterend', nickHtml);
+      })
+      .catch(function() {
+        // fishDB.json 못 읽으면 FISH_ALIASES 것만이라도 표시
+        if (nicksFromCode.length === 0) return;
+        const nickHtml =
+          '<div id="nicknameBox" style="margin:2px 0 6px; font-size:0.78rem; color:rgba(255,255,255,0.55);">' +
+          '별칭: ' + nicksFromCode.join(', ') +
+          '</div>';
+        const sciEl2 = document.getElementById('resultScientificName');
+        sciEl2.insertAdjacentHTML('afterend', nickHtml);
+      });
   }
+
 
   // 크기별 이름(출세어) 표시
   const oldStage = document.getElementById('growthStageBox');
