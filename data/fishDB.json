@@ -1318,15 +1318,16 @@
     "similarFish": [{"name": "전어", "difference": "밴댕이가 더 납작하고 은빛이 강함"}],
     "warning": null
   },
-  "뱅에돔": {
+   "뱅에돔": {
     "aliases": [],
+    "wikiTitle": "벵에돔",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
     "closedSeason": null,
     "minSize": null,
     "minSizeUnit": null,
     "minSizeNote": null,
-    "regionNote": "벵에돔과 동일 어종으로 표기만 다름",
+      "regionNote": null,
     "habitat": "제주·남해 연안 암초 지대",
     "season": "가을~겨울 (9월~2월)",
     "description": "벵에돔과 같은 어종으로 지역에 따라 부르는 이름이 다릅니다. 갯바위 낚시 대상어입니다.",
