@@ -1277,7 +1277,7 @@ function showResult(data) {
 
     if (data.closedSeason) {
       renderCalendar(data.closedSeason, data.closedSeasonActive);
-    } else {
+    } else if (!data.minSize) {
       const bar = document.getElementById('calendarBar');
       bar.innerHTML = `
         <div style="
@@ -1297,7 +1297,11 @@ function showResult(data) {
           다만, 너무 어린 개체는 놓아 주세요.
         </div>
       `;
+    } else {
+      const bar = document.getElementById('calendarBar');
+      bar.innerHTML = '';
     }
+
     updateInfoCards(data);
   }
 
