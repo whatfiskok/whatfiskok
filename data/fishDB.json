@@ -900,6 +900,25 @@
     "similarFish": [],
     "warning": "지역별 금어기가 다릅니다."
   },
+  
+"꺽지": {
+  "aliases": ["꺽더구", "꾹저구", "궐어"],
+  "scientificName": "Coreoperca herzi",
+  "waterType": "freshwater",
+  "seaRegion": null,
+  "closedSeason": null,
+  "minSize": null,
+  "minSizeUnit": null,
+  "minSizeNote": null,
+  "regionNote": null,
+  "habitat": "물이 맑고 자갈이 깔린 계곡·하천 (전국 분포)",
+  "season": "산란기 5~6월",
+  "description": "쏘가리과에 속하는 한국 고유종 민물고기입니다. 물이 맑은 자갈 바닥의 계곡과 강에 서식하며, 낚시 대상어이자 매운탕 재료로 알려져 있습니다.",
+  "similarFish": [{"name": "쏘가리", "difference": "꺽지는 몸이 더 작고 짙은 가로줄무늬가 있으며, 쏘가리는 표범 무늬가 특징"}],
+  "warning": null
+},
+
+  
   "황복": {
     "aliases": ["복어"],
     "scientificName": "Takifugu obscurus",
