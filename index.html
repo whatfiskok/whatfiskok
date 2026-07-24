@@ -2032,7 +2032,8 @@ function showDoneRequests() {
     .then(json => {
       const reqRows = json.requests || [];
       // 3번째 열(인덱스 2)이 '완료'인 항목만, 최근 것부터 10개
-      const done = reqRows.filter(row => row[2] && String(row[2]).trim() === '완료');
+      const done = reqRows.filter(row => row[2] && String(row[2]).trim() === 'ㅇ');
+
       const recent10 = done.slice(-10).reverse();
 
       if (recent10.length === 0) return;
