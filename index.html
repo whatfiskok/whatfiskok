@@ -1323,8 +1323,8 @@ function renderResult(data) {
 
         const descBox = document.createElement('div');
         descBox.id = 'fishDescBox';
-        descBox.style.cssText = 'margin:14px 0; padding:16px 18px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; color:rgba(255,255,255,0.9); font-size:0.88rem; line-height:1.8;';
-        descBox.textContent = info.description;
+               descBox.style.cssText = 'margin:10px 0 14px; padding:0; background:transparent; border:none; color:rgba(255,255,255,0.9); font-size:0.88rem; line-height:1.8;';
+
 
         const sciEl = document.getElementById('resultScientificName');
         sciEl.insertAdjacentElement('afterend', descBox);
