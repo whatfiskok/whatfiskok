@@ -1321,10 +1321,10 @@ function renderResult(data) {
         const info = db[data.fishName];
         if (!info || !info.description) return;
 
-        const descBox = document.createElement('div');
+               const descBox = document.createElement('div');
         descBox.id = 'fishDescBox';
-               descBox.style.cssText = 'margin:10px 0 14px; padding:0; background:transparent; border:none; color:rgba(255,255,255,0.9); font-size:0.88rem; line-height:1.8;';
-
+        descBox.style.cssText = 'margin:10px 0 14px; padding:0; background:transparent; border:none; color:rgba(255,255,255,0.9); font-size:0.88rem; line-height:1.8;';
+        descBox.textContent = info.description;
 
         const sciEl = document.getElementById('resultScientificName');
         sciEl.insertAdjacentElement('afterend', descBox);
