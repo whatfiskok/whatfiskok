@@ -1072,7 +1072,29 @@ const cached = null; // getCache(ck);
 
 function showResult(data) {
   showLoading(false);
+
+  // fishDB.json에서 교란종 여부를 직접 읽어와 data에 반영
+  if (data.fishName) {
+    fetch('/data/fishDB.json')
+      .then(function(r) { return r.json(); })
+      .then(function(db) {
+        const info = db[data.fishName];
+        if (info && info.invasive === true) {
+          data.invasive = true;
+          renderResult(data);
+        } else {
+          renderResult(data);
+        }
+      })
+      .catch(function() { renderResult(data); });
+    return;
+  }
+  renderResult(data);
+}
+
+function renderResult(data) {
   document.getElementById('introBox').style.display = 'none';
+
 
 
 
