@@ -1762,6 +1762,22 @@
     "similarFish": [],
     "warning": "해양보호생물로 포획·채취·유통이 전면 금지됩니다. 혼획 시 즉시 방류해야 합니다."
   },
+  "퉁가리": {
+  "aliases": [],
+  "wikiTitle": "퉁가리",
+  "scientificName": "Liobagrus andersoni",
+  "waterType": "fresh",
+  "closedSeason": null,
+  "minSize": null,
+  "minSizeUnit": null,
+  "minSizeNote": null,
+  "regionNote": null,
+  "habitat": "물이 맑고 자갈이 깔린 하천 중·상류",
+  "season": null,
+  "description": "우리나라 고유종인 동자개과 민물고기. 가슴·등지느러미 가시에 독이 있어 찔리면 아프니 맨손으로 만질 때 주의하세요.",
+  "similarFish": []
+},
+
   "향유고래": {
     "aliases": [],
     "protected": true,
