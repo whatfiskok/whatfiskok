@@ -1326,8 +1326,9 @@ function renderResult(data) {
         descBox.style.cssText = 'margin:14px 0; padding:16px 18px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; color:rgba(255,255,255,0.9); font-size:0.88rem; line-height:1.8;';
         descBox.textContent = info.description;
 
-        const calSection = document.getElementById('calendarSection');
-        calSection.insertAdjacentElement('afterend', descBox);
+        const sciEl = document.getElementById('resultScientificName');
+        sciEl.insertAdjacentElement('afterend', descBox);
+
       })
       .catch(function() {});
   }
