@@ -1360,7 +1360,28 @@ function showResult(data) {
     calendarSection.style.display = 'block';
     requestSection.style.display = 'none';
 
-    if (data.closedSeason) {
+    if (data.invasive) {
+      const bar = document.getElementById('calendarBar');
+      bar.innerHTML = `
+        <div style="
+          width:100%;
+          border: 1.5px solid rgba(255,255,255,0.6);
+          border-radius: 20px;
+          padding: 14px 20px;
+          text-align: center;
+          font-size: 0.85rem;
+          color: white;
+          line-height: 1.8;
+          overflow: visible;
+          white-space: normal;
+          word-break: keep-all;
+        ">
+          ⚠️ 생태계교란 생물입니다.<br>
+          잡은 뒤 다시 놓아주면 안 되며,<br>
+          제거 대상 어종입니다.
+        </div>
+      `;
+    } else if (data.closedSeason) {
       renderCalendar(data.closedSeason, data.closedSeasonActive);
     } else if (!data.minSize) {
       const bar = document.getElementById('calendarBar');
@@ -1388,6 +1409,7 @@ function showResult(data) {
     }
 
     updateInfoCards(data);
+
   }
 
   const rn = document.getElementById('regionNote');
@@ -1478,18 +1500,21 @@ const sizeText = data.minSize
           ${closedText ? closedText : '없음'}
         </span>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
         <span style="font-size:0.85rem; color:#aaa; min-width:80px;">금지체장 :</span>
-<span style="font-size:0.95rem; font-weight:800; color:${isProtected ? '#e63946' : (sizeText ? '#f4a261' : (closedText ? '#aaa' : '#4fc3f7'))};">
-${isProtected
-  ? '해당 없음 (포획 금지 어종)'
-  : (sizeText
-      ? sizeText + ' 이하 포획 금지'
-      : '작은건 놔주고 큰거만 잡으세요')}
+<span style="font-size:0.95rem; font-weight:800; color:${data.invasive ? '#e63946' : (isProtected ? '#e63946' : (sizeText ? '#f4a261' : (closedText ? '#aaa' : '#4fc3f7')))};">
+${data.invasive
+  ? '방류 금지 (제거 대상)'
+  : (isProtected
+      ? '해당 없음 (포획 금지 어종)'
+      : (sizeText
+          ? sizeText + ' 이하 포획 금지'
+          : '작은건 놔주고 큰거만 잡으세요'))}
 </span>
 
 
       </div>
+
       <div style="display:flex; align-items:center; gap:8px;">
         <span style="font-size:0.85rem; color:#aaa; min-width:80px;">제철 안내 :</span>
         <span style="font-size:0.95rem; font-weight:700; color:#4fc3f7;">
