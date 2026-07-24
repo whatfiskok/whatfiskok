@@ -1160,9 +1160,11 @@
     "warning": null
   },
   "배스": {
+    "invasive": true,
     "aliases": ["큰입우럭"],
     "wikiTitle": "배스 (어류)",
     "scientificName": "Micropterus salmoides",
+
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
@@ -1175,8 +1177,10 @@
     "similarFish": []
   },
   "블루길": {
+    "invasive": true,
     "aliases": [],
     "scientificName": "Lepomis macrochirus",
+
     "waterType": "fresh",
     "closedSeason": null,
     "minSize": null,
