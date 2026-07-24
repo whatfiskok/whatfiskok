@@ -1311,6 +1311,26 @@ function renderResult(data) {
       })
       .catch(function() {});
   }
+  // 어종 설명(description) 표시 — fishDB.json에서 읽어옴
+  const oldDesc = document.getElementById('fishDescBox');
+  if (oldDesc) oldDesc.remove();
+  if (data.fishName) {
+    fetch('/data/fishDB.json')
+      .then(function(r) { return r.json(); })
+      .then(function(db) {
+        const info = db[data.fishName];
+        if (!info || !info.description) return;
+
+        const descBox = document.createElement('div');
+        descBox.id = 'fishDescBox';
+        descBox.style.cssText = 'margin:14px 0; padding:16px 18px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:16px; color:rgba(255,255,255,0.9); font-size:0.88rem; line-height:1.8;';
+        descBox.textContent = info.description;
+
+        const calSection = document.getElementById('calendarSection');
+        calSection.insertAdjacentElement('afterend', descBox);
+      })
+      .catch(function() {});
+  }
 
 
   // 별칭으로 검색한 경우, 고정 안내 표시
