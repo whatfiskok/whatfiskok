@@ -1958,13 +1958,16 @@ function handleStickyBar() {
   if (!bar) return;
 
 
-  // 결과 화면 면책 문구 또는 위치 검색 화면 면책 문구 중, 현재 화면에 있는 것을 기준으로 삼음
+  // 결과 화면 면책 문구, 위치 검색 면책 문구, 또는 초기 화면의 '최근 추가된 어종' 중 현재 화면에 있는 것을 기준으로 삼음
   const box1 = document.getElementById('legalNoticeBox');
   const box2 = document.getElementById('locationLegalNotice');
+  const box3 = document.getElementById('doneRequestArea');
 
   let target = null;
   if (box1 && box1.style.display !== 'none') target = box1;
-  else if (box2) target = box2;
+  else if (box2 && box2.offsetParent !== null) target = box2;
+  else if (box3 && box3.innerHTML.trim() !== '') target = box3;
+
 
   if (!target) {
     bar.style.transform = 'translateY(100%)';
@@ -2137,8 +2140,10 @@ function showDoneRequests() {
   window.addEventListener('load', function() {
     showTopSearches();
     showDoneRequests();
+    setTimeout(handleStickyBar, 1500);
   });
 </script>
+
 
 
 </body>
