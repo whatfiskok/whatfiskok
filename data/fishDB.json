@@ -15,6 +15,23 @@
     "similarFish": [{"name": "가자미", "difference": "가자미는 눈이 오른쪽에 있음 (왼넙치 오가자미)"}],
     "warning": null
   },
+
+  "참붕어": {
+  "aliases": [],
+  "wikiTitle": "참붕어",
+  "scientificName": "Pseudorasbora parva",
+  "waterType": "fresh",
+  "closedSeason": null,
+  "minSize": null,
+  "minSizeUnit": null,
+  "minSizeNote": null,
+  "regionNote": null,
+  "habitat": "강·저수지·연못 등 물살이 느린 담수 전국",
+  "season": null,
+  "description": "잉어과에 속하는 작은 민물고기로, 흔히 아는 붕어와는 다른 종입니다. 보통 6~8cm 정도로 작으며 입수염이 없습니다. 낚시 미끼로도 쓰이며, 다른 물고기 알을 잘 먹어 저수지 생태에 영향을 주기도 합니다.",
+  "similarFish": []
+},
+
   "조피볼락": {
     "aliases": ["우럭"],
     "scientificName": "Sebastes schlegelii",
