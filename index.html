@@ -1658,12 +1658,14 @@ function showAdminPanel() {
 
     .then(r => r.json())
     .then(json => {
-      const rows = json.data.slice(1);
+      const rows = json.data.slice(1).reverse();   // ← 최근 항목이 위로
       let html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;overflow-y:auto;padding:20px;">';
       html += '<div style="max-width:500px;margin:0 auto;color:white;">';
       html += '<h2 style="margin-bottom:16px;">📊 검색 기록</h2>';
+      // ↓ 표를 감싸는 스크롤 영역 (약 10줄 높이만 보이고 나머지는 스크롤)
+      html += '<div style="max-height:400px;overflow-y:auto;border-radius:8px;">';
       html += '<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">';
-      html += '<tr style="border-bottom:1px solid #444;"><th style="padding:8px;text-align:left;">날짜</th><th>어종</th><th>방법</th><th>토큰</th></tr>';
+      html += '<tr style="position:sticky;top:0;background:#000;z-index:2;border-bottom:1px solid #444;"><th style="padding:8px;text-align:left;">날짜</th><th>어종</th><th>방법</th><th>토큰</th></tr>';
       rows.forEach(r => {
         html += `<tr style="border-bottom:1px solid #333;">
           <td style="padding:6px;font-size:0.7rem;">${r[0]}</td>
@@ -1673,11 +1675,13 @@ function showAdminPanel() {
         </tr>`;
       });
       html += '</table>';
+      html += '</div>';   // ← 스크롤 영역 닫기
       html += '<button onclick="this.parentElement.parentElement.remove()" style="margin-top:20px;padding:10px 24px;border-radius:10px;border:none;background:white;color:black;font-weight:700;cursor:pointer;">닫기</button>';
       html += '</div></div>';
       document.body.insertAdjacentHTML('beforeend', html);
     });
 }
+
 
 function searchFishName(name) {
   const box = document.getElementById('locationListBox');
