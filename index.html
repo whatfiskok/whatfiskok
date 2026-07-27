@@ -1657,12 +1657,10 @@ function showAdminPanel() {
   fetch(SHEETS_URL)
     .then(r => r.json())
     .then(json => {
-      // 빈 어종 행 제외 + 최근순
       const rows = json.data.slice(1)
         .filter(r => r[1] && String(r[1]).trim() !== '')
         .reverse();
 
-      // 요청 시트 (헤더 제외, 빈 행 제외, 최근순)
       const reqAll = (json.requests || []).slice(1)
         .filter(r => r[1] && String(r[1]).trim() !== '')
         .reverse();
@@ -1692,20 +1690,42 @@ function showAdminPanel() {
       html += '<tr style="position:sticky;top:0;background:#000;z-index:2;border-bottom:1px solid #444;"><th style="padding:8px;text-align:left;">날짜</th><th>어종</th><th>완료</th></tr>';
       reqAll.forEach(r => {
         const done = r[2] && String(r[2]).trim() === 'ㅇ';
-        html += `<tr style="border-bottom:1px solid #333;background:${done ? 'transparent' : 'rgba(255,180,0,0.12)'};">
+        const dateStr = String(r[0]).replace(/'/g, "\\'");
+        const nameStr = String(r[1]).replace(/'/g, "\\'");
+        html += `<tr style="border-bottom:1px solid #333;">
           <td style="padding:6px;font-size:0.7rem;">${r[0]}</td>
-          <td style="padding:6px;text-align:center;font-weight:${done ? '400' : '700'};">${r[1]}</td>
-          <td style="padding:6px;text-align:center;">${done ? '✅' : '⬜'}</td>
+          <td style="padding:6px;text-align:center;">${r[1]}</td>
+          <td style="padding:6px;text-align:center;">
+            <input type="checkbox" ${done ? 'checked' : ''}
+              onchange="updateDone('${dateStr}','${nameStr}',this.checked,this)"
+              style="width:18px;height:18px;cursor:pointer;">
+          </td>
         </tr>`;
       });
       html += '</table></div>';
 
-      html += '<p style="margin-top:10px;font-size:0.75rem;color:rgba(255,255,255,0.6);">⬜ 표시된 항목은 아직 처리 안 됨. 완료하려면 구글 시트 요청 탭 C열에 ㅇ를 입력하세요.</p>';
+      html += '<p style="margin-top:10px;font-size:0.75rem;color:rgba(255,255,255,0.6);">체크하면 시트에 자동 저장됩니다.</p>';
 
-      // 닫기 버튼 (맨 아래)
       html += '<button onclick="this.parentElement.parentElement.remove()" style="margin-top:24px;padding:10px 24px;border-radius:10px;border:none;background:white;color:black;font-weight:700;cursor:pointer;">닫기</button>';
       html += '</div></div>';
       document.body.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+function updateDone(date, fishName, done, checkbox) {
+  checkbox.disabled = true;
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'updateDone', date: date, fishName: fishName, done: done }),
+  })
+    .then(() => {
+      checkbox.disabled = false;
+      showToast(done ? '완료 처리했습니다 ✅' : '완료 해제했습니다');
+    })
+    .catch(() => {
+      checkbox.disabled = false;
+      checkbox.checked = !done;
+      showToast('저장 실패. 다시 시도해주세요.');
     });
 }
 
