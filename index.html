@@ -2145,12 +2145,16 @@ function showDoneRequests() {
   fetch(SHEETS_URL)
     .then(r => r.json())
     .then(json => {
-      const reqRows = json.requests || [];
-      const done = reqRows.filter(row => row[2] && String(row[2]).trim() === 'ㅇ');
+      const rows = json.data || [];
+      // "어종요청"으로 기록된 것만 골라내기
+      const requested = rows.slice(1).filter(row =>
+        row[2] && String(row[2]).trim() === '어종요청'
+      );
 
+      // 중복 제거 + 최근순
       const seen = {};
       const unique = [];
-      done.slice().reverse().forEach(row => {
+      requested.slice().reverse().forEach(row => {
         const name = String(row[1]).trim();
         if (name && !seen[name]) {
           seen[name] = true;
@@ -2184,6 +2188,7 @@ function showDoneRequests() {
     })
     .catch(() => {});
 }
+
 
 
   </script>
