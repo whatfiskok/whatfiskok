@@ -726,21 +726,20 @@
     "similarFish": [{"name": "오분자기", "difference": "오분자기는 전복보다 훨씬 작고 제주 특산"}],
     "warning": "지역별 금지체장이 다릅니다. 제주산은 10cm 이하 포획 금지."
   },
-  "오분자기": {
-    "aliases": ["떡조개"],
-    "scientificName": "Haliotis diversicolor",
-    "waterType": "sea",
-    "seaRegion": ["제주"],
-    "closedSeason": "9월 1일 ~ 10월 31일",
-    "minSize": 3,
-    "minSizeUnit": "cm",
-    "minSizeNote": "각장",
-    "regionNote": "제주특별자치도 한정 어종",
-    "habitat": "제주 연안 암초 지대",
-    "season": "봄~여름 (4월~8월)",
-    "description": "전복의 일종으로 제주 특산. 전복보다 작지만 맛이 진하고 독특합니다.",
-    "similarFish": [{"name": "전복", "difference": "전복보다 훨씬 작고 제주 연안에만 서식"}],
-    "warning": "제주특별자치도 한정 어종입니다."
+ "오분자기": {
+  "aliases": ["떡조개"],
+  "wikiTitle": "오분자기",
+  "scientificName": "Haliotis diversicolor",
+  "waterType": "sea",
+  "closedSeason": "7월 1일 ~ 8월 31일",
+  "minSize": 4,
+  "minSizeUnit": "cm",
+  "minSizeNote": "각장",
+  "regionNote": "주 서식지는 제주 연안이며, 금지체장(각장 4cm)은 제주 기준입니다.",
+  "season": "봄~여름 (4월~8월)",
+  "description": "전복의 일종으로 제주 특산. 전복보다 작지만 맛이 진하고 독특합니다.",
+  "seaRegion": ["제주"],
+  "similarFish": []
   },
   "소라": {
     "aliases": [],
