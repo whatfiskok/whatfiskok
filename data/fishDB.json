@@ -742,21 +742,22 @@
   "similarFish": []
   },
   "소라": {
-    "aliases": [],
+    "aliases": ["뿔소라"],
     "scientificName": "Turbo cornutus",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
-    "closedSeason": "5월 1일 ~ 6월 30일",
-    "minSize": 7,
+    "closedSeason": "6월 1일 ~ 8월 31일",
+    "minSize": 5,
     "minSizeUnit": "cm",
-    "minSizeNote": "각고 (껍데기 높이)",
-    "regionNote": null,
+    "minSizeNote": "각장 (껍데기 길이), 제주·울릉·독도 기준",
+    "regionNote": "지역별로 금어기가 다릅니다. 제주·여수 삼산면은 6.1~8.31, 추자도·울릉도·독도는 7.1~9.30 기준입니다. 표준명 '소라'가 곧 '뿔소라'이며, '참소라'는 다른 종(피뿔고둥)입니다.",
     "habitat": "연안 암초 지대",
     "season": "가을~겨울 (9월~12월)",
     "description": "해녀가 채취하는 대표 패류. 회·구이·된장국으로 즐기며 살이 쫄깃합니다.",
     "similarFish": [],
     "warning": null
   },
+
   "새조개": {
     "aliases": [],
     "scientificName": "Fulvia mutica",
