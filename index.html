@@ -1658,11 +1658,21 @@ function showAdminPanel() {
 
     .then(r => r.json())
     .then(json => {
-      const rows = json.data.slice(1).reverse();   // ← 최근 항목이 위로
+      // 빈 어종 행 제외 + 최근순
+      const rows = json.data.slice(1)
+        .filter(r => r[1] && String(r[1]).trim() !== '')
+        .reverse();
+
+      // 요청 시트 (헤더 제외, 빈 행 제외, 최근순)
+      const reqAll = (json.requests || []).slice(1)
+        .filter(r => r[1] && String(r[1]).trim() !== '')
+        .reverse();
+
       let html = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;overflow-y:auto;padding:20px;">';
       html += '<div style="max-width:500px;margin:0 auto;color:white;">';
+
+      // ===== 검색 기록 =====
       html += '<h2 style="margin-bottom:16px;">📊 검색 기록</h2>';
-      // ↓ 표를 감싸는 스크롤 영역 (약 10줄 높이만 보이고 나머지는 스크롤)
       html += '<div style="max-height:400px;overflow-y:auto;border-radius:8px;">';
       html += '<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">';
       html += '<tr style="position:sticky;top:0;background:#000;z-index:2;border-bottom:1px solid #444;"><th style="padding:8px;text-align:left;">날짜</th><th>어종</th><th>방법</th><th>토큰</th></tr>';
@@ -1674,13 +1684,32 @@ function showAdminPanel() {
           <td style="padding:6px;text-align:center;">${r[3]}</td>
         </tr>`;
       });
-      html += '</table>';
-      html += '</div>';   // ← 스크롤 영역 닫기
-      html += '<button onclick="this.parentElement.parentElement.remove()" style="margin-top:20px;padding:10px 24px;border-radius:10px;border:none;background:white;color:black;font-weight:700;cursor:pointer;">닫기</button>';
+      html += '</table></div>';
+
+      // ===== 요청 목록 =====
+      html += '<h2 style="margin:28px 0 16px;">📝 요청 목록</h2>';
+      html += '<div style="max-height:400px;overflow-y:auto;border-radius:8px;">';
+      html += '<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">';
+      html += '<tr style="position:sticky;top:0;background:#000;z-index:2;border-bottom:1px solid #444;"><th style="padding:8px;text-align:left;">날짜</th><th>어종</th><th>완료</th></tr>';
+      reqAll.forEach(r => {
+        const done = r[2] && String(r[2]).trim() === 'ㅇ';
+        html += `<tr style="border-bottom:1px solid #333;background:${done ? 'transparent' : 'rgba(255,180,0,0.12)'};">
+          <td style="padding:6px;font-size:0.7rem;">${r[0]}</td>
+          <td style="padding:6px;text-align:center;font-weight:${done ? '400' : '700'};">${r[1]}</td>
+          <td style="padding:6px;text-align:center;">${done ? '✅' : '⬜'}</td>
+        </tr>`;
+      });
+      html += '</table></div>';
+
+      html += '<p style="margin-top:10px;font-size:0.75rem;color:rgba(255,255,255,0.6);">⬜ 표시된 항목은 아직 처리 안 됨. 완료하려면 구글 시트 요청 탭 C열에 ㅇ를 입력하세요.</p>';
+
+      // 닫기 버튼 (맨 아래)
+      html += '<button onclick="this.parentElement.parentElement.remove()" style="margin-top:24px;padding:10px 24px;border-radius:10px;border:none;background:white;color:black;font-weight:700;cursor:pointer;">닫기</button>';
       html += '</div></div>';
       document.body.insertAdjacentHTML('beforeend', html);
     });
 }
+
 
 
 function searchFishName(name) {
