@@ -15,6 +15,22 @@
     "similarFish": [{"name": "가자미", "difference": "가자미는 눈이 오른쪽에 있음 (왼넙치 오가자미)"}],
     "warning": null
   },
+  "멍게": {
+    "aliases": ["우렁쉥이"],
+    "scientificName": "Halocynthia roretzi",
+    "waterType": "sea",
+    "seaRegion": ["남해", "동해"],
+    "closedSeason": null,
+    "minSize": null,
+    "minSizeUnit": null,
+    "minSizeNote": null,
+    "regionNote": "법으로 정해진 금어기·금지체장이 없습니다. 다만 너무 어린 개체는 놓아 주세요. (일부 지역 마을어장은 자체 규약이 있을 수 있습니다.)",
+    "habitat": "연안 암초·양식장",
+    "season": "봄 (3월~5월)",
+    "description": "향과 쌉싸름한 맛이 특징인 대표 피낭류. 주로 회로 즐기며 양식으로 많이 생산됩니다.",
+    "similarFish": [],
+    "warning": null
+  },
 
   "참붕어": {
   "aliases": [],
