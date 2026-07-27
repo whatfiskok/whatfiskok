@@ -1597,7 +1597,7 @@ ${data.invasive
       setTimeout(() => t.classList.add('hidden'), 3500);
     }
     // Google Sheets 기록
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby1EntjYtDk5bY5Oj23xgMe_-ns1ZkX8qcLVqLHntnqIEo7v1CzpcrzS5LxWtl8MPFX/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxNubWPhayahW6GRl-sOPla5sV9Cn4WOQO836kWb6B19Q7BbIYPY1F2_d0cHQbh2YbF/exec';
 
 
 
@@ -2145,16 +2145,12 @@ function showDoneRequests() {
   fetch(SHEETS_URL)
     .then(r => r.json())
     .then(json => {
-      const rows = json.data || [];
-      // "어종요청"으로 기록된 것만 골라내기
-      const requested = rows.slice(1).filter(row =>
-        row[2] && String(row[2]).trim() === '어종요청'
-      );
+      const reqRows = json.requests || [];
+      const done = reqRows.filter(row => row[2] && String(row[2]).trim() === 'ㅇ');
 
-      // 중복 제거 + 최근순
       const seen = {};
       const unique = [];
-      requested.slice().reverse().forEach(row => {
+      done.slice().reverse().forEach(row => {
         const name = String(row[1]).trim();
         if (name && !seen[name]) {
           seen[name] = true;
