@@ -1654,9 +1654,7 @@ function handleAdminClick() {
 
 
 function showAdminPanel() {
-  fetch('https://script.google.com/macros/s/AKfycbxNubWPhayahW6GRl-sOPla5sV9Cn4WOQO836kWb6B19Q7BbIYPY1F2_d0cHQbh2YbF/exec
-')
-
+  fetch(SHEETS_URL)
     .then(r => r.json())
     .then(json => {
       // 빈 어종 행 제외 + 최근순
