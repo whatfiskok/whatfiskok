@@ -1803,7 +1803,7 @@ function updateDone(date, fishName, done, checkbox) {
 
 
 
-function searchFishName(name) {
+function searchFishName(name, from) {
   const box = document.getElementById('locationListBox');
   if (box) box.remove();
 
@@ -1818,8 +1818,14 @@ function searchFishName(name) {
     bar.style.display = 'none';
   }
 
+  // 위치 목록에서 눌러본 어종이면 어종명으로 기록 남기기
+  if (from === '위치') {
+    logSearch(name, '위치→어종', 0);
+  }
+
   callAPI({ fishName: name });
 }
+
 
 // 등록된 어종 중 검색어와 비슷한 이름을 찾아 최대 5개 반환
 async function findSimilarFish(keyword) {
@@ -2051,9 +2057,10 @@ function showLocationList(fishList) {
       const statusLabel = f.inSeason ? '🚫 금어기 중' : '✅ 포획 가능';
 
       html += `
-        <div onclick="searchFishName('${f.name}')" style="
+        <div onclick="searchFishName('${f.name}', '위치')" style="
           display:flex; align-items:center; justify-content:space-between;
           padding:12px 14px;
+
           margin-bottom:8px;
           background:rgba(255,255,255,0.06);
           border:1px solid rgba(255,255,255,0.12);
