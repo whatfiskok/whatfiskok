@@ -1519,33 +1519,7 @@ function renderResult(data) {
     rn.classList.add('hidden');
   }
 
-  // 지역별 금어기 표시
-  const oldRegionBox = document.getElementById('regionSeasonBox');
-  if (oldRegionBox) oldRegionBox.remove();
-  if (data.fishName) {
-    fetch('/data/fishDB.json')
-      .then(function(r) { return r.json(); })
-      .then(function(db) {
-        const info = db[data.fishName];
-        if (!info || !info.regionSeasons || info.regionSeasons.length === 0) return;
 
-        const rowsHtml = info.regionSeasons.map(function(rs) {
-          return '<div style="display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.1);">' +
-            '<span style="color:rgba(255,255,255,0.85); font-size:0.82rem; font-weight:600;">' + rs.region + '</span>' +
-            '<span style="color:#e63946; font-size:0.82rem; font-weight:700; text-align:right;">' + rs.season + '</span>' +
-          '</div>';
-        }).join('');
-
-        const boxHtml =
-          '<div id="regionSeasonBox" style="margin:12px 0; padding:14px 16px; background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.15); border-radius:14px;">' +
-          '<div style="color:white; font-weight:800; font-size:0.85rem; margin-bottom:8px;">📍 종류·지역별 금어기</div>' +
-          rowsHtml + '</div>';
-
-        const calSec = document.getElementById('calendarSection');
-        calSec.insertAdjacentHTML('afterend', boxHtml);
-      })
-      .catch(function() {});
-  }
 
 
   const wb2 = document.getElementById('warningBox');
