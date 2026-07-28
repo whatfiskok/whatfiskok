@@ -866,8 +866,12 @@ function handleImage(file) {
 
     
     document.getElementById('analyzeBtn').addEventListener('click', () => {
-      if (currentImageBase64) callAPI({ imageBase64: currentImageBase64, waterType: currentWaterType });
+      if (currentImageBase64) {
+        window.lastSearchWasPhoto = true;
+        callAPI({ imageBase64: currentImageBase64, waterType: currentWaterType });
+      }
     });
+
 
 // 한 단어로 묶이는 어종 그룹 (검색 시 목록을 먼저 보여줌)
 const FISH_GROUPS = {
@@ -1099,7 +1103,18 @@ function showResult(data) {
 }
 
 function renderResult(data) {
+  // 사진 검색이면 결과 어종명으로 기록 남기기
+  if (window.lastSearchWasPhoto) {
+    window.lastSearchWasPhoto = false;
+    if (data.fishName && data.fishName !== '—' && data.source !== 'not_found') {
+      logSearch(data.fishName, '사진', 0);
+    } else {
+      logSearch('(사진-미인식)', '사진', 0);
+    }
+  }
+
   document.getElementById('introBox').style.display = 'none';
+
 
 
 
