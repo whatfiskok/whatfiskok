@@ -859,17 +859,22 @@
     "scientificName": "Heliocidaris crassispina",
     "waterType": "sea",
     "seaRegion": ["남해", "동해", "제주"],
-    "closedSeason": "6월 1일 ~ 8월 31일",
+    "closedSeason": null,
     "minSize": null,
     "minSizeUnit": null,
     "minSizeNote": null,
-    "regionNote": "지역별 금어기가 다를 수 있음",
+    "regionNote": "성게는 종류에 따라 금어기가 다릅니다. 주로 채취하는 보라성게는 금어기가 폐지되어 없고, 동해에서 나는 북쪽말똥성게는 9월 1일~10월 31일이 금어기입니다.",
+    "regionSeasons": [
+      { "region": "보라성게 (전 연안)", "season": "금어기 없음" },
+      { "region": "북쪽말똥성게 (동해)", "season": "9월 1일 ~ 10월 31일" }
+    ],
     "habitat": "연안 암초 지대",
     "season": "겨울~봄 (11월~5월)",
     "description": "성게알(생식소)이 진미로 꼽히는 극피동물. 성게비빔밥·성게국수로 즐깁니다.",
     "similarFish": [],
-    "warning": "지역별로 금어기가 다를 수 있어 출조 전 확인 필요"
+    "warning": null
   },
+
   "우뭇가사리": {
     "aliases": ["한천"],
     "scientificName": "Gelidium amansii",
