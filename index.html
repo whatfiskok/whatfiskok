@@ -1139,8 +1139,21 @@ function renderResult(data) {
 
 
   if (data.fishName) {
+    // fishDB.json에 직접 넣은 사진 주소가 있으면 그것을 최우선으로 사용
+    fetch('/data/fishDB.json')
+      .then(function(r) { return r.json(); })
+      .then(function(db) {
+        const info = db[data.fishName];
+        if (info && info.imageUrl) {
+          fishPhotoImg.src = info.imageUrl;
+          fishPhoto.style.setProperty('display', 'block', 'important');
+        }
+      })
+      .catch(function() {});
+
     const wikiTitle = data.wikiTitle || data.fishName;
     fetch(`https://ko.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(wikiTitle)}&prop=pageimages|images|extracts&exintro=true&explaintext=true&format=json&pithumbsize=400&origin=*`)
+
       .then(r => r.json())
       .then(json => {
         const pages = json.query.pages;
