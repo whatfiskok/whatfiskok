@@ -1490,6 +1490,16 @@ function renderResult(data) {
           var calBar = document.getElementById('calendarBar');
           if (calBar) calBar.innerHTML = '';
 
+          // 상단 카드 "금어기: 없음"을 안내 문구로 변경
+          var closedCell = document.querySelectorAll('#infoCards span');
+          for (var i = 0; i < closedCell.length; i++) {
+            if (closedCell[i].textContent.trim() === '없음') {
+              closedCell[i].textContent = '종류·지역별 상이 (아래 참고)';
+              closedCell[i].style.color = '#e63946';
+              break;
+            }
+          }
+
           var rowsHtml = info.regionSeasons.map(function(rs) {
             return '<div style="display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.1);">' +
               '<span style="color:rgba(255,255,255,0.85); font-size:0.82rem; font-weight:600;">' + rs.region + '</span>' +
