@@ -182,13 +182,13 @@
     "similarFish": [{"name": "노래미", "difference": "사실상 동일 어종으로 지역에 따라 부르는 명칭이 다름"}],
     "warning": null
   },
-  "문치가자미": {
+"문치가자미": {
     "aliases": ["도다리"],
     "scientificName": "Pseudopleuronectes yokohamae",
     "waterType": "sea",
     "seaRegion": ["서해", "남해", "동해"],
     "closedSeason": "12월 1일 ~ 1월 31일",
-    "minSize": 20,
+    "minSize": 17,
     "minSizeUnit": "cm",
     "minSizeNote": "전장",
     "regionNote": null,
@@ -198,6 +198,7 @@
     "similarFish": [{"name": "넙치", "difference": "왼넙치 오가자미 - 눈 방향으로 구분"}],
     "warning": null
   },
+
   "참가자미": {
     "aliases": ["가자미"],
     "scientificName": "Pleuronectes herzensteini",
@@ -374,8 +375,8 @@
     "similarFish": [],
     "warning": null
   },
-  "말쥐치": {
-    "aliases": ["쥐치", "쥐포"],
+"말쥐치": {
+    "aliases": ["쥐포"],
     "scientificName": "Thamnaconus modestus",
     "waterType": "sea",
     "seaRegion": ["남해", "제주"],
@@ -386,10 +387,11 @@
     "regionNote": "정치망어업·연안어업·구획어업은 6월 1일 ~ 7월 31일 적용",
     "habitat": "연안~외양 중층",
     "season": "가을~겨울 (9월~12월)",
-    "description": "쥐포의 원료가 되는 어종. 거친 피부와 독특한 지느러미가 특징입니다.",
-    "similarFish": [],
+    "description": "쥐포의 원료가 되는 어종. 거친 피부와 독특한 지느러미가 특징입니다. '쥐치'와 자주 혼동되지만 서로 다른 종입니다.",
+    "similarFish": [{"name": "쥐치", "difference": "쥐치(Stephanolepis cirrhifer)는 말쥐치와 다른 종으로, 말쥐치보다 작고 몸이 더 둥근 마름모꼴입니다."}],
     "warning": null
   },
+
   "도루묵": {
     "aliases": [],
     "scientificName": "Arctoscopus japonicus",
