@@ -1447,9 +1447,10 @@ function renderResult(data) {
       `;
     } else if (data.closedSeason) {
       renderCalendar(data.closedSeason, data.closedSeasonActive);
-    } else if (!data.minSize) {
+    } else if (!data.minSize && !(data.regionSeasons && data.regionSeasons.length > 0)) {
       const bar = document.getElementById('calendarBar');
       bar.innerHTML = `
+
         <div style="
           width:100%;
           border: 1.5px solid rgba(255,255,255,0.6);
@@ -1526,11 +1527,18 @@ function updateInfoCards(data) {
   const infoCards = document.getElementById('infoCards');
 
   const closedText = (() => {
-    if (!data.closedSeason) return null;
+    if (!data.closedSeason) {
+      // 금어기는 비어 있지만 지역·종류별 금어기가 따로 있으면 안내
+      if (data.regionSeasons && data.regionSeasons.length > 0) {
+        return '종류·지역별 상이 (아래 참고)';
+      }
+      return null;
+    }
     const m = data.closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
     if (m) return `${m[1]}월 ${m[2]}일 ~ ${m[3]}월 ${m[4]}일`;
     return data.closedSeason;
   })();
+
 
 const sizeText = data.minSize
   ? data.minSize + (data.minSizeUnit || 'cm') + (data.minSizeNote ? ' (' + data.minSizeNote + ')' : '')
