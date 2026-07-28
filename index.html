@@ -1207,13 +1207,18 @@ function renderResult(data) {
             return fetch(`https://api.inaturalist.org/v1/taxa/${taxonId}`)
               .then(r3 => r3.json())
               .then(json3 => {
-                if (!json3.results || json3.results.length === 0) return;
+                    if (!json3.results || json3.results.length === 0) return;
                 const photos = json3.results[0].taxon_photos || [];
                 // 두 번째 사진 사용 (없으면 아무것도 안 함 → 중복 방지)
                 if (photos.length >= 2 && photos[1].photo && photos[1].photo.medium_url) {
-                  fishPhotoImg2.src = photos[1].photo.medium_url;
-                  fishPhoto2.style.setProperty('display', 'block', 'important');
+                  const secondUrl = photos[1].photo.medium_url;
+                  // 첫 번째 사진과 주소가 같으면(같은 사진이면) 두 번째는 숨김
+                  if (secondUrl !== fishPhotoImg.src) {
+                    fishPhotoImg2.src = secondUrl;
+                    fishPhoto2.style.setProperty('display', 'block', 'important');
+                  }
                 }
+
               });
           }).catch(() => {});
 
