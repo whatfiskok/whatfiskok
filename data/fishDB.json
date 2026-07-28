@@ -911,6 +911,7 @@
   },
   "넓미역": {
     "aliases": ["미역"],
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/CSIRO_ScienceImage_952_Undaria_pinnatifida_Japanese_kelp.jpg",
     "scientificName": "Undaria peterseniana",
     "waterType": "sea",
     "seaRegion": ["제주"],
@@ -921,10 +922,11 @@
     "regionNote": "제주특별자치도 한정 적용",
     "habitat": "제주 연안 암초 지대",
     "season": "겨울~봄 (12월~4월)",
-    "description": "제주 연안에서 채취하는 자연산 미역. 미역국·무침으로 활용됩니다.",
+    "description": "제주 연안에서 채취하는 자연산 미역. 미역국·무침으로 활용됩니다. (사진은 유사종인 미역 이미지입니다.)",
     "similarFish": [],
     "warning": "제주특별자치도 한정 금어기 적용"
   },
+
   "쏘가리": {
     "aliases": [],
     "scientificName": "Siniperca scherzeri",
