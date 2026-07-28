@@ -205,7 +205,7 @@
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
-    "minSize": 20,
+    "minSize": 17,
     "minSizeUnit": "cm",
     "minSizeNote": "전장",
     "regionNote": null,
@@ -221,7 +221,7 @@
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
-    "minSize": 20,
+    "minSize": 17,
     "minSizeUnit": "cm",
     "minSizeNote": "전장",
     "regionNote": null,
@@ -237,7 +237,7 @@
     "waterType": "sea",
     "seaRegion": ["동해"],
     "closedSeason": null,
-    "minSize": 20,
+    "minSize": 17,
     "minSizeUnit": "cm",
     "minSizeNote": "전장",
     "regionNote": null,
@@ -669,7 +669,8 @@
     "scientificName": "Portunus trituberculatus",
     "waterType": "sea",
     "seaRegion": ["서해", "남해"],
-    "closedSeason": "6월 21일 ~ 9월 30일 중 2개월 (매년 장관 고시로 확정)",
+"closedSeason": "6월 21일 ~ 8월 20일",
+
     "minSize": 6.4,
     "minSizeUnit": "cm",
     "minSizeNote": "두흉갑장 (등딱지 너비)",
@@ -678,7 +679,8 @@
     "season": "봄·가을 (4월~6월, 9월~11월)",
     "description": "한국 대표 갑각류. 꽃게탕·간장게장·양념게장으로 인기입니다.",
     "similarFish": [],
-    "warning": "금어기는 매년 장관 고시로 확정. 체장 측정 기준이 '두흉갑장'입니다."
+"warning": "체장 측정 기준이 '두흉갑장(등딱지 길이)'입니다. 서해5도 일부 해역은 별도 적용."
+
   },
   "대게": {
     "aliases": ["영덕대게"],
