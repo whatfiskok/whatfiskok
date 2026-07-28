@@ -1727,9 +1727,11 @@ function showAdminPanel() {
   fetch(SHEETS_URL)
     .then(r => r.json())
     .then(json => {
-      const rows = json.data.slice(1)
-        .filter(r => r[1] && String(r[1]).trim() !== '')
-        .reverse();
+const rows = json.data.slice(1)
+  .filter(r => r[1] && String(r[1]).trim() !== '')
+  .filter(r => r[2] !== '위치')
+  .reverse();
+
 
       const reqAll = (json.requests || []).slice(1)
         .filter(r => r[1] && String(r[1]).trim() !== '')
