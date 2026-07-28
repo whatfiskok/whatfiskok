@@ -1928,10 +1928,12 @@ async function searchByLocation() {
       return a.name.localeCompare(b.name, 'ko');
     });
 
+  logSearch(window.userRegion || '전국', '위치', 0);
   showLocationList(fishList);
 
 
 }
+
 
 function showLocationList(fishList) {
   document.getElementById('introBox').style.display = 'none';
