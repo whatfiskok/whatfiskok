@@ -1820,8 +1820,9 @@ function searchFishName(name, from) {
 
   // 위치 목록에서 눌러본 어종이면 어종명으로 기록 남기기
   if (from === '위치') {
-    logSearch(name, '위치→어종', 0);
+    logSearch(name, '위치', 0);
   }
+
 
   callAPI({ fishName: name });
 }
