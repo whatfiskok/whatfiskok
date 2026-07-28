@@ -1818,6 +1818,23 @@
   "similarFish": []
 },
 
+  "쥐치": {
+    "aliases": [],
+    "scientificName": "Stephanolepis cirrhifer",
+    "waterType": "sea",
+    "seaRegion": ["서해", "남해", "동해", "제주"],
+    "closedSeason": null,
+    "minSize": null,
+    "minSizeUnit": null,
+    "minSizeNote": null,
+    "regionNote": null,
+    "habitat": "연안 암초·해조류 지대",
+    "season": "여름~가을 (6월~10월)",
+    "description": "말쥐치보다 작고 몸이 둥근 마름모꼴인 쥐치과 어종입니다. 껍질이 질겨 벗겨서 조리하며, 회·조림·쥐포로 즐깁니다. 법으로 정해진 금지체장은 없습니다.",
+    "similarFish": [{"name": "말쥐치", "difference": "말쥐치가 더 크고 몸이 길쭉하며, 금지체장 18cm 규정이 있습니다."}],
+    "warning": null
+ },
+
   "향유고래": {
     "aliases": [],
     "protected": true,
