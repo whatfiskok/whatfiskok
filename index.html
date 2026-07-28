@@ -1528,12 +1528,16 @@ function renderResult(data) {
 
 
   const wb2 = document.getElementById('warningBox');
-  if (data.warning) {
+  // regionNote와 warning 내용이 같으면(공백 제거 후 비교) 중복이므로 warning은 숨김
+  const sameAsRegion = data.warning && data.regionNote &&
+    data.warning.replace(/\s/g, '') === data.regionNote.replace(/\s/g, '');
+  if (data.warning && !sameAsRegion) {
     document.getElementById('warningText').textContent = '⚠️ ' + data.warning;
     wb2.classList.remove('hidden');
   } else {
     wb2.classList.add('hidden');
   }
+
 
       document.getElementById('legalNoticeBox').style.display = 'block';
 document.getElementById('supportActionBox').style.display = 'none';
