@@ -623,7 +623,9 @@ body {
       align-items:center;
       gap:6px;
     ">
-      <div style="font-size:1.5rem;">📏</div>
+      <img id="cardSizeIcon" src="" alt="측정" style="width:40px; height:40px; object-fit:contain; display:none;">
+<div id="cardSizeEmoji" style="font-size:1.5rem;">📏</div>
+
       <div style="font-size:0.65rem; color:#aaa; font-weight:600; letter-spacing:0.5px;">금지체장</div>
       <div style="font-size:1rem; color:white; font-weight:800;" id="cardSizeText"></div>
       <div style="font-size:0.6rem; color:#aaa;">이상만 포획</div>
@@ -2287,16 +2289,23 @@ function showDoneRequests() {
     .catch(() => {});
 }
 
+// 측정 부위명(minSizeNote)을 보고 알맞은 아이콘을 골라주는 함수
+function getSizeIcon(note) {
+  if (!note) return null;
+  if (note.includes('항문장'))                  return { file: 'data/fish-icon-anus.png',    label: '항문장' };
+  if (note.includes('두흉갑장') || note.includes('갑폭')) return { file: 'data/fish-icon-crab.png',    label: '두흉갑장' };
+  if (note.includes('외투장'))                  return { file: 'data/fish-icon-squid.png',   label: '외투장' };
+  if (note.includes('체반폭'))                  return { file: 'data/fish-icon-skate.png',   label: '체반폭' };
+  if (note.includes('체중'))                    return { file: 'data/fish-icon-octopus.png', label: '체중' };
+  if (note.includes('각고'))                    return { file: 'data/fish-icon-shell.png',   label: '각고' };
+  if (note.includes('각장'))                    return { file: 'data/fish-icon-shell.png',   label: '각장' };
+  return null;  // 전장 등 일반 어종은 기존 📏 그대로 사용
+}
 
 
   </script>
 
 
-
-
-
-
-  </script>
 
 <div onclick="handleAdminClick()" style="
   position:absolute;
