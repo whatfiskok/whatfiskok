@@ -487,17 +487,18 @@ body {
 
 <!-- 연중 포획 금지 / 포획 자제 안내 -->
 <div id="bannedInfoBox" style="margin-top:20px; padding:0 4px;">
-  <div style="background:rgba(230,57,70,0.12); border:1.5px solid rgba(230,57,70,0.5); border-radius:16px; padding:16px; color:white; margin-bottom:12px;">
-    <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ff6b6b;">🚫 연중 포획 금지</div>
+  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white; margin-bottom:12px;">
+    <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ffffff;">🚫 연중 포획 금지</div>
     <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">1년 내내 잡을 수 없는 어종입니다.</div>
     <div id="bannedList"></div>
   </div>
-  <div style="background:rgba(244,162,97,0.1); border:1.5px solid rgba(244,162,97,0.45); border-radius:16px; padding:16px; color:white;">
-    <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#f4a261;">⚠️ 포획 자제 권고</div>
+  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white;">
+    <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ffffff;">⚠️ 포획 자제 권고</div>
     <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">보호가 필요한 소중한 어종입니다.</div>
     <div id="cautionList"></div>
   </div>
 </div>
+
 
 <!-- 소개 문구 -->
 <div id="introBox" style="margin-top:20px; padding:0 4px;">
@@ -2365,8 +2366,9 @@ function renderBannedInfo() {
   }
   var b = document.getElementById('bannedList');
   var c = document.getElementById('cautionList');
-  if (b) b.innerHTML = makeList(ALWAYS_BANNED, 'rgba(230,57,70,0.6)');
-  if (c) c.innerHTML = makeList(CAUTION_FISH, 'rgba(244,162,97,0.6)');
+  if (b) b.innerHTML = makeList(ALWAYS_BANNED, 'rgba(255,255,255,0.6)');
+  if (c) c.innerHTML = makeList(CAUTION_FISH, 'rgba(255,255,255,0.6)');
+
 }
 
 
