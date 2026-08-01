@@ -1595,7 +1595,16 @@ function renderCalendar(closedSeason, closedSeasonActive) {
 function updateInfoCards(data) {
   const infoCards = document.getElementById('infoCards');
 
+  // 연중 포획 금지 어종이면 값을 통일해서 강제 지정
+  if (typeof ALWAYS_BANNED !== 'undefined' && ALWAYS_BANNED.indexOf(data.fishName) !== -1) {
+    data.closedSeason = '1월 1일 ~ 12월 31일';
+    data.minSize = null;
+    data.season = '포획 금지 (연중)';
+    data.protected = true;
+  }
+
   const closedText = (() => {
+
     if (!data.closedSeason) {
       // 금어기는 비어 있지만 지역·종류별 금어기가 따로 있으면 안내
       if (data.regionSeasons && data.regionSeasons.length > 0) {
