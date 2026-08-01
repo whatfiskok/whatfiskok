@@ -2353,6 +2353,22 @@ function getSizeIcon(note) {
 
 // 연중(1년 내내) 포획 금지 어종 목록
 const ALWAYS_BANNED = ['명태', '무태장어', '돌고래', '향유고래', '가시고기', '어름치'];
+// 포획 자제 권고 어종 목록
+const CAUTION_FISH = ['쉬리'];
+
+// 상단 안내 목록을 그려주는 함수
+function renderBannedInfo() {
+  function makeList(names, color) {
+    return names.map(function(name) {
+      return '<span onclick="searchFishName(\'' + name + '\')" style="display:inline-block; margin:4px 6px 4px 0; padding:7px 14px; border-radius:20px; border:1.5px solid ' + color + '; background:rgba(255,255,255,0.06); color:white; font-size:0.85rem; font-weight:700; cursor:pointer;">' + name + '</span>';
+    }).join('');
+  }
+  var b = document.getElementById('bannedList');
+  var c = document.getElementById('cautionList');
+  if (b) b.innerHTML = makeList(ALWAYS_BANNED, 'rgba(230,57,70,0.6)');
+  if (c) c.innerHTML = makeList(CAUTION_FISH, 'rgba(244,162,97,0.6)');
+}
+
 
   </script>
 
@@ -2423,10 +2439,12 @@ const ALWAYS_BANNED = ['명태', '무태장어', '돌고래', '향유고래', '�
 
 <script>
   window.addEventListener('load', function() {
+    renderBannedInfo();
     showTopSearches();
     showDoneRequests();
     setTimeout(handleStickyBar, 1500);
   });
+
 </script>
 
 
