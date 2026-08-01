@@ -966,6 +966,9 @@ function doSearch() {
 function showFishGroup(groupName, names) {
   document.getElementById('introBox').style.display = 'none';
   document.getElementById('resultOverlay').style.display = 'none';
+  var bannedBox = document.getElementById('bannedInfoBox');
+  if (bannedBox) bannedBox.style.display = 'none';
+
 
   const old = document.getElementById('locationListBox');
   if (old) old.remove();
@@ -1048,7 +1051,10 @@ function closeFishGroup() {
   const box = document.getElementById('fishGroupBox');
   if (box) box.remove();
   document.getElementById('introBox').style.display = 'block';
+  var bannedBox = document.getElementById('bannedInfoBox');
+  if (bannedBox) bannedBox.style.display = 'block';
 }
+
 
 
 
