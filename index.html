@@ -1644,14 +1644,8 @@ const sizeText = data.minSize
         </span>
       </div>
         <div style="display:flex; align-items:center; gap:8px;">
-         <span style="font-size:0.85rem; color:#aaa; min-width:80px; white-space:nowrap; display:inline-flex; align-items:center;">
-          ${(() => {
-            const ic = getSizeIcon(data.minSizeNote);
-            return ic
-              ? `<img src="${ic.file}" alt="${ic.label}" style="width:18px; height:18px; object-fit:contain; margin-right:4px; flex-shrink:0;">${ic.label} :`
-              : '금지체장 :';
-          })()}
-        </span>
+        <span style="font-size:0.85rem; color:#aaa; min-width:80px;">금지체장 :</span>
+
 
 
 <span style="font-size:0.95rem; font-weight:800; color:${data.invasive ? '#e63946' : (isProtected ? '#e63946' : (sizeText ? '#f4a261' : (closedText ? '#aaa' : '#4fc3f7')))};">
