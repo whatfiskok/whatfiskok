@@ -1689,15 +1689,18 @@ const sizeText = data.minSize
 
 
 
-<span style="font-size:0.95rem; font-weight:800; color:${data.invasive ? '#e63946' : (isProtected ? '#e63946' : (sizeText ? '#f4a261' : (closedText ? '#aaa' : '#4fc3f7')))};">
+<span style="font-size:0.95rem; font-weight:800; color:${data.invasive ? '#e63946' : (data.isCaution ? '#f4a261' : (isProtected ? '#e63946' : (sizeText ? '#f4a261' : (closedText ? '#aaa' : '#4fc3f7'))))};">
 ${data.invasive
   ? '방류 금지 (제거 대상)'
-  : (isProtected
-      ? '해당 없음 (포획 금지 어종)'
-      : (sizeText
-          ? sizeText + ' 이하 포획 금지'
-          : '작은건 놔주고 큰거만 잡으세요'))}
+  : (data.isCaution
+      ? '해당 없음'
+      : (isProtected
+          ? '해당 없음 (포획 금지 어종)'
+          : (sizeText
+              ? sizeText + ' 이하 포획 금지'
+              : '작은건 놔주고 큰거만 잡으세요')))}
 </span>
+
 
 
       </div>
