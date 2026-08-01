@@ -1220,6 +1220,20 @@ function renderResult(data) {
         const fishPhoto2 = document.getElementById('fishPhoto2');
         fishPhoto2.style.display = 'none';
 
+        // 측정 기준 큰 아이콘 표시 (특수 측정 어종만)
+        const measureBox = document.getElementById('measureIconBox');
+        const measureImg = document.getElementById('measureIconImg');
+        const measureLabel = document.getElementById('measureIconLabel');
+        const mIcon = getSizeIcon(data.minSizeNote);
+        if (mIcon) {
+          measureImg.src = mIcon.file;
+          measureLabel.textContent = mIcon.label + ' 기준으로 측정';
+          measureBox.style.display = 'block';
+        } else {
+          measureBox.style.display = 'none';
+        }
+
+
 
 
         if (data.source === 'not_found') {
