@@ -2251,9 +2251,10 @@ function showTopSearches() {
         '<div onclick="searchFishName(\'' + item[0] + '\')" style="display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); cursor:pointer;">' +
           '<span style="min-width:24px; font-weight:800; color:rgba(255,255,255,0.85);">' + (i + 1) + '</span>' +
           '<span style="flex:1; color:white; font-weight:600; font-size:0.82rem;">' + item[0] + '</span>' +
-          '<span style="color:rgba(255,255,255,0.6); font-size:0.85rem;">' + item[1] + '회</span>' +
         '</div>'
       ).join('');
+
+
 
       const area = document.getElementById('topSearchArea');
       if (area) {
