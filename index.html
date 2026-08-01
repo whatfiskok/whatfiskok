@@ -877,7 +877,10 @@ function handleImage(file) {
       switchMainTab('photo');
 
       // 사진 선택 시 소개 박스와 최다 검색어·최근 추가 목록 숨기기
-      document.getElementById('introBox').style.display = 'none';
+        document.getElementById('introBox').style.display = 'none';
+  var bannedBox = document.getElementById('bannedInfoBox');
+  if (bannedBox) bannedBox.style.display = 'none';
+
       const fgb = document.getElementById('fishGroupBox');
       if (fgb) fgb.remove();
       const llb = document.getElementById('locationListBox');
@@ -1600,7 +1603,10 @@ document.getElementById('closeResult').addEventListener('click', () => {
   const box = document.getElementById('locationListBox');
   if (box) box.remove();
   document.getElementById('introBox').style.display = 'block';
+  const bannedBox = document.getElementById('bannedInfoBox');
+  if (bannedBox) bannedBox.style.display = 'block';
 });
+
 
 
 function renderCalendar(closedSeason, closedSeasonActive) {
