@@ -1156,6 +1156,9 @@ function renderResult(data) {
 
   const ro = document.getElementById('resultOverlay');
   ro.style.display = 'block';
+  var bannedBox = document.getElementById('bannedInfoBox');
+  if (bannedBox) bannedBox.style.display = 'none';
+
 
   const fishPhoto = document.getElementById('fishPhoto');
   const fishPhotoImg = document.getElementById('fishPhotoImg');
