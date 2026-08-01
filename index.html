@@ -1626,7 +1626,14 @@ function updateInfoCards(data) {
     data.minSize = null;
     data.season = '포획 금지 (연중)';
     data.protected = true;
+    data.isCaution = false;   // 연중 금지 어종 표시
   }
+  // 포획 자제 권고 어종이면 별도 표시 (금지가 아니라 자제)
+  else if (typeof CAUTION_FISH !== 'undefined' && CAUTION_FISH.indexOf(data.fishName) !== -1) {
+    data.minSize = null;
+    data.isCaution = true;    // 자제 권고 어종 표시
+  }
+
 
   const closedText = (() => {
 
