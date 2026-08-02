@@ -480,10 +480,41 @@ body {
   ">검색</button>
 
   </div>
-</div>
+
+  <!-- 검색바 아래 아이콘 메뉴 3개 -->
+  <div style="display:flex; gap:8px; margin-top:12px; width:100%; box-sizing:border-box;">
+    <button onclick="document.getElementById('galleryInput').click();" style="
+      flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;
+      padding:12px 6px; border-radius:12px;
+      border:1.5px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06);
+      color:white; font-size:0.8rem; font-weight:600; cursor:pointer;
+    ">
+      <span style="font-size:1.3rem;">🖼️</span>사진검색
+    </button>
+    <button onclick="document.getElementById('cameraInput').click();" style="
+      flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;
+      padding:12px 6px; border-radius:12px;
+      border:1.5px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06);
+      color:white; font-size:0.8rem; font-weight:600; cursor:pointer;
+    ">
+      <span style="font-size:1.3rem;">📷</span>카메라검색
+    </button>
+    <button onclick="searchByLocation();" style="
+      flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;
+      padding:12px 6px; border-radius:12px;
+      border:1.5px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06);
+      color:white; font-size:0.8rem; font-weight:600; cursor:pointer;
+    ">
+      <span style="font-size:1.3rem;">📍</span>위치검색
+    </button>
+  </div>
 
 
         </div>
+
 
 <!-- 연중 포획 금지 / 포획 자제 안내 -->
 <div id="bannedInfoBox" style="margin-top:20px; padding:0 4px;">
