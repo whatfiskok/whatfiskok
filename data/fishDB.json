@@ -2108,6 +2108,40 @@
   "similarFish": [{"name": "동자개(빠가사리)", "difference": "대농갱이가 몸이 더 길고 색이 균일하며, 동자개는 뚜렷한 얼룩무늬가 있습니다"}],
   "warning": null
 },
+"배도라치": {
+  "aliases": ["베도라치"],
+  "wikiTitle": "베도라치",
+  "scientificName": "Pholis nebulosa",
+  "waterType": "sea",
+  "seaRegion": ["서해", "남해", "동해"],
+  "closedSeason": null,
+  "minSize": null,
+  "minSizeUnit": null,
+  "minSizeNote": null,
+  "regionNote": null,
+  "habitat": "연안 조간대 바위틈·해조류 지대",
+  "season": "겨울~봄 (12월~3월)",
+  "description": "연안 바위틈에 사는 가늘고 긴 물고기로, 서해에서는 '뽀드락지'라 불리며 매운탕·죽으로 먹습니다. 법으로 정해진 금어기·금지체장은 없습니다.",
+  "similarFish": [],
+  "warning": null
+},
+"횟대": {
+  "aliases": ["횟대기"],
+  "wikiTitle": "횟대기",
+  "scientificName": "Gymnocanthus herzensteini",
+  "waterType": "sea",
+  "seaRegion": ["동해"],
+  "closedSeason": null,
+  "minSize": null,
+  "minSizeUnit": null,
+  "minSizeNote": null,
+  "regionNote": null,
+  "habitat": "동해 연안 모래·자갈 바닥",
+  "season": "겨울 (11월~2월)",
+  "description": "머리가 크고 가시가 많은 냉수성 어종으로, 동해에서 주로 잡히며 회·매운탕·건조(횟대포)로 먹습니다. 법으로 정해진 금어기·금지체장은 없습니다.",
+  "similarFish": [],
+  "warning": null
+},
 
   "향유고래": {
     "aliases": [],
