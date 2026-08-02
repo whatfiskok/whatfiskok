@@ -983,17 +983,18 @@
     "aliases": [],
     "scientificName": "Plecoglossus altivelis",
     "waterType": "fresh",
-    "closedSeason": "9월 15일 ~ 11월 15일",
+    "closedSeason": null,
     "minSize": null,
     "minSizeUnit": null,
     "minSizeNote": null,
-    "regionNote": "강원도·경상북도: 봄 금어기 4월 20일~5월 20일 / 가을 금어기 9월 1일~10월 31일 / 댐·인공 조성지는 별도 적용",
+    "regionNote": "지역별로 다름 — 강원·경북: 봄(소상기) 4월 20일~5월 20일, 가을(산란기) 9월 1일~10월 31일 / 그 외 지역: 봄(소상기) 4월 1일~4월 30일, 가을(산란기) 9월 15일~11월 15일 / 댐·인공 조성지는 별도 적용",
     "habitat": "맑은 강 자갈 바닥",
     "season": "여름 (6월~8월)",
     "description": "수박 향이 나는 청정 민물고기. 소금구이로 즐기며 여름 별미로 꼽힙니다.",
     "similarFish": [],
     "warning": null
   },
+
   "연어": {
     "aliases": [],
     "scientificName": "Oncorhynchus keta",
