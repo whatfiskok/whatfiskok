@@ -985,9 +985,11 @@
     "waterType": "fresh",
     "closedSeason": null,
     "regionSeasons": [
-      { "region": "강원·경북", "season": "봄(소상기) 4월 20일~5월 20일 / 가을(산란기) 9월 1일~10월 31일" },
-      { "region": "그 외 지역", "season": "봄(소상기) 4월 1일~4월 30일 / 가을(산란기) 9월 15일~11월 15일" }
+      { "region": "강원·경북", "season": "봄(소상기) 4월 20일~5월 20일\n가을(산란기) 9월 1일~10월 31일" },
+      { "region": "그 외 지역", "season": "봄(소상기) 4월 1일~4월 30일\n가을(산란기) 9월 15일~11월 15일" }
     ],
+
+
     "minSize": null,
     "minSizeUnit": null,
     "minSizeNote": null,
