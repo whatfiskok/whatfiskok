@@ -532,7 +532,13 @@ body {
     <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">보호가 필요한 소중한 어종입니다.</div>
     <div id="cautionList"></div>
   </div>
+  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white; margin-top:12px;">
+    <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ffffff;">🌱 자율 방생 권장</div>
+    <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">자원이 줄고 있어요. 산란철 어미·알 밴 개체는 놓아주세요.</div>
+    <div id="recoveryList"></div>
+  </div>
 </div>
+
 
 
 <!-- 소개 문구 -->
@@ -2432,6 +2438,10 @@ const ALWAYS_BANNED = ['명태', '무태장어', '돌고래', '향유고래', '�
 // 포획 자제 권고 어종 목록
 const CAUTION_FISH = ['쉬리', '각시붕어', '갈겨니', '돌고기', '모래무지', '꺽지'];
 
+// 자율 방생 권장 (자원회복 대상) 어종 목록
+const RECOVERY_FISH = ['대구', '도루묵', '참홍어', '꽃게', '낙지', '주꾸미', '쥐치', '갈치'];
+
+
 
 // 상단 안내 목록을 그려주는 함수
 function renderBannedInfo() {
@@ -2442,8 +2452,11 @@ function renderBannedInfo() {
   }
   var b = document.getElementById('bannedList');
   var c = document.getElementById('cautionList');
+  var r = document.getElementById('recoveryList');
   if (b) b.innerHTML = makeList(ALWAYS_BANNED, 'rgba(255,255,255,0.6)');
   if (c) c.innerHTML = makeList(CAUTION_FISH, 'rgba(255,255,255,0.6)');
+  if (r) r.innerHTML = makeList(RECOVERY_FISH, 'rgba(255,255,255,0.6)');
+
 
 }
 
