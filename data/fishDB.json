@@ -488,6 +488,24 @@
     "similarFish": [{"name": "부세", "difference": "부세는 참조기보다 크고 머리 형태가 다름"}],
     "warning": null
   },
+  "백조기": {
+  "aliases": ["보구치"],
+  "wikiTitle": "보구치",
+  "scientificName": "Pennahia argentata",
+  "waterType": "sea",
+  "seaRegion": ["서해", "남해"],
+  "closedSeason": null,
+  "minSize": null,
+  "minSizeUnit": null,
+  "minSizeNote": null,
+  "regionNote": null,
+  "habitat": "연안 얕은 모래·펄 바닥",
+  "season": "여름 (6월~8월)",
+  "description": "민어과의 흰 몸빛 어종으로, 보구치라고도 불립니다. 여름철 서해 선상낚시 인기 대상어이며 회·구이·매운탕으로 먹습니다. 법으로 정해진 금어기·금지체장은 없습니다.",
+  "similarFish": [{"name": "부세", "difference": "백조기는 몸이 은백색이고, 부세는 노란빛이 돕니다"}],
+  "warning": null
+},
+
   "전어": {
     "aliases": [],
     "scientificName": "Konosirus punctatus",
