@@ -2065,6 +2065,40 @@
     "similarFish": [],
     "warning": "멸종위기 야생생물 1급. 연중 포획이 금지된 법적 보호종입니다."
   },
+"도화새우": {
+  "aliases": ["독도새우", "꽃새우"],
+  "wikiTitle": "도화새우",
+  "scientificName": "Pandalus hypsinotus",
+  "waterType": "sea",
+  "seaRegion": ["동해"],
+  "habitat": "동해 수심 200~300m의 찬 심해 바닥",
+  "season": "가을~겨울 (11월~2월)",
+  "description": "동해 심해에 사는 대형 새우로, '독도새우' 3종 중 가장 크고 비쌉니다. 몸에 붉은 반점(도화 무늬)이 있습니다. 법으로 정해진 금어기·금지체장은 없습니다.",
+  "similarFish": [{"name": "물렁가시붉은새우(홍새우)", "difference": "도화새우가 더 크고 등에 흰 반점 무늬가 뚜렷합니다"}],
+  "warning": null
+},
+"보리새우": {
+  "aliases": ["오도리"],
+  "wikiTitle": "보리새우",
+  "scientificName": "Marsupenaeus japonicus",
+  "waterType": "sea",
+  "seaRegion": ["서해", "남해"],
+  "habitat": "연안 모래·펄 바닥 (수심 100m 이내)",
+  "season": "여름~가을 (6월~9월)",
+  "description": "몸에 보리 무늬 같은 줄무늬가 있는 고급 새우로, '오도리'라고도 불립니다. 산 채로 회로 먹는 것으로 유명합니다. 법으로 정해진 금어기·금지체장은 없습니다.",
+  "warning": null
+},
+"대농갱이": {
+  "aliases": ["농갱이"],
+  "wikiTitle": "대농갱이",
+  "scientificName": "Leiocassis ussuriensis",
+  "waterType": "fresh",
+  "habitat": "임진강·한강·금강·낙동강 중하류의 자갈·모래 바닥",
+  "season": "여름 (산란기 5~7월)",
+  "description": "메기목 동자개과의 야행성 육식 민물고기로, 한반도 하천에 널리 서식하는 토종 어종입니다. 법으로 정해진 금어기·금지체장은 없습니다.",
+  "similarFish": [{"name": "동자개(빠가사리)", "difference": "대농갱이가 몸이 더 길고 색이 균일하며, 동자개는 뚜렷한 얼룩무늬가 있습니다"}],
+  "warning": null
+},
 
   "향유고래": {
     "aliases": [],
