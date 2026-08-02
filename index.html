@@ -570,8 +570,36 @@ body {
 
 
 
+<!-- 월별 금어기 해제 목록 -->
+<div id="monthlyReleaseBox" style="margin-top:20px; padding:0 4px;">
+  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+      <div>
+        <div style="font-size:0.95rem; font-weight:800; color:#ffffff;">
+          <span id="monthlyReleaseTitle">8월</span>부터 가능
+        </div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-top:2px;">금어기가 풀리는 어종</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px; flex-shrink:0;">
+        <button type="button" onclick="changeReleaseMonth(-1)" style="
+          width:34px; height:28px; border-radius:8px; cursor:pointer;
+          border:1.5px solid rgba(255,255,255,0.3);
+          background:rgba(255,255,255,0.1); color:white; font-size:0.9rem;
+        ">▲</button>
+        <button type="button" onclick="changeReleaseMonth(1)" style="
+          width:34px; height:28px; border-radius:8px; cursor:pointer;
+          border:1.5px solid rgba(255,255,255,0.3);
+          background:rgba(255,255,255,0.1); color:white; font-size:0.9rem;
+        ">▼</button>
+      </div>
+    </div>
+    <div id="monthlyReleaseList"></div>
+  </div>
+</div>
+
 <!-- 소개 문구 -->
 <div id="introBox" style="margin-top:20px; padding:0 4px;">
+
 
 
   <div style="
@@ -2508,6 +2536,82 @@ function switchInfoTab(mode) {
   });
 }
 
+// 월별 금어기 해제 목록
+window.currentReleaseMonth = new Date().getMonth() + 1; // 현재 월 (1~12)
+window.monthlyReleaseData = null; // {1:[...], 2:[...], ...}
+
+function loadMonthlyRelease() {
+  fetch('/data/fishDB.json')
+    .then(function(r) { return r.json(); })
+    .then(function(db) {
+      var byMonth = {};
+      for (var m = 1; m <= 12; m++) byMonth[m] = [];
+
+Object.keys(db).forEach(function(name) {
+  var info = db[name];
+  if (!info.closedSeason) return;
+  var mt = info.closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
+  if (!mt) return;
+
+  // 종료일 다음 날을 계산 → 그 날이 속한 월이 "해제(가능 시작)월"
+  var endMonth = parseInt(mt[3]);
+  var endDay   = parseInt(mt[4]);
+  // 종료일 다음 날 (윤년 무관하게 안전하도록 2024년 사용)
+  var next = new Date(2024, endMonth - 1, endDay + 1);
+  var releaseMonth = next.getMonth() + 1; // 1~12
+  var releaseDay   = next.getDate();
+
+  byMonth[releaseMonth].push({
+    name: name,
+    releaseText: releaseMonth + '월 ' + releaseDay + '일부터 가능',
+    period: mt[1] + '월 ' + mt[2] + '일 ~ ' + mt[3] + '월 ' + mt[4] + '일'
+  });
+});
+
+
+      // 이름 가나다순 정렬
+      for (var k = 1; k <= 12; k++) {
+        byMonth[k].sort(function(a, b) { return a.name.localeCompare(b.name, 'ko'); });
+      }
+
+      window.monthlyReleaseData = byMonth;
+      renderMonthlyRelease();
+    })
+    .catch(function() {});
+}
+
+function changeReleaseMonth(delta) {
+  var m = window.currentReleaseMonth + delta;
+  if (m < 1) m = 12;
+  if (m > 12) m = 1;
+  window.currentReleaseMonth = m;
+  renderMonthlyRelease();
+}
+
+function renderMonthlyRelease() {
+  if (!window.monthlyReleaseData) return;
+  var m = window.currentReleaseMonth;
+  var list = window.monthlyReleaseData[m] || [];
+
+  var titleEl = document.getElementById('monthlyReleaseTitle');
+  if (titleEl) titleEl.textContent = m + '월';
+
+  var listEl = document.getElementById('monthlyReleaseList');
+  if (!listEl) return;
+
+  if (list.length === 0) {
+    listEl.innerHTML = '<div style="text-align:center; color:rgba(255,255,255,0.4); padding:16px; font-size:0.85rem;">이 달에 해제되는 어종이 없습니다.</div>';
+    return;
+  }
+
+ listEl.innerHTML = list.map(function(f) {
+  return '<div style="display:flex; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.1);">' +
+    '<span style="color:white; font-size:0.88rem; font-weight:700;">' + f.name + '</span>' +
+    '<span style="color:rgba(255,255,255,0.6); font-size:0.78rem; text-align:right;">' + f.releaseText + '</span>' +
+  '</div>';
+}).join('');
+
+}
 
   </script>
 
@@ -2577,12 +2681,14 @@ function switchInfoTab(mode) {
 </div>
 
 <script>
-  window.addEventListener('load', function() {
-    renderBannedInfo();
-    showTopSearches();
-    showDoneRequests();
-    setTimeout(handleStickyBar, 1500);
-  });
+window.addEventListener('load', function() {
+  renderBannedInfo();
+  showTopSearches();
+  showDoneRequests();
+  loadMonthlyRelease();
+  setTimeout(handleStickyBar, 1500);
+});
+
 
 </script>
 
