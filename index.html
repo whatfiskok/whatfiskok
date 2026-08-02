@@ -2165,8 +2165,14 @@ function showLocationList(fishList) {
         ? '내일 해제!'
         : `${f.daysLeft}일 후 해제`;
 
-      const statusColor = f.inSeason ? '#e63946' : '#4fc3f7';
-      const statusLabel = f.inSeason ? '🚫 금어기 중' : '✅ 포획 가능';
+      // 연중 포획 금지 어종은 무조건 금지로 표시
+      const isAlwaysBanned = (typeof ALWAYS_BANNED !== 'undefined') && ALWAYS_BANNED.indexOf(f.name) !== -1;
+
+      const statusColor = (isAlwaysBanned || f.inSeason) ? '#e63946' : '#4fc3f7';
+      const statusLabel = isAlwaysBanned
+        ? '🚫 포획 금지 (연중)'
+        : (f.inSeason ? '🚫 금어기 중' : '✅ 포획 가능');
+
 
       html += `
         <div onclick="searchFishName('${f.name}', '위치')" style="
