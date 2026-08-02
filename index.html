@@ -2565,15 +2565,19 @@ Object.keys(db).forEach(function(name) {
   byMonth[releaseMonth].push({
     name: name,
     releaseText: releaseMonth + '월 ' + releaseDay + '일부터 가능',
+    releaseDay: releaseDay,
     period: mt[1] + '월 ' + mt[2] + '일 ~ ' + mt[3] + '월 ' + mt[4] + '일'
   });
 });
 
+// 해제일(일자) 빠른 순 정렬, 같은 날이면 이름 가나다순
+for (var k = 1; k <= 12; k++) {
+  byMonth[k].sort(function(a, b) {
+    if (a.releaseDay !== b.releaseDay) return a.releaseDay - b.releaseDay;
+    return a.name.localeCompare(b.name, 'ko');
+  });
+}
 
-      // 이름 가나다순 정렬
-      for (var k = 1; k <= 12; k++) {
-        byMonth[k].sort(function(a, b) { return a.name.localeCompare(b.name, 'ko'); });
-      }
 
       window.monthlyReleaseData = byMonth;
       renderMonthlyRelease();
@@ -2605,12 +2609,18 @@ function renderMonthlyRelease() {
     return;
   }
 
- listEl.innerHTML = list.map(function(f) {
-  return '<div style="display:flex; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.1);">' +
-    '<span style="color:white; font-size:0.88rem; font-weight:700;">' + f.name + '</span>' +
-    '<span style="color:rgba(255,255,255,0.6); font-size:0.78rem; text-align:right;">' + f.releaseText + '</span>' +
-  '</div>';
-}).join('');
+  listEl.innerHTML = list.map(function(f) {
+    return '<div onclick="searchFishName(\'' + f.name + '\')" style="' +
+        'display:flex; justify-content:space-between; align-items:center; gap:10px;' +
+        'padding:11px 8px; border-bottom:1px solid rgba(255,255,255,0.1);' +
+        'cursor:pointer; border-radius:8px;"' +
+        ' onmouseover="this.style.background=\'rgba(255,255,255,0.1)\'"' +
+        ' onmouseout="this.style.background=\'transparent\'">' +
+      '<span style="color:white; font-size:0.88rem; font-weight:700;">' + f.name + '</span>' +
+      '<span style="color:rgba(255,255,255,0.6); font-size:0.78rem; text-align:right;">' + f.releaseText + '</span>' +
+    '</div>';
+  }).join('');
+
 
 }
 
