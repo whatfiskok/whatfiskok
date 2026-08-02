@@ -522,22 +522,51 @@ body {
 
 <!-- 연중 포획 금지 / 포획 자제 안내 -->
 <div id="bannedInfoBox" style="margin-top:60px; padding:0 4px;">
-  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white; margin-bottom:12px;">
+
+  <!-- 탭 버튼 3개 -->
+  <div style="display:flex; gap:6px; margin-bottom:12px;">
+    <button type="button" id="infoTabBanned" onclick="switchInfoTab('banned')" style="
+      flex:1; padding:10px 4px; border-radius:12px; cursor:pointer;
+      border:1.5px solid rgba(255,255,255,0.6);
+      background:rgba(255,255,255,0.2); color:white;
+      font-size:0.78rem; font-weight:700;
+    ">🚫 연중 금지</button>
+    <button type="button" id="infoTabCaution" onclick="switchInfoTab('caution')" style="
+      flex:1; padding:10px 4px; border-radius:12px; cursor:pointer;
+      border:1.5px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.6);
+      font-size:0.78rem; font-weight:700;
+    ">⚠️ 포획 자제</button>
+    <button type="button" id="infoTabRecovery" onclick="switchInfoTab('recovery')" style="
+      flex:1; padding:10px 4px; border-radius:12px; cursor:pointer;
+      border:1.5px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.6);
+      font-size:0.78rem; font-weight:700;
+    ">🌱 자율 방생</button>
+  </div>
+
+  <!-- 연중 포획 금지 -->
+  <div id="infoBoxBanned" style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white;">
     <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ffffff;">🚫 연중 포획 금지</div>
     <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">1년 내내 잡을 수 없는 어종입니다.</div>
     <div id="bannedList"></div>
   </div>
-  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white;">
+
+  <!-- 포획 자제 권고 -->
+  <div id="infoBoxCaution" style="display:none; background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white;">
     <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ffffff;">⚠️ 포획 자제 권고</div>
     <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">보호가 필요한 소중한 어종입니다.</div>
     <div id="cautionList"></div>
   </div>
-  <div style="background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white; margin-top:12px;">
+
+  <!-- 자율 방생 권장 -->
+  <div id="infoBoxRecovery" style="display:none; background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.6); border-radius:16px; padding:16px; color:white;">
     <div style="font-size:0.95rem; font-weight:800; margin-bottom:4px; color:#ffffff;">🌱 자율 방생 권장</div>
     <div style="font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:12px;">자원이 줄고 있어요. 산란철 어미·알 밴 개체는 놓아주세요.</div>
     <div id="recoveryList"></div>
   </div>
 </div>
+
 
 
 
@@ -2458,6 +2487,25 @@ function renderBannedInfo() {
   if (r) r.innerHTML = makeList(RECOVERY_FISH, 'rgba(255,255,255,0.6)');
 
 
+}
+// 안내 박스 탭 전환
+function switchInfoTab(mode) {
+  var boxes = {
+    banned:   { box: 'infoBoxBanned',   tab: 'infoTabBanned' },
+    caution:  { box: 'infoBoxCaution',  tab: 'infoTabCaution' },
+    recovery: { box: 'infoBoxRecovery', tab: 'infoTabRecovery' }
+  };
+  Object.keys(boxes).forEach(function(key) {
+    var box = document.getElementById(boxes[key].box);
+    var tab = document.getElementById(boxes[key].tab);
+    var active = (key === mode);
+    if (box) box.style.display = active ? 'block' : 'none';
+    if (tab) {
+      tab.style.background = active ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.06)';
+      tab.style.color = active ? 'white' : 'rgba(255,255,255,0.6)';
+      tab.style.borderColor = active ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.2)';
+    }
+  });
 }
 
 
