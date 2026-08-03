@@ -1070,6 +1070,9 @@ function showFishGroup(groupName, names) {
   document.getElementById('resultOverlay').style.display = 'none';
   var bannedBox = document.getElementById('bannedInfoBox');
   if (bannedBox) bannedBox.style.display = 'none';
+  var monthlyBox = document.getElementById('monthlyReleaseBox');
+  if (monthlyBox) monthlyBox.style.display = 'none';
+
 
 
   const old = document.getElementById('locationListBox');
@@ -1155,7 +1158,10 @@ function closeFishGroup() {
   document.getElementById('introBox').style.display = 'block';
   var bannedBox = document.getElementById('bannedInfoBox');
   if (bannedBox) bannedBox.style.display = 'block';
+  var monthlyBox = document.getElementById('monthlyReleaseBox');
+  if (monthlyBox) monthlyBox.style.display = 'block';
 }
+
 
 
 
