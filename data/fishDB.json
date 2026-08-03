@@ -359,22 +359,23 @@
     "similarFish": [],
     "warning": null
   },
-  "갈치": {
-    "aliases": [],
-    "scientificName": "Trichiurus lepturus",
-    "waterType": "sea",
-    "seaRegion": ["남해", "동해", "제주"],
-    "closedSeason": "7월 1일 ~ 7월 31일",
-    "minSize": 18,
-    "minSizeUnit": "cm",
-    "minSizeNote": "항문장",
-    "regionNote": "북위 33°00′ 이북 해역에 한정 적용. 어획량의 10% 미만이면 예외",
-    "habitat": "수심 50~300m 중층~저층",
-    "season": "여름~가을 (7월~10월)",
-    "description": "은빛 칼 모양의 어종. 제주 갈치가 유명하며 구이·조림으로 인기입니다.",
-    "similarFish": [],
-    "warning": null
-  },
+"갈치": {
+  "aliases": [],
+  "scientificName": "Trichiurus lepturus",
+  "waterType": "sea",
+  "seaRegion": ["남해", "동해", "제주"],
+  "closedSeason": "7월 1일 ~ 7월 31일",
+  "minSize": 18,
+  "minSizeUnit": "cm",
+  "minSizeNote": "항문장",
+  "regionNote": "근해연승어업 기준 7월(7월 1일~7월 31일) 금어기이나 2027년까지 한시 유예 중이라 현재 포획 가능. 근해자망·정치망 등 다른 어법은 어구별로 금어기가 다름(6월, 7~8월, 11~6월 등).",
+  "habitat": "수심 50~300m 중층~저층",
+  "season": "여름~가을 (7월~10월)",
+  "description": "은빛 칼 모양의 어종. 제주 갈치가 유명하며 구이·조림으로 인기입니다.",
+  "similarFish": [],
+  "warning": "금어기가 어법·해역에 따라 다르며, 근해연승 갈치 금어기는 2027년까지 유예된 상태입니다. 정확한 기준은 해양수산부 고시를 확인하세요."
+},
+
 "말쥐치": {
     "aliases": ["쥐포"],
     "scientificName": "Thamnaconus modestus",
