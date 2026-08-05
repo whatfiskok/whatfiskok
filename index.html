@@ -2564,8 +2564,13 @@ Object.keys(db).forEach(function(name) {
   var mt = info.closedSeason.match(/(\d+)월\s*(\d+)일\s*~\s*(\d+)월\s*(\d+)일/);
   if (!mt) return;
 
+  // 연중 포획 금지 어종은 제외 (1월 1일 ~ 12월 31일)
+  var sMonth = parseInt(mt[1]), sDay = parseInt(mt[2]);
+  if (sMonth === 1 && sDay === 1 && parseInt(mt[3]) === 12 && parseInt(mt[4]) === 31) return;
+
   // 종료일 다음 날을 계산 → 그 날이 속한 월이 "해제(가능 시작)월"
   var endMonth = parseInt(mt[3]);
+
   var endDay   = parseInt(mt[4]);
   // 종료일 다음 날 (윤년 무관하게 안전하도록 2024년 사용)
   var next = new Date(2024, endMonth - 1, endDay + 1);
